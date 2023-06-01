@@ -1,0 +1,149 @@
+﻿@model MainFooterViewModel
+
+<footer class="main-footer-container">
+    <div class="main-footer">
+        <a class="main-footer-logo" target="_blank" href="http://www.riversideinsights.com"><img src="@Links.Reskin.Content.dm_ui.img.dm_footer_logo_svg" class="main-footer-logo-img" alt="Logo Riverside Insights Elevate Potential" /></a>
+        <div class="main-footer-links">
+            <a class="footer-link" target="_blank" rel="noopener noreferrer" href="@Model.TermsOfUseLink" title="Terms of Use">Terms of Use</a> |
+            <a class="footer-link" target="_blank" href="@Model.PrivacyPolicyLink" title="Privacy Policy">Privacy Policy</a>
+            @if (Model.SiteMap != null)
+            {
+                @:| <a class="footer-link footer-sitemap-switch" aria-controls="divFooterContent" aria-label="Site Map Expandable, Select and use tab to navigate" href="javascript:;">Site Map</a>
+            }
+        </div>
+    </div>
+    @if (Model.SiteMap != null)
+    {
+        <div id="divFooterContent" class="main-footer-sitemap dm-ui-hide" aria-expanded="false">
+            <hr />
+            <table role="presentation">
+                <tr>
+                    <td class="footer-sitemap-block" aria-label="Navigate Menu">
+                        <div class="footer-map-header" role="heading">Navigate</div>
+                        <ul>
+                            <li><a class="footer-sitemap-link" href="@Model.SiteMap.OverviewLink">Overview</a></li>
+
+                            @if (!string.IsNullOrEmpty(Model.SiteMap.TestEventsLink))
+                            {
+                                <li><a class="footer-sitemap-link" href="@Model.SiteMap.TestEventsLink">Test Events</a></li>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.SiteMap.AssignmentsLink))
+                            {
+                                <li><a class="footer-sitemap-link" href="@Model.SiteMap.AssignmentsLink">Assignments</a></li>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.SiteMap.ProctoringLink))
+                            {
+                                <li><a class="footer-sitemap-link" href="@Model.SiteMap.ProctoringLink">Proctoring</a></li>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.SiteMap.OmrLink))
+                            {
+                                <li><a class="footer-sitemap-link" href="@Model.SiteMap.OmrLink">Scanning</a></li>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.SiteMap.ReportsLink))
+                            {
+                                <li><a class="footer-sitemap-link" href="@Model.SiteMap.ReportsLink">Reports</a></li>
+                            }
+                        </ul>
+                    </td>
+                    @if (Model.SiteMap.HasAdminSection)
+                    {
+                        <td class="footer-sitemap-block" aria-label="Administration Menu">
+                            <div class="footer-map-header" role="heading">Administration</div>
+                            <ul>
+                                @if (!string.IsNullOrEmpty(Model.SiteMap.ManageStudentsLink))
+                                {
+                                    <li><a class="footer-sitemap-link" href="@Model.SiteMap.ManageStudentsLink">Manage Students</a></li>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.SiteMap.ManageStaffLink))
+                                {
+                                    <li><a class="footer-sitemap-link" href="@Model.SiteMap.ManageStaffLink">Manage Staff</a></li>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.SiteMap.ManageLocationsLink))
+                                {
+                                    <li><a class="footer-sitemap-link" href="@Model.SiteMap.ManageLocationsLink">Manage Locations</a></li>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.SiteMap.ManageRosteringLink))
+                                {
+                                    <li><a class="footer-sitemap-link" href="@Model.SiteMap.ManageRosteringLink">Manage Rostering</a></li>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.SiteMap.ManageOmrScanningSettingsLink))
+                                {
+                                    <li><a class="footer-sitemap-link" href="@Model.SiteMap.ManageOmrScanningSettingsLink">Manage OMR Scanning Settings</a></li>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.SiteMap.ManageReportsAccessLink))
+                                {
+                                    <li><a class="footer-sitemap-link" href="@Model.SiteMap.ManageReportsAccessLink">Manage Reports Access</a></li>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.SiteMap.ManageTestingActivityLink))
+                                {
+                                    <li><a class="footer-sitemap-link" href="@Model.SiteMap.ManageTestingActivityLink">Manage Testing Activity</a></li>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.SiteMap.ViewLicensesLink))
+                                {
+                                    <li><a class="footer-sitemap-link" href="@Model.SiteMap.ViewLicensesLink">View Licenses</a></li>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.SiteMap.SettingsPreferencesLink))
+                                {
+                                    <li><a class="footer-sitemap-link" href="@Model.SiteMap.SettingsPreferencesLink">Settings and Preferences</a></li>
+                                }
+                            </ul>
+                        </td>
+                    }
+                        <td class="footer-sitemap-block" aria-label="Tools & Assistance Menu">
+                            <div class="footer-map-header" role="heading">Tools & Assistance</div>
+                            <ul>
+                                @if (!string.IsNullOrEmpty(Model.SiteMap.ProductResourcesLink))
+                                {
+                                    <li><a class="footer-sitemap-link" target="_blank" href="@Model.SiteMap.ProductResourcesLink">Product Resources</a></li>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.SiteMap.DirectionsForAdministrationLink))
+                                {
+                                    <li><a class="footer-sitemap-link" href="@Model.SiteMap.DirectionsForAdministrationLink">Directions for Administration</a></li>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.SiteMap.UserGuidesLink))
+                                {
+                                    <li><a class="footer-sitemap-link" href="@Model.SiteMap.UserGuidesLink" target="_blank">User Guides</a></li>
+                                }
+
+                                <li><a class="footer-sitemap-link" target="_blank" href="@Model.SiteMap.HelpLink">Help</a></li>
+
+                            </ul>
+                            @if (Model.IsNelsonCustomer)
+                            {
+                                <div>Contact Nelson Education Ltd.</div>
+                                <dl class="footer-map-contact-info">
+                                    <dd>by phone <a class="footer-sitemap-link" href="tel:+18006680671">(800) 668-0671 ext. 2222</a></dd>
+                                    <dd>by email <a class="footer-sitemap-link" href="mailto:nelson.clinical@nelson.com">nelson.clinical@nelson.com</a></dd>
+                                </dl>
+                            }
+                            else
+                            {
+                                <div>Contact DataManager Support Center</div>
+                                <dl class="footer-map-contact-info">
+                                    <dd>by phone <a class="footer-sitemap-link" href="tel:+18772468337">(877) 246-8337</a></dd>
+                                    <dd>by email <a class="footer-sitemap-link" href="mailto:help@riversidedatamanager.com">help@riversidedatamanager.com</a></dd>
+                                </dl>
+                            }
+                        </td>
+                    <td class="footer-sitemap-block" aria-label="More Menu">
+                        <div class="footer-map-header" role="heading">More</div>
+                        <ul>
+                            <li><a class="footer-sitemap-link" target="_blank" href="@Model.SiteMap.TermsOfUseLink">Terms of Use</a></li>
+                            <li><a class="footer-sitemap-link" target="_blank" href="@Model.SiteMap.PrivacyPolicyLink">Privacy Policy</a></li>
+                            <li><a class="footer-sitemap-link" href="@Model.SiteMap.SignOutLink">Sign out</a></li>
+                        </ul>
+                    </td>
+                    <td class="footer-sitemap-block" aria-label="Company Info" aria-describedby="spanFooterCompany">
+                        <div class="footer-map-header" role="heading">Company</div>
+                        <span id="spanFooterCompany">
+                            Riverside Insights <br />
+                            One Pierce Place, Suite 900W <br />
+                            Itasca, IL 60143 <br />
+                        </span>
+                        <a class="footer-sitemap-link" href="@Model.SiteMap.CompanyWebsiteLink" target="_blank">@Model.SiteMap.CompanyWebsiteDisplayLink</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+</footer>

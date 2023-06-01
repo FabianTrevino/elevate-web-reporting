@@ -1,0 +1,129 @@
+﻿@model OptionGroup
+
+@{
+    var modalId = $"{Model.Type}Modal";
+
+    var cancelButtonId = $"{modalId}-cancel-button";
+    var removeAllButtonId = $"{modalId}-remove-all-button";
+    var applyButtonId = $"{modalId}-apply-button";
+
+    var group = (CustomFieldGroup)Model;
+    var options = group.Options.Cast<CustomFieldOption>().ToList();
+    var groupings = options.Select(o => new { o.GroupingText, o.GroupingValue }).Distinct().ToList();
+}
+
+<label id="lblGroupCustomDataFields" style="display: none;">@string.Format("{0} Change", Model.DisplayName)</label>
+<label>@Model.DisplayName</label> @Html.WrSpecialGroupLink(modalId, "lblGroupCustomDataFields", "divGroupCustomDataFields")
+<div id="divGroupCustomDataFields" class="option-group-selected-text">@group.SelectionText</div>
+
+<input id="@Model.TypeCode" type="hidden" value="" class="dm-ui-hidden-input" />
+
+<div id="@modalId" class="dm-ui-modal-container dm-ui-hide" role="alertdialog" aria-label="@Model.DisplayName">
+    <div class="dm-ui-modal dm-ui-modal-green custom-data-fields-modal">
+        <header><h1>@Model.DisplayName</h1></header>
+        <section>
+
+            <div class="cdf-container">
+
+                <div class="cdf-available-container">
+                    <div class="cdf-available-controls">
+                        <h4>Available</h4>
+                        <button id="cdf-add-to-selected-button" aria-label="Add to Selected" class="dm-ui-button-primary dm-ui-button-small">Add to Selected</button>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="cdf-available-items">
+                        <div id="divSelectedMessage" style="height:0px; width:0px; overflow: hidden" role="alert"></div>
+                        <a tabindex="0" id="cdf-select-all-link">Select all</a>
+                        <a tabindex="0" id="cdf-deselect-all-link">Deselect all</a>
+                        <hr />
+
+                        @foreach (var grouping in groupings)
+                        {
+                            var groupingId = $"{grouping.GroupingValue}_grouping_id";
+                            var groupingClass = $"cdf-{grouping.GroupingValue}-item-class";
+                            var groupingListId = $"{grouping.GroupingValue}_grouping_list_id";
+
+                            var groupingOptions = options.Where(o => o.GroupingValue == grouping.GroupingValue).ToList();
+                            var isGroupingChecked = groupingOptions.All(o => o.IsSelected || o.ManualSelection);
+
+                            var groupingValues = groupingOptions.Select(g => g.GroupingValue).ToList();
+                            var isGroupingDisabled = groupingValues.All(v => group.SelectedValuesOrder.Contains(v));
+
+                            @Html.DmUiCheckBox(text: grouping.GroupingText, isChecked: isGroupingChecked, id: groupingId, htmlAttributes: new { @class = "cdf-grouping-checkbox", disabled = isGroupingDisabled, data_items_class = groupingClass })
+
+                            <img class="cdf-grouping-arrow cdf-grouping-arrow-down" role="button" tabindex="0" aria-label="Expand @grouping.GroupingText" data-grouping-list-id="@groupingListId" src="@Links.Reskin.Content.dm_ui.icons.chevron_down_12_svg" />
+                            <img class="cdf-grouping-arrow cdf-grouping-arrow-up" role="button" tabindex="0" aria-label="Collapse @grouping.GroupingText" data-grouping-list-id="@groupingListId" src="@Links.Reskin.Content.dm_ui.icons.chevron_up_12_svg" />
+
+                            <ul class="cdf-grouping-items" id="@groupingListId" data-grouping-id="@groupingId" style="display: none;">
+                                @foreach (var option in groupingOptions)
+                                {
+                                    var manualSelectionClass = option.ManualSelection ? "cdf-manual-selection" : "";
+                                    var isDisabled = option.IsSelected && group.SelectedValuesOrder.Contains(option.Value);
+                                    <li class="cdf-item">
+                                        @Html.DmUiCheckBox(text: option.Text, isChecked: option.IsSelected, id: option.Value, htmlAttributes: new { @class = $"{groupingClass} {manualSelectionClass} cdf-default-item", disabled = isDisabled, data_value = option.Value, data_text = option.Text, data_width = option.Width })
+                                    </li>
+                                }
+                            </ul>
+
+                            <hr />
+                        }
+
+                    </div>
+                </div>
+                <div class="custom-fields-selected-container-margin">
+                    <div class="custom-fields-selected-container">
+                        <div class="custom-fields-selected-controls">
+                            <h4>Selected</h4>
+                        </div>
+                        <div class="custom-fields-selected-items">
+                            <div class="cdf-selected-headings">
+                                <div id="divDataFieldLabel" class="cdf-selected-headings-label">DATA FIELD LABEL</div>
+                                <div id="divValueLength" class="cdf-selected-headings-length">VALUE LENGTH</div>
+                            </div>
+                            <hr />
+
+                            <div class="cdf-selected-items-drop">
+
+                                @foreach (var value in group.SelectedValuesOrder)
+                                {
+                                    var selectedOption = options.First(o => o.Value == value && o.IsSelected);
+                                    var defaultValuesStyle = selectedOption.UserText != null && selectedOption.UserWidth != null ? "display:block;" : "display:none;";
+
+                                    <div class="cdf-selected-item" data-value="@selectedOption.Value">
+                                        <img class="cdf-dragger" src="@Links.Reskin.Content.img.cdf_dragger_svg" />
+                                        <div class="cdf-selected-item-body">
+                                            <div class="cdf-user-controls">
+                                                <input type="text" class="cdf-selected-item-user-text" aria-describedby="divDataFieldLabel" value="@(selectedOption.UserText ?? selectedOption.Text)" data-default-text="@selectedOption.Text" />
+                                                <input type="text" class="cdf-selected-item-user-width" aria-describedby="divValueLength" value="@(selectedOption.UserWidth ?? selectedOption.Width)" data-default-width="@selectedOption.Width" />
+                                                <button class="dm-ui-button-primary dm-ui-button-small cdf-remove-individual-button" data-value="@selectedOption.Value">Remove</button>
+                                            </div>
+                                            <div class="cdf-default-values" style="@defaultValuesStyle">
+                                                <div class="cdf-selected-item-text" aria-describedby="divDataFieldLabel">@selectedOption.Text</div>
+                                                <div class="cdf-selected-item-width" aria-describedby="divValueLength">@selectedOption.Width</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="dm-ui-modal-button-container-dual">
+                <button id="@cancelButtonId" class="dm-ui-button-small dm-ui-button-secondary">Cancel</button>
+                <button id="@applyButtonId" class="dm-ui-button-small dm-ui-button-primary cdf-apply-button">Apply</button>
+                <button id="@removeAllButtonId" class="dm-ui-button-small dm-ui-button-secondary cdf-remove-all-button">Remove All</button>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script type="text/javascript">
+    Options.AssignCustomFieldsGroupHandler('#@applyButtonId', '#@cancelButtonId', '#@removeAllButtonId', '@Links.Reskin.Content.img.cdf_dragger_svg', @group.UserTextLength, '#@modalId', '#@Model.TypeCode');
+</script>

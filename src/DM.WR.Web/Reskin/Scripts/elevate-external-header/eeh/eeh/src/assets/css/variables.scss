@@ -1,0 +1,47 @@
+:root {
+  --app-font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+
+  --page-background-color: #f8f8f8;
+  --app-background-color: #ffffff;
+  --app-background-color-inverse: #096da9;
+  --text-color-default: #000000;
+  --text-color-inverse: #d8e1e9;
+
+  --app-box-background-color: #ffffff;
+  --app-box-border: 1px solid #d8e1e8;
+  --app-box-border-radius: 3px;
+
+  --link-color: #096da9;
+  --link-color-inactive: #6a6d6d;
+
+  --app-button-background-color: #096da9;
+  --app-button-text-color: #ffffff;
+  --app-button-border: 1px solid #e4e8f1;
+  --app-button-border-radius: 6px;
+
+  --app-button-hover-background-color: #0e5b8b;
+  --app-button-hover-text-color: #ffffff;
+
+  --app-button-disabled-background-color: #f8f8f8;
+  --app-button-disabled-text-color: #e1e1e1;
+  --app-button-disabled-border: 1px solid #e3e3e3;
+
+  --app-button-disabled-hover-background-color: #f8f8f8;
+
+  --input-background: #ffffff;
+  --input-border: 2px solid #d7dae2;
+  --input-border-hover: 2px solid #147cbd;
+  --input-border-radius: 4px;
+  --input-padding: 3px 8px;
+
+  --input-background-invalid: #fff1f1;
+  --input-border-invalid: 2px solid #b12e2e;
+  --input-color-invalid: #b12e2e;
+
+  --input-background-valid: #eefbf5;
+  --input-border-valid: 2px solid #46b282;
+  --input-color-valid: #168252;
+
+  --animation-short: 0.3s;
+  --animation-long: 0.6s;
+}

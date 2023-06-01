@@ -1,0 +1,84 @@
+.app-form-row-buttons,
+.app-form-row-submit {
+  margin-top: 1em;
+  text-align: center;
+}
+
+.app-button {
+  padding: 0.7em 1.8em;
+  color: var(--app-button-text-color);
+  background: var(--app-button-background-color);
+  border: var(--app-button-border);
+  border-radius: var(--app-button-border-radius);
+  letter-spacing: 0px;
+  text-decoration: none;
+
+  &.app-icon-button {
+    display: inline-grid;
+    grid-template-columns: repeat(2, auto);
+    grid-column-gap: 1ch;
+    align-items: center;
+    color: var(--text-color-inverse);
+    & img {
+      height: 1.2em;
+      opacity: 0.8;
+      margin-left: 1ch;
+    }
+
+    & path {
+      fill: var(--text-color-inverse);
+    }
+  }
+
+  &:hover {
+    background: var(--app-button-hover-background-color);
+  }
+
+  &[disabled],
+  &.app-button-disabled {
+    color: var(--app-button-disabled-text-color);
+    background: var(--app-button-disabled-background-color);
+    border: var(--app-button-disabled-border);
+
+    &:hover {
+      background: var(--app-button-disabled-hover-background-color);
+    }
+  }
+
+  &.app-inline-button {
+  }
+}
+
+.input-field {
+  outline: none;
+  background: var(--input-background);
+  border: var(--input-border);
+  border-radius: var(--input-border-radius);
+  padding: 12px 5px;
+  border-radius: 4px;
+  margin-bottom: 1em;
+  margin-top: 1.5em;
+
+  transition-property: color, background, border;
+  transition-duration: var(--animation-short);
+  transition-timing-function: ease-in-out;
+
+  &:required {
+    &:invalid {
+      background: var(--input-background-invalid);
+      border: var(--input-border-invalid);
+    }
+
+    &:valid {
+      background: var(--input-background-valid);
+      border: var(--input-border-valid);
+    }
+
+    &:placeholder-shown,
+    &:focus {
+      box-shadow: none;
+      background: var(--input-background);
+      border: var(--input-border);
+    }
+  }
+}

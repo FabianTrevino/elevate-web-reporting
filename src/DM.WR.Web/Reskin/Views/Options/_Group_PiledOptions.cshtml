@@ -1,0 +1,56 @@
+﻿@model OptionGroup
+
+@{
+    var modalId = $"{Model.Type}Modal";
+
+    var cancelButtonId = $"{modalId}-cancel-button";
+    var applyButtonId = $"{modalId}-apply-button";
+
+    var piledOptions = Model.Options.Cast<PiledOption>().GroupBy(o => o.PileLabel).ToList();
+    var text = Model.SelectedValues.Count > 0 ? string.Join(", ", Model.Options.Where(o => o.IsSelected).Select(o => o.Text)) : "None selected";
+    var disabledClass = Model.IsDisabled ? "options-disabled-special-group" : "";
+}
+
+<label id="lblGroupPiledOptions" style="display: none;">@string.Format("{0} Change", Model.DisplayName)</label>
+<label>@Model.DisplayName</label>
+
+@if (!Model.IsDisabled)
+{
+    @Html.WrSpecialGroupLink(modalId, "lblGroupPiledOptions", "divGroupPiledOptions")
+}
+
+<div id="divGroupPiledOptions" class="option-group-selected-text @disabledClass">@text</div>
+
+<input id="@Model.TypeCode" type="hidden" value="@JsonConvert.SerializeObject(Model.SelectedValues, Formatting.None)" class="dm-ui-hidden-input" />
+
+<div id="@modalId" class="dm-ui-modal-container dm-ui-hide" role="alertdialog" aria-label="@Model.DisplayName">
+    <div class="dm-ui-modal dm-ui-modal-green piled-options-group">
+        <header><h1>@Model.DisplayName</h1></header>
+        <section>
+
+            @foreach (var pile in piledOptions)
+            {
+                var items = pile.Select(p => new DropdownItem
+                {
+                    Text = p.Text,
+                    Value = p.Value,
+                    Selected = p.IsSelected
+                }).ToList();
+
+                var selectedValue = pile.Any(o => o.IsSelected) ? pile.Where(o => o.IsSelected).Select(o => o.Value).First() : "";
+                var displayLabel = pile.Key.ToUpper();
+
+                @Html.DmUiSingleSelectDropdown(items, Html.RandomId(), allowDiselection: true, defaultText: "None", label: displayLabel, htmlAttributes: new { data_original_value = selectedValue })
+            }
+
+            <div class="dm-ui-modal-button-container-dual">
+                <button id="@cancelButtonId" class="dm-ui-button-large dm-ui-button-secondary">Cancel</button>
+                <button id="@applyButtonId" class="dm-ui-button-large dm-ui-button-primary">Apply</button>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script type="text/javascript">
+    Options.AssignPiledOptionsGroupHandler('#@applyButtonId', '#@cancelButtonId', '#@modalId', '#@Model.TypeCode');
+</script>

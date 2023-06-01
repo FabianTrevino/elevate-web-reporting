@@ -1,0 +1,29 @@
+#root {
+  height: 60px;
+  font-size: 16px;
+}
+
+#root ~ .main-header-container,
+#root ~ .main-menu-container, 
+#root ~ .main-footer-container {
+  display: none
+}
+
+#site-wrapper {
+  position: absolute;
+
+  [type="button"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  .main-header-fixed-spacer {
+    height: 60px !important;
+  }
+
+  .main-header-fixed-wrapper #main-header .app-header-title {
+    font-size: 16px;
+  }
+}

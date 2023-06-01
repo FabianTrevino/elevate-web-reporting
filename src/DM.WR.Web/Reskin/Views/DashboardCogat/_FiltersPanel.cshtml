@@ -1,0 +1,75 @@
+﻿@using DM.WR.Models.CogAt
+@model CogatFiltersViewModel
+
+<input type="hidden" id="root-location" value="@Model.RootNodeName" />
+<input type="hidden" id="root-location-type" value="@Model.RootNodeType.ToUpper()" />
+<input type="hidden" id="battery" value="@Model.Battery" />
+<input type="hidden" id="test-family-group-code" value="@Model.TestFamilyGroupCode" />
+
+@foreach (var filter in Model.Filters)
+{
+    if (filter.IsHidden) { continue; }
+
+    <div class="dashboard-filter">
+        @if (filter.InputControl == OptionsInputControl.SingleSelect)
+        {
+            <input id="@filter.TypeCode" type="hidden" value="@JsonConvert.SerializeObject(filter.SelectedValues, Formatting.None)" class="dm-ui-hidden-input" />
+            @Html.DmUiSingleSelectDropdown(
+                items: filter.GetDropdownList(),
+                id: $"{filter.Type.ToString()}_Control",
+                allowDiselection: false,
+                defaultText: null,
+                label: filter.DisplayName)
+        }
+        else if (filter.InputControl == OptionsInputControl.MultiSelect)
+        {
+            <input id="@filter.TypeCode" type="hidden" value="@JsonConvert.SerializeObject(filter.SelectedValues, Formatting.None)" class="dm-ui-hidden-input" />
+            @Html.DmUiMultiSelectDropdown(
+                items: filter.GetDropdownList(),
+                id: $"{filter.Type.ToString()}_Control",
+                label: filter.DisplayName,
+                hasSelectAll: true,
+                hasSelectNone: true,
+                minToSelect: filter.MinToSelect,
+                maxToSelect: filter.MaxToSelect,
+                defaultText: null,
+                hasIndicator: true)
+        }
+        else if (filter.InputControl == OptionsInputControl.PiledSingleSelect)
+        {
+            <input id="@filter.TypeCode" type="hidden" value="@JsonConvert.SerializeObject(filter.SelectedValues, Formatting.None)" class="dm-ui-hidden-input" />
+
+            var items = filter.IsLocation ? filter.GetGroupLocationDropdownList() : filter.GetGroupDropdownList();
+
+            @Html.DmUiGroupMultiSelectDropdown(
+                items: items,
+                id: $"{filter.Type.ToString()}_Control",
+                label: filter.DisplayName,
+                hasSelectAll: true,
+                hasSelectNone: true,
+                minToSelect: filter.MinToSelect,
+                defaultText: null,
+                hasIndicator: true
+                )
+
+            /* @foreach (var pile in piledOptions)
+            {
+                var items = pile.Select(p => new DropdownItem
+                {
+                    Text = p.Text,
+                    Value = p.Value,
+                    Selected = p.IsSelected
+                }).ToList();
+
+                var selectedValue = pile.Any(o => o.IsSelected) ? pile.Where(o => o.IsSelected).Select(o => o.Value).First() : "";
+                var displayLabel = pile.Key;
+
+                @Html.DmUiSingleSelectDropdown(items, Html.RandomId(), allowDiselection: true, defaultText: "None", label: displayLabel, htmlAttributes: new { data_original_value = selectedValue })
+            }*/
+        }
+        else
+        {
+            <span>UNKNOWN FILTER TYPE</span>
+        }
+    </div>
+}

@@ -1,0 +1,40 @@
+﻿@model MainMenuViewModel
+
+<nav class="main-menu-container">
+    <ul class="main-menu">
+        @foreach (var menuItem in Model)
+        {
+            if (menuItem.Value.IsVisible)
+            {
+                var hasSubMenu = menuItem.Value.SubMenu != null;
+                var subMenuHandlerClass = hasSubMenu ? "has-sub-menu" : null;
+
+                <li class="@menuItem.Value.HtmlClass">
+                    @if (hasSubMenu)
+                    {
+                        <a class="@subMenuHandlerClass" href="@menuItem.Value.Link">
+                            @menuItem.Value.Text
+                            <div class="main-menu-arrow main-menu-arrow-down"></div>
+                        </a>
+                        <ul class="sub-menu">
+                            @foreach (var subMenuItem in menuItem.Value.SubMenu)
+                            {
+                                if (subMenuItem.Value.IsVisible)
+                                {
+                                    <li><a href="@subMenuItem.Value.Link" @if (subMenuItem.Value.IsOpenInNewWindow) { <text> target="_blank" </text> }>@subMenuItem.Value.Text</a></li>
+                                }
+                            }
+                        </ul>
+
+                    }
+                    else
+                    {
+                        <a class="@subMenuHandlerClass" href="@menuItem.Value.Link">
+                            @menuItem.Value.Text
+                        </a>
+                    }
+                </li>
+            }
+        }
+    </ul>
+</nav>

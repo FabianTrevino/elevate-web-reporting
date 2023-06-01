@@ -1,0 +1,323 @@
+.main-menu-container {
+    width: 100%;
+    min-width: 1024px;
+    height: 47px;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.main-menu-container > .main-menu {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    align-items: center;
+    justify-content: center;
+    max-width: 1280px;
+    min-width: 1024px;
+    height: 100%;
+    list-style-type: none;
+    margin: auto;
+    padding: 0;
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+.main-menu-container > .main-menu > li {
+    display: table-cell;
+    height: 100%;
+    max-width: 304px;
+    border: none;
+    line-height: 1.11;
+    position: relative;
+}
+
+.main-menu-container > .main-menu > li > a {
+    color: #262626;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    line-height: 47px;
+    font-size: 17px;
+    font-stretch: normal;
+    position: relative;
+}
+
+.main-menu-container > .main-menu > li > a::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background-color: transparent;
+}
+
+.main-menu a:active,
+.main-menu > .selected-item > a,
+.main-menu > .current-page > a {
+    /*font-weight: bold;*/
+}
+
+.main-menu a {
+    -moz-transition: color 0.1s;
+    -webkit-transition: color 0.1s;
+    -o-transition: color 0.1s;
+    transition: color 0.1s;
+}
+.main-menu-container > .main-menu .main-menu-arrow {
+    width: 11px;
+    height: 11px;
+    display: inline-block;
+    margin-left: 6px;
+    vertical-align: middle;
+    position: relative;
+    background-image: url('icons/mm-base-down.svg');
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+/*
+    -moz-transition: all 0.05s;
+    -webkit-transition: all 0.05s;
+    -o-transition: all 0.05s;
+    transition: all 0.05s;
+*/
+}
+    .main-menu-container > .main-menu .sub-menu .main-menu-arrow {
+        margin-top: -2px;
+    }
+.main-menu a:focus .main-menu-arrow-down,
+.main-menu a:hover .main-menu-arrow-down {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+.main-menu a > .main-menu-arrow-up {
+    -webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    -o-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    top: -1px !important;
+}
+
+/* ----- Overview ----- */
+.main-menu > .main-menu-overview > a:hover,
+.main-menu > .main-menu-overview.selected-item > a,
+.main-menu > .main-menu-overview.current-page > a {
+    color: #0779ca;
+}
+
+.main-menu > .main-menu-overview.selected-item > a::after,
+.main-menu > .main-menu-overview.current-page > a::after {
+    border-bottom: solid 4px #1398f6;
+}
+
+.main-menu > .main-menu-overview.current-page > a > .main-menu-arrow-down,
+.main-menu > .main-menu-overview > a:focus > .main-menu-arrow-down,
+.main-menu > .main-menu-overview > a:hover > .main-menu-arrow-down {
+    background-image: url('icons/mm-overview-down.svg');
+}
+
+.main-menu > .main-menu-overview > a > .main-menu-arrow-up {
+/*  background-image: url('icons/mm-overview-up.svg');*/
+    background-image: url('icons/mm-overview-down.svg');
+}
+
+/* ----- Assessments ----- */
+.main-menu > .main-menu-assessments > a:focus,
+.main-menu > .main-menu-assessments > a:hover,
+.main-menu > .main-menu-assessments.selected-item > a,
+.main-menu > .main-menu-assessments.current-page > a {
+    color: #8035e5;
+}
+
+.main-menu > .main-menu-assessments.selected-item > a::after,
+.main-menu > .main-menu-assessments.current-page > a::after {
+    border-bottom: solid 4px #a369ef;
+}
+
+.main-menu > .main-menu-assessments.current-page > a > .main-menu-arrow-down,
+.main-menu > .main-menu-assessments > a:focus > .main-menu-arrow-down,
+.main-menu > .main-menu-assessments > a:hover > .main-menu-arrow-down {
+    background-image: url('icons/mm-assessments-down.svg');
+}
+
+.main-menu > .main-menu-assessments > a > .main-menu-arrow-up {
+/*  background-image: url('icons/mm-assessments-up.svg');*/
+    background-image: url('icons/mm-assessments-down.svg');
+}
+
+/* ----- Testing ----- */
+.main-menu > .main-menu-testing > a:focus,
+.main-menu > .main-menu-testing > a:hover,
+.main-menu > .main-menu-testing.selected-item > a,
+.main-menu > .main-menu-testing.current-page > a {
+    color: #d2460f;
+}
+
+.main-menu > .main-menu-testing.selected-item > a::after,
+.main-menu > .main-menu-testing.current-page > a::after {
+    border-bottom: solid 4px #f16c37;
+}
+
+.main-menu > .main-menu-testing.current-page > a > .main-menu-arrow-down,
+.main-menu > .main-menu-testing > a:focus > .main-menu-arrow-down,
+.main-menu > .main-menu-testing > a:hover > .main-menu-arrow-down {
+    background-image: url('icons/mm-testing-down.svg');
+}
+
+.main-menu > .main-menu-testing > a > .main-menu-arrow-up {
+/*  background-image: url('icons/mm-testing-up.svg');*/
+    background-image: url('icons/mm-testing-down.svg');
+}
+
+/* ----- Reports ----- */
+.main-menu > .main-menu-reports > a:focus,
+.main-menu > .main-menu-reports > a:hover,
+.main-menu > .main-menu-reports.selected-item > a,
+.main-menu > .main-menu-reports.current-page > a {
+    color: #038277;
+}
+
+.main-menu > .main-menu-reports.selected-item > a::after,
+.main-menu > .main-menu-reports.current-page > a::after {
+    border-bottom: solid 4px #03a590;
+}
+
+.main-menu > .main-menu-reports.current-page > a > .main-menu-arrow-down,
+.main-menu > .main-menu-reports > a:focus > .main-menu-arrow-down,
+.main-menu > .main-menu-reports > a:hover > .main-menu-arrow-down {
+    background-image: url('icons/mm-reports-down.svg');
+}
+
+.main-menu > .main-menu-reports > a > .main-menu-arrow-up {
+/*  background-image: url('icons/mm-reports-up.svg');*/
+    background-image: url('icons/mm-reports-down.svg');
+}
+
+/* ----- Administration ----- */
+.main-menu > .main-menu-administration > a:focus,
+.main-menu > .main-menu-administration > a:hover,
+.main-menu > .main-menu-administration.selected-item > a,
+.main-menu > .main-menu-administration.current-page > a {
+    color: #910095;
+}
+
+.main-menu > .main-menu-administration.selected-item > a::after,
+.main-menu > .main-menu-administration.current-page > a::after {
+    border-bottom: solid 4px #ab249d;
+}
+
+.main-menu > .main-menu-administration.current-page > a > .main-menu-arrow-down,
+.main-menu > .main-menu-administration > a:focus > .main-menu-arrow-down,
+.main-menu > .main-menu-administration > a:hover > .main-menu-arrow-down {
+    background-image: url('icons/mm-administration-down.svg');
+}
+
+.main-menu > .main-menu-administration > a > .main-menu-arrow-up {
+/*  background-image: url('icons/mm-administration-up.svg');*/
+    background-image: url('icons/mm-administration-down.svg');
+}
+
+/*--- Sub Menu ---*/
+.main-menu-container .sub-menu {
+    position: absolute;
+    left: 0;
+    top: 47px;
+    width: 100%;
+    list-style-type: none;
+    text-align: left;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+    z-index: 15;
+    display: none;
+}
+    .main-menu-container .sub-menu .sub-menu {
+        box-shadow: none;
+    }
+
+    .main-menu-container .sub-menu .sub-menu {
+        position: relative;
+        top: 0;
+        
+    }
+        .main-menu-container .sub-menu .sub-menu li {
+            background-color: transparent;
+        }
+        .main-menu-container .sub-menu .sub-menu li a {
+            padding-left: 40px;
+        }
+        .main-menu-container .sub-menu .sub-menu .sub-menu li a {
+            padding-left: 80px;
+        }
+        .main-menu-container .sub-menu .sub-menu .sub-menu .sub-menu li a {
+            padding-left: 120px;
+        }
+        .main-menu-container .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu li a {
+            padding-left: 160px;
+        }
+.main-menu-container .sub-menu > li {
+    display: block;
+    background-color: #fff;
+}
+
+.main-menu-container .sub-menu > li > a {
+    height: 100%;
+    width: 100%;
+    font-size: 15px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.11;
+    color: #3d3f3f;
+    padding: 16px;
+}
+
+.main-menu-container .sub-menu > li > a:hover {
+    text-decoration: none;
+}
+
+/* ----- Sub Menu: Overview ----- */
+.main-menu-container .main-menu-overview .sub-menu > li > a:hover {
+    background-color: #e5f3ff;
+}
+
+.main-menu-container .main-menu-overview .sub-menu > li > a:active {
+    background-color: #c8e4fb;
+}
+
+/* ----- Sub Menu: Assessments ----- */
+.main-menu-container .main-menu-assessments .sub-menu > li > a:hover {
+    background-color: #f2eafc;
+}
+
+.main-menu-container .main-menu-assessments .sub-menu > li > a:active {
+    background-color: #dfccf8;
+}
+
+/* ----- Sub Menu: Testing ----- */
+.main-menu-container .main-menu-testing .sub-menu > li > a:hover {
+    background-color: #faece7;
+}
+
+.main-menu-container .main-menu-testing .sub-menu > li > a:active {
+    background-color: #f4d1c3;
+}
+
+/* ----- Sub Menu: Reports ----- */
+.main-menu-container .main-menu-reports .sub-menu > li > a:hover {
+    background-color: #e5f2f1;
+}
+
+.main-menu-container .main-menu-reports .sub-menu > li > a:active {
+    background-color: #c0e0dd;
+}
+
+/* ----- Sub Menu: Administration ----- */
+.main-menu-container .main-menu-administration .sub-menu > li > a:hover {
+    background-color: #f4e5f4;
+}
+
+.main-menu-container .main-menu-administration .sub-menu > li > a:active {
+    background-color: #e3bfe4;
+}

@@ -1,0 +1,22 @@
+﻿<div class="dm-ui-modal-container report-viewer-modal-container" role="alertdialog" aria-label="Report Viewer" style="display: none;">
+    <div class="dm-ui-modal report-viewer-modal">
+        <div class="report-viewer-content">
+            <header id="hdrReportViewer" tabindex="0"><h3>REPORT VIEWER</h3></header>
+            <div class="report-viewer-buttons-container">
+                <div id="last-name-search" class="dm-ui-search-field">
+                    <input id="last-name-search-text" type="text" placeholder="Search by Last Name" />
+                    <button id="last-name-search-button" role="button">&nbsp;</button>
+                </div>
+                <label for="export-to-excel-button" class="export-to-excel-controls">EXPORT:</label>
+                <button id="export-to-excel-button" class="dm-ui-button-secondary dm-ui-button-small export-to-excel-controls">XLS</button>
+                <button id="edit-report-button" class="dm-ui-button-secondary dm-ui-button-small">Edit This Report</button>
+                <button id="close-button" class="dm-ui-button-secondary dm-ui-button-small">Close</button>
+            </div>
+            <section>
+                <form action="" method="post" target="report_iframe" id="actuatePostForm"></form>
+                <iframe class="report-iframe" src="" frameborder="0" name="report_iframe"></iframe>
+            </section>
+            <form name="exportExcelForm" method="post" target="_self" id="exportExcelForm" action=""></form>
+        </div>
+    </div>
+</div>

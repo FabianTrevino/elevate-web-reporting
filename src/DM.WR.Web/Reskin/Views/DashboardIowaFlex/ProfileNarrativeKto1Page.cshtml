@@ -1,0 +1,111 @@
+﻿@model List<ProfileNarrativeKto1ViewModel>
+@{
+    Layout = MVC.Shared.Views._Layout_Pdf;
+}
+@Styles.Render(BundlePath.CssDashboardIowaFlexPage)
+<style>
+    html {
+        background-color: transparent !important;
+    }
+</style>
+
+@{
+    string ConvertToList(string text)
+    {
+        var result = "<ul>";
+        string[] arrStr = text.Split('\n');
+        foreach (var str in arrStr)
+        {
+            result += "<li>" + str + "</li>";
+        }
+        result += "</ul>";
+        return result;
+    }
+}
+
+@foreach (var report in Model)
+{
+    var formattedTestDate = "";
+    if (report.TestDate != null)
+    {
+        formattedTestDate = DateTime.Parse(report.TestDate).ToString("MMM dd, yyyy");
+    }
+<div class="profile-narrative-k1-wrapper">
+    <h1>Student Profile Narrative</h1>
+    <hr />
+    <div class="student-name"><img src="@Links.Reskin.Content.img.logoIowaAssessmentsAdaptive_png" class="logo-iowa-flex-k1" />@report.StudentFirstName @report.StudentLastName</div>
+
+    <table class="header">
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td rowspan="7" class="description">
+                    <h2 class="pld-stage-@report.PldName.ToLower()">@report.PerformanceLevelDescriptor.PldAltName</h2>
+                    @Html.Raw(report.PerformanceLevelDescriptor.PldDesc)
+                </td>
+            </tr>
+            <tr>
+                <td class="title">Student ID:</td>
+                <td class="value">@report.StudentExternalId</td>
+            </tr>
+            <tr>
+                <td class="title">Grade:</td>
+                <td class="value">Grade @report.Grade</td>
+            </tr>
+            <tr>
+                <td class="title">Test Event:</td>
+                <td class="value">@formattedTestDate</td>
+            </tr>
+            <tr>
+                <td class="title">Class:</td>
+                <td class="value">@report.Class</td>
+            </tr>
+            <tr>
+                <td class="title">School:</td>
+                <td class="value">@report.School</td>
+            </tr>
+            <tr>
+                <td class="title">District:</td>
+                <td class="value">@report.District</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr />
+    <h3 class="pld-stage-@report.PldName.ToLower() pld-level-@report.PldLevel">@report.PerformanceLevelDescriptor.PldAltName — PLD Level @report.PldLevel</h3>
+    <table class="pld-level-info">
+        <thead>
+            <tr>
+                @if (report.PerformanceLevelStatement.CanStatement != "")
+                {
+                    <th><div>@report.PerformanceLevelStatement.CanDescription</div></th>
+                }
+                @if (report.PerformanceLevelStatement.ReadyStatement != "")
+                {
+                    <th><div>@report.PerformanceLevelStatement.ReadyDescription</div></th>
+                }
+                @if (report.PerformanceLevelStatement.PracticeStatement != "")
+                {
+                    <th><div>@report.PerformanceLevelStatement.NeedDescription</div></th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @if (report.PerformanceLevelStatement.CanStatement != "")
+                {
+                    <td>@Html.Raw(ConvertToList(report.PerformanceLevelStatement.CanStatement))</td>
+                }
+                @if (report.PerformanceLevelStatement.ReadyStatement != "")
+                {
+                    <td>@Html.Raw(ConvertToList(report.PerformanceLevelStatement.ReadyStatement))</td>
+                }
+                @if (report.PerformanceLevelStatement.PracticeStatement != "")
+                {
+                    <td>@Html.Raw(ConvertToList(report.PerformanceLevelStatement.PracticeStatement))</td>
+                }
+            </tr>
+        </tbody>
+    </table>
+</div>
+}

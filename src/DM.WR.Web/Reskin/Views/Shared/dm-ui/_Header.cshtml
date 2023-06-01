@@ -1,0 +1,24 @@
+﻿@model MainHeaderViewModel
+
+@*<header class="main-header-container" role="banner">
+    <div class="main-header">
+        <div class="header-logo"><img src="@Links.Reskin.Content.dm_ui.img.dm_header_logo_svg" alt="Logo Riverside Insights Elevate Potential" /></div>
+        @if (!string.IsNullOrEmpty(Model.UserName))
+        {
+            <div class="header-links-container">
+                <div>Hello <strong>@Model.UserName</strong></div>
+                <div>
+                    <a class="header-link" target="_blank" href="@Model.ResourcesLink" title="Resources">Resources</a> |
+                    <a class="header-link" target="_blank" href="@Model.HelpLink" title="Help">Help</a> |
+                    <a class="header-link" href="@Model.SignOutLink" title="Sign out">Sign out</a>
+                    <input type="hidden" id="inlineManualUserInfo" value="@Model.UserInfo" />
+                </div>
+            </div>
+        }
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            DmUiPlugins.InitInlineManual(@Html.Raw(Model.UserInfo));
+        });
+    </script>
+</header>*@

@@ -1,0 +1,44 @@
+﻿@{
+    Layout = MVC.Shared.Views.dm_ui._Layout_Base;
+}
+
+@section page_css
+{
+    @RenderSection("page_css", required: false)
+}
+
+@* ----- Header ----- *@
+@{
+    //TODO: When HeaderViewModel is null in the ViewBag, it wants to stick the page ViewModel in _Header view instead.
+    //TODO: 404 page a good example 
+    var headerModel = ViewBag.HeaderViewModel == null ? new MainHeaderViewModel() : (MainHeaderViewModel)ViewBag.HeaderViewModel;
+    Html.RenderPartial(MVC.Shared.Views.dm_ui._Header, headerModel);
+}
+
+@RenderSection("main_menu", required: false)
+
+<div class="body-content @ViewBag.BodyContentMainMenu">
+
+    @RenderSection("bread_crumbs", required: false)
+
+    @RenderSection("floating_buttons", required: false)
+
+    <main role="main">
+        <header id="dm-ui-main-page-title"><h1>@ViewBag.MainTitle</h1></header>
+
+        @Html.Partial(MVC.Shared.Views.dm_ui.ViewNames._Alerts)
+
+        @RenderBody()
+    </main>
+
+</div>
+
+@section page_js
+{
+    @RenderSection("page_js", required: false)
+}
+
+@section js_on_document_ready
+{
+    @RenderSection("js_on_document_ready", required: false)
+}

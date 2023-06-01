@@ -1,0 +1,719 @@
+﻿@using System.Text
+@model DashboardStudentProfileViewModel
+
+@{
+    if (Model.pdf_type != null && Model.pdf_type != "")
+    {
+        Layout = MVC.Shared.Views._Layout_Pdf;
+    }
+
+    ViewBag.Title = "Student Profile";
+    ViewBag.MainTitle = "STUDENT PROFILE";
+}
+
+@if (Model.pdf_type == null || Model.pdf_type == "")
+{
+    <div class="floating-buttons">
+        <form id="print_preview_form" name="print_preview_form" target="print_preview_popup" method="post" action="../Pdf/">
+
+            <div class="dm-ui-checkbox-container">
+                <div class="dm-ui-checkbox">
+                    <input id="background_process" name="background_process" value="true" type="checkbox">
+                    <label for="background_process">Run in Background</label>
+                </div>
+            </div>
+            <a href="#" class="dm-ui-button-primary dm-ui-button-small pdf-print" pdf-type="student-profile" pdf-export="true">Export to PDF</a>
+            <a href="#" class="dm-ui-button-primary dm-ui-button-small pdf-print" pdf-type="student-profile" pdf-export="">Print</a>
+            <input type="hidden" id="pdf_type" name="pdf_type" value="">
+            <input type="hidden" id="pdf_model" name="pdf_model" value="">
+            <div id="pdf_post_parameters"></div>
+        </form>
+    </div>
+}
+else
+{
+    ViewBag.pdf_wrapper = "pdf-wrapper";
+    <style>
+        html {
+            background-color: transparent !important;
+        }
+    </style>
+}
+
+@{
+    if (Model.mod == null)
+    {
+        <h1>mod model is null</h1>
+    }
+    else
+    {
+        int studentNum = -1;
+        foreach (var student in Model.mod)
+        {
+            studentNum++;
+            ViewBag.student_num = studentNum;
+            ViewBag.FirstName = student.ContainsKey("FirstName") ? HttpUtility.UrlDecode(student["FirstName"], Encoding.GetEncoding("windows-1251")) : "Unknown";
+            ViewBag.LastName = student.ContainsKey("LastName") ? HttpUtility.UrlDecode(student["LastName"], Encoding.GetEncoding("windows-1251")) : "Unknown";
+            ViewBag.NPR = student.ContainsKey("NPR") ? student["NPR"] : "Unknown";
+            ViewBag.SS = student.ContainsKey("SS") ? student["SS"] : "Unknown";
+            ViewBag.TestEvent = student.ContainsKey("test_event") ? HttpUtility.UrlDecode(student["test_event"], Encoding.GetEncoding("windows-1251")) : "Unknown";
+            ViewBag.Grade = student.ContainsKey("grade") ? HttpUtility.UrlDecode(student["grade"], Encoding.GetEncoding("windows-1251")) : "Unknown";
+            ViewBag.Id = student.ContainsKey("id") ? HttpUtility.UrlDecode(student["id"], Encoding.GetEncoding("windows-1251")) : "Unknown";
+            ViewBag.District = student.ContainsKey("district") ? HttpUtility.UrlDecode(student["district"], Encoding.GetEncoding("windows-1251")) : "Unknown";
+            ViewBag.School = student.ContainsKey("school") ? HttpUtility.UrlDecode(student["school"], Encoding.GetEncoding("windows-1251")) : "Unknown";
+            ViewBag.Class = student.ContainsKey("class") ? HttpUtility.UrlDecode(student["class"], Encoding.GetEncoding("windows-1251")) : "Unknown";
+
+            <div class="page-break-before"></div>
+            <div class="dm-ui-page-container dm-ui-page-container-800 @ViewBag.pdf_wrapper pdf_wrapper_num_@ViewBag.student_num">
+                <section class="dm-ui-page-section carded-section student-profile-section">
+                    @*<img src="@Links.Reskin.Content.img.logoIowaAssessmentsAdaptive_png" class="logoIowaAssessmentsAdaptive" />*@
+                    @*<h2>@Model.FirstName @Model.LastName</h2>*@
+                    <h3><span>Student Profile Narrative:</span> @ViewBag.FirstName @ViewBag.LastName</h3>
+                    <div class="student-info-wrapper">
+                        <div class="block">
+                            <div class="row">
+                                <div class="title">Student ID:</div>
+                                <div class="value">@ViewBag.Id</div>
+                            </div>
+                            <div class="row">
+                                <div class="title">Grade:</div>
+                                <div class="value">@ViewBag.Grade</div>
+                            </div>
+                            <div class="row">
+                                <div class="title">Test Date:</div>
+                                <div class="value">May 29, 2019</div>
+                            </div>
+                        </div>
+                        <div class="block">
+                            <div class="row">
+                                <div class="title">Class:</div>
+                                <div class="value">@ViewBag.Class</div>
+                            </div>
+                            <div class="row">
+                                <div class="title">School:</div>
+                                <div class="value">@ViewBag.School</div>
+                            </div>
+                            <div class="row">
+                                <div class="title">District:</div>
+                                <div class="value">@ViewBag.District</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="student-progress-block">
+                        @*<h3>@Model.FirstName’s Overall Mathematics Score</h3>*@
+                        <h3>@ViewBag.FirstName’s Overall @ViewBag.TestEvent Score</h3>
+                        <hr><hr>
+                        <div class="left-column centred">
+                            <div class="block">
+                                @*<div class="score">@Model.SS</div>*@
+                                <div class="score">@ViewBag.SS</div>
+                                <div class="title">Standard Score</div>
+                            </div>
+                            <div class="block">
+                                @*<div class="score">@Model.NPR</div>*@
+                                <div class="score">@ViewBag.NPR</div>
+                                <div class="title">National Percentile<br> Rank (NPR) </div>
+                            </div>
+                            @*<div class="block">
+                                <div class="score">820Q-920Q</div>
+                                <div class="title">Quantile Range</div>
+                            </div>*@
+                        </div>
+                        <div class="right-column">
+                            <div class="standard_score_graph current">
+                                <div class="graph-wrapper">
+                                    <div class="title">Standard Score Graph</div>
+                                    <div class="chart">
+                                        <div class="bg level1"></div>
+                                        <div class="bg level2"></div>
+                                        <div class="bg level3"></div>
+                                        <div class="bg level4"></div>
+                                        <div class="bg level5"></div>
+                                        <div class="blocks-wrapper">
+                                            <div class="block"><span>100</span></div>
+                                            <div class="block"><span>125</span></div>
+                                            <div class="block"><span>150</span></div>
+                                            <div class="block"><span>175</span></div>
+                                            <div class="block"><span>200</span></div>
+                                            <div class="block"><span>225</span></div>
+                                            <div class="block"><span>250</span></div>
+                                            <div class="block"><span>275</span></div>
+                                            <div class="block"><span>300</span></div>
+                                            <div class="block"><span>325</span></div>
+                                            <div class="block"><span>350</span></div>
+                                            <div class="block"><span>375</span><span>400</span></div>
+                                        </div>
+                                        <div class="score_line chart_bar_transited" data-transited-width="46%" style="width: 0%;"></div>
+                                    </div>
+                                </div>
+                                <div class="chart_legend">
+                                    <div class="block level1"><span></span>Level 1</div>
+                                    <div class="block level2"><span></span>Level 2</div>
+                                    <div class="block level3"><span></span>Level 3</div>
+                                    <div class="block level4"><span></span>Level 4</div>
+                                    <div class="block level5"><span></span>Level 5</div>
+                                </div>
+                            </div>
+                            <p>
+                                @ViewBag.FirstName was recently given a @ViewBag.TestEvent. This report is designed to give you information about @ViewBag.FirstName achievement level in @ViewBag.TestEvent. Along with the results of this assessment, classroom work, grades, teacher observations and other test results should also be reviewed for a more complete picture of academic progress.
+                            </p>
+                            <p>
+                                At the test level @ViewBag.FirstName received a Standard Score of @ViewBag.SS and a Nation Percentile Rank of @ViewBag.NPR (This means @ViewBag.FirstName scored higher then @ViewBag.NPR of students in the same grade across the nation).
+                            </p>
+                            <p>
+                                @ViewBag.FirstName is currently tracking Level 1 for the @ViewBag.TestEvent test. Below you can see more detail on how @ViewBag.FirstName performed on each of the domains that was part of the assessment. These may be areas of strengths and or weaknesses and this information can help focus on instruction such that @ViewBag.FirstName can work on increasing knowledge and or making sure @ViewBag.FirstName understands the curriculum that is being taught.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="student-progress-block">
+                        <h3>Operations and Algebraic Thinking</h3>
+                        <hr>
+                        <div class="left-column">
+                            <div class="block">
+                                <div class="score">
+                                    <div class="color-label green"><span></span>Mid</div>
+                                </div>
+                                <div class="title">Achievement Level</div>
+                            </div>
+                        </div>
+                        <div class="right-column">
+                            <p>
+                                These questions how well students can use the four operations with whole numbers to solve problems, demonstrate knowledge of factors and multiples, and generate and analyze mathematical patterns.
+                            </p>
+                            <p>
+                                @ViewBag.FirstName’s performance in this domain is in the Mid range, which means @ViewBag.FirstName has demonstrated moderate understanding of these concepts and would benefit from continued instruction and practice in this domain.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="student-progress-block">
+                        <h3>Number and Operations in Base Ten</h3>
+                        <hr>
+                        <div class="left-column">
+                            <div class="block">
+                                <div class="score">
+                                    <div class="color-label blue"><span></span>High</div>
+                                </div>
+                                <div class="title">Achievement Level</div>
+                            </div>
+                        </div>
+                        <div class="right-column">
+                            <p>
+                                These questions measure how well students can generalize place value understanding for multi-digit whole numbers and use place value understanding and properties of operations to perform multi-digit arithmetic.
+                            </p>
+                            <p>
+                                @ViewBag.FirstName’s performance in this domain is in the High range, which means @ViewBag.FirstName has demonstrated advanced understanding of these concepts.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="student-progress-block">
+                        <h3>Number and Operations — Fractions</h3>
+                        <hr>
+                        <div class="left-column">
+                            <div class="block">
+                                <div class="score">
+                                    <div class="color-label red"><span></span>Low</div>
+                                </div>
+                                <div class="title">Achievement Level</div>
+                            </div>
+                        </div>
+                        <div class="right-column">
+                            <p>
+                                These questions measure how well students can understand fraction equivalence and ordering, build fractions from unit fractions, understand decimal notation for fractions, and compare decimal fractions.
+                            </p>
+                            <p>
+                                @ViewBag.FirstName’s performance in this domain is in the Low range, which means @ViewBag.FirstName has not demonstrated understanding of these concepts yet and would benefit from additional instruction and practice in this domain.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="student-progress-block">
+                        <h3>Measurement and Data</h3>
+                        <hr>
+                        <div class="left-column">
+                            <div class="block">
+                                <div class="score">
+                                    <div class="color-label blue"><span></span>Above Avg.</div>
+                                </div>
+                                <div class="title">Achievement Level</div>
+                            </div>
+                        </div>
+                        <div class="right-column">
+                            <p>
+                                These questions measure how well students can solve problems involving measurement (including conversion of measurements), represent and interpret data, understand concepts of angle, and measure angles.
+                            </p>
+                            <p>
+                                @ViewBag.FirstName’s performance in this domain is in the High range, which means @ViewBag.FirstName has demonstrated advanced understanding of these concepts.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="student-progress-block">
+                        <h3>Geometry</h3>
+                        <hr>
+                        <div class="left-column">
+                            <div class="block">
+                                <div class="score">
+                                    <div class="color-label green"><span></span>Average</div>
+                                </div>
+                                <div class="title">Achievement Level</div>
+                            </div>
+                        </div>
+                        <div class="right-column">
+                            <p>
+                                These questions measure how well students can draw and identify lines and angles and classify shapes by properties of their lines and angles.
+                            </p>
+                            <p>
+                                @ViewBag.FirstName’s performance in this domain is in the Mid range, which means @ViewBag.FirstName has demonstrated moderate understanding of these concepts and would benefit from continued instruction and practice in this domain.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="student-progress-block">
+                        @*<h3>Monitoring @Model.FirstName’s Progress Across Grades</h3>*@
+                        <h3>Monitoring @ViewBag.FirstName’s Progress Across Grades</h3>
+                        <hr><hr>
+                        <div class="right-column" style="width:100%;display:block;">
+                            <table class="standard-score-graph-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Grade</th>
+                                        <th>Standard Score</th>
+                                        <th>Standard Score Graph</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>03/10/19</td>
+                                        <td>5</td>
+                                        <td>xxx</td>
+                                        <td class="chart">
+                                            <div class="standard_score_graph current">
+                                                <div class="graph-wrapper">
+                                                    <div class="chart">
+                                                        <div class="bg level1"></div>
+                                                        <div class="bg level2"></div>
+                                                        <div class="bg level3"></div>
+                                                        <div class="bg level4"></div>
+                                                        <div class="bg level5"></div>
+                                                        <div class="blocks-wrapper">
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                        </div>
+                                                        <div class="score_line chart_bar_transited" data-transited-width="46%" style="width: 0%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>12/10/18</td>
+                                        <td>5</td>
+                                        <td>xxx</td>
+                                        <td class="chart">
+                                            <div class="standard_score_graph">
+                                                <div class="graph-wrapper">
+                                                    <div class="chart">
+                                                        <div class="bg level1"></div>
+                                                        <div class="bg level2"></div>
+                                                        <div class="bg level3"></div>
+                                                        <div class="bg level4"></div>
+                                                        <div class="bg level5"></div>
+                                                        <div class="blocks-wrapper">
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                        </div>
+                                                        <div class="score_line chart_bar_transited" data-transited-width="" style="width: 0%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>09/10/18</td>
+                                        <td>5</td>
+                                        <td>xxx</td>
+                                        <td class="chart">
+                                            <div class="standard_score_graph">
+                                                <div class="graph-wrapper">
+                                                    <div class="chart">
+                                                        <div class="bg level1"></div>
+                                                        <div class="bg level2"></div>
+                                                        <div class="bg level3"></div>
+                                                        <div class="bg level4"></div>
+                                                        <div class="bg level5"></div>
+                                                        <div class="blocks-wrapper">
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                        </div>
+                                                        <div class="score_line chart_bar_transited" data-transited-width="" style="width: 0%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>03/10/18</td>
+                                        <td>4</td>
+                                        <td>xxx</td>
+                                        <td class="chart">
+                                            <div class="standard_score_graph">
+                                                <div class="graph-wrapper">
+                                                    <div class="chart">
+                                                        <div class="bg level1"></div>
+                                                        <div class="bg level2"></div>
+                                                        <div class="bg level3"></div>
+                                                        <div class="bg level4"></div>
+                                                        <div class="bg level5"></div>
+                                                        <div class="blocks-wrapper">
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                        </div>
+                                                        <div class="score_line chart_bar_transited" data-transited-width="" style="width: 0%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>12/10/17</td>
+                                        <td>4</td>
+                                        <td>xxx</td>
+                                        <td class="chart">
+                                            <div class="standard_score_graph">
+                                                <div class="graph-wrapper">
+                                                    <div class="chart">
+                                                        <div class="bg level1"></div>
+                                                        <div class="bg level2"></div>
+                                                        <div class="bg level3"></div>
+                                                        <div class="bg level4"></div>
+                                                        <div class="bg level5"></div>
+                                                        <div class="blocks-wrapper">
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                        </div>
+                                                        <div class="score_line chart_bar_transited" data-transited-width="" style="width: 0%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>09/10/17</td>
+                                        <td>4</td>
+                                        <td>xxx</td>
+                                        <td class="chart">
+                                            <div class="standard_score_graph">
+                                                <div class="graph-wrapper">
+                                                    <div class="chart">
+                                                        <div class="bg level1"></div>
+                                                        <div class="bg level2"></div>
+                                                        <div class="bg level3"></div>
+                                                        <div class="bg level4"></div>
+                                                        <div class="bg level5"></div>
+                                                        <div class="blocks-wrapper">
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                        </div>
+                                                        <div class="score_line chart_bar_transited" data-transited-width="" style="width: 0%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>03/10/17</td>
+                                        <td>3</td>
+                                        <td>xxx</td>
+                                        <td class="chart">
+                                            <div class="standard_score_graph">
+                                                <div class="graph-wrapper">
+                                                    <div class="chart">
+                                                        <div class="bg level1"></div>
+                                                        <div class="bg level2"></div>
+                                                        <div class="bg level3"></div>
+                                                        <div class="bg level4"></div>
+                                                        <div class="bg level5"></div>
+                                                        <div class="blocks-wrapper">
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                        </div>
+                                                        <div class="score_line chart_bar_transited" data-transited-width="" style="width: 0%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>12/10/16</td>
+                                        <td>3</td>
+                                        <td>xxx</td>
+                                        <td class="chart">
+                                            <div class="standard_score_graph">
+                                                <div class="graph-wrapper">
+                                                    <div class="chart">
+                                                        <div class="bg level1"></div>
+                                                        <div class="bg level2"></div>
+                                                        <div class="bg level3"></div>
+                                                        <div class="bg level4"></div>
+                                                        <div class="bg level5"></div>
+                                                        <div class="blocks-wrapper">
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                        </div>
+                                                        <div class="score_line chart_bar_transited" data-transited-width="" style="width: 0%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>09/10/16</td>
+                                        <td>3</td>
+                                        <td>xxx</td>
+                                        <td class="chart">
+                                            <div class="standard_score_graph">
+                                                <div class="graph-wrapper">
+                                                    <div class="chart">
+                                                        <div class="bg level1"></div>
+                                                        <div class="bg level2"></div>
+                                                        <div class="bg level3"></div>
+                                                        <div class="bg level4"></div>
+                                                        <div class="bg level5"></div>
+                                                        <div class="blocks-wrapper">
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                        </div>
+                                                        <div class="score_line chart_bar_transited" data-transited-width="" style="width: 0%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>03/10/16</td>
+                                        <td>2</td>
+                                        <td>xxx</td>
+                                        <td class="chart">
+                                            <div class="standard_score_graph">
+                                                <div class="graph-wrapper">
+                                                    <div class="chart">
+                                                        <div class="bg level1"></div>
+                                                        <div class="bg level2"></div>
+                                                        <div class="bg level3"></div>
+                                                        <div class="bg level4"></div>
+                                                        <div class="bg level5"></div>
+                                                        <div class="blocks-wrapper">
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                        </div>
+                                                        <div class="score_line chart_bar_transited" data-transited-width="" style="width: 0%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>12/10/15</td>
+                                        <td>2</td>
+                                        <td>xxx</td>
+                                        <td class="chart">
+                                            <div class="standard_score_graph">
+                                                <div class="graph-wrapper">
+                                                    <div class="chart">
+                                                        <div class="bg level1"></div>
+                                                        <div class="bg level2"></div>
+                                                        <div class="bg level3"></div>
+                                                        <div class="bg level4"></div>
+                                                        <div class="bg level5"></div>
+                                                        <div class="blocks-wrapper">
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                            <div class="block"></div>
+                                                        </div>
+                                                        <div class="score_line chart_bar_transited" data-transited-width="" style="width: 0%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>09/10/15</td>
+                                        <td>2</td>
+                                        <td>xxx</td>
+                                        <td class="chart">
+                                            <div class="standard_score_graph">
+                                                <div class="graph-wrapper">
+                                                    <div class="chart">
+                                                        <div class="bg level1"></div>
+                                                        <div class="bg level2"></div>
+                                                        <div class="bg level3"></div>
+                                                        <div class="bg level4"></div>
+                                                        <div class="bg level5"></div>
+                                                        <div class="blocks-wrapper">
+                                                            <div class="block"><span>100</span></div>
+                                                            <div class="block"><span>125</span></div>
+                                                            <div class="block"><span>150</span></div>
+                                                            <div class="block"><span>175</span></div>
+                                                            <div class="block"><span>200</span></div>
+                                                            <div class="block"><span>225</span></div>
+                                                            <div class="block"><span>250</span></div>
+                                                            <div class="block"><span>275</span></div>
+                                                            <div class="block"><span>300</span></div>
+                                                            <div class="block"><span>325</span></div>
+                                                            <div class="block"><span>350</span></div>
+                                                            <div class="block"><span>375</span><span>400</span></div>
+                                                        </div>
+                                                        <div class="score_line chart_bar_transited" data-transited-width="" style="width: 0%;"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="chart_legend">
+                                                    <div class="block level1"><span></span>Low</div>
+                                                    <div class="block level2"><span></span>Low Average</div>
+                                                    <div class="block level3"><span></span>Average</div>
+                                                    <div class="block level4"><span></span>High Average</div>
+                                                    <div class="block level5"><span></span>High</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        }
+    }
+}
+
+@section page_js
+{
+    @Scripts.Render(BundlePath.JsIowaFlexStudentProfilePage)
+}
+
+@section js_on_document_ready
+{
+    DmUiLibrary.HideOverlaySpinner();
+    @*initStudentProfile(@Model.SS);*@
+    //initStudentProfile(@ViewBag.SS);
+    initStudentProfiles(@Html.Raw(JsonConvert.SerializeObject(Model.mod)));
+}
+
+@section page_css
+{
+    @Styles.Render(BundlePath.CssDashboardPage)
+}

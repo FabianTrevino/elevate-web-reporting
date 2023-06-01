@@ -1,0 +1,25 @@
+﻿@model ModalModel
+
+@{ 
+    if (Model.Buttons.Count < 1 || Model.Buttons.Count > 2)
+    {
+        throw new Exception("DM.UI.Library :: _ModalLayout.cshtml :: The quantity of buttons in ViewModel is incorrect.  There could only be 1 or 2 buttons.");
+    }
+
+    var buttonContainerClass = Model.Buttons.Count == 1 ? "dm-ui-modal-button-container-single" : "dm-ui-modal-button-container-dual";
+}
+
+<div class="dm-ui-modal-container">
+    <div class="dm-ui-modal @Model.CssClass">
+        <header><h1>@Model.HeaderText</h1></header>
+        <section>
+            @RenderBody()
+            <div class="@buttonContainerClass">
+                @foreach (var button in Model.Buttons)
+                {
+                    <button id="@button.Id" class="@button.DmUiClass @button.CustomClass">@button.Text</button>
+                }
+            </div>
+        </section>
+    </div>
+</div>

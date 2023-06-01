@@ -1,0 +1,84 @@
+﻿@model OptionsPageViewModel
+
+<div class="dm-ui-page-container">
+    <section class="dm-ui-page-section options-page-section">
+
+        @Html.DmUiTabNav((List<TabItem>)ViewBag.Tabs)
+
+        @if (Model.IsInEditCriteriaMode)
+        {
+            <div class="dm-ui-alert dm-ui-alert-info edit-criteria-notification">
+                <span class="notification-text">You are editing saved criteria.</span>
+                <button id="exit-edit-mode-button" class="dm-ui-button-primary dm-ui-button-medium">Exit Edit Mode</button>
+                <div class="clear"></div>
+            </div>
+            <input type="hidden" id="criteriaId" value="@Model.CriteriaId" />
+            <div class="edit-criteria-controls">
+                <div class="criteria-name"><label for="criteria-name-text">CRITERIA NAME</label></div>
+                <div class="criteria-description"><label for="criteria-description-text">SUMMARY (optional)</label></div>
+                <div class="criteria-date"><label id="lblCriteriaLastUpdateDate">LAST UPDATED</label></div>
+            </div>
+            <div class="edit-criteria-controls edit-criteria-textboxes">
+                <div class="criteria-name"><input id="criteria-name-text" type="text" value="@Model.CriteriaName" /></div>
+                <div class="criteria-description"><input id="criteria-description-text" type="text" value="@Model.CriteriaDescription" /></div>
+                <div aria-label="@Model.CriteriaName Last Updated @Model.CriteriaDate" tabindex="0" class="criteria-date">@Model.CriteriaDate</div>
+            </div>
+
+            <hr class="edit-criteria-hr" />
+
+        }
+
+        <h2>
+            Report Criteria for <span id="current-location-name">@Model.CurrentLocationName</span>
+            <a id="change-main-location-link" aria-label="Change Report Criteria for @Model.CurrentLocationName" tabindex="0" @Html.Attr(!Model.IsMultiLocation, "style", "display:none;")>Change</a>
+        </h2>
+
+        <div class="options-placeholder">Report Options</div>
+
+        <div class="options-page-buttons">
+            @if (Model.IsInEditCriteriaMode)
+            {
+                <button id="save-changes-button" class="dm-ui-button-secondary dm-ui-button-medium">Save Changes</button>
+                <button id="save-as-copy-button" class="dm-ui-button-secondary dm-ui-button-medium">Save as Copy</button>
+            }
+            else
+            {
+                <button id="reset-criteria-button" class="dm-ui-button-secondary dm-ui-button-medium">Reset Criteria</button>
+                <button id="save-criteria-button" class="dm-ui-button-secondary dm-ui-button-medium">Save Criteria</button>
+            }
+
+            <button id="run-report-button" class="dm-ui-button-primary dm-ui-button-medium">Run Report</button>
+            <button id="run-report-in-background" class="dm-ui-button-primary dm-ui-button-medium">Run Report in Background</button>
+
+            <div class="clear"></div>
+        </div>
+
+    </section>
+</div>
+
+@{ Html.RenderPartial(MVC.Report.Views._ReportViewer); }
+
+@if (!Model.IsGuidUser)
+{
+    @section floating_buttons
+    {
+        <a href="#" class="dm-ui-button-secondary dm-ui-button-small" id="display-reporting-key-modal-button">Add Reporting Key</a>
+    }
+}
+
+@section page_js
+{
+    @Scripts.Render(BundlePath.JsOptionsPage)
+}
+
+@section js_on_document_ready
+{
+    Common.Init();
+    Criteria.Init();
+    Options.Init();
+}
+
+@section page_css
+{
+    @Styles.Render(BundlePath.CssOptionsPage)
+}

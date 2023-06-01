@@ -1,0 +1,23 @@
+﻿@model string
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @Styles.Render(DmUiBundlePath.CssBundle)
+    @Styles.Render(BundlePath.CssDashboardIowaFlexPage)
+    @if (Model.IndexOf("dm-ui-page-container-800 longitudinal", StringComparison.Ordinal) != -1)
+    {
+        @Styles.Render(BundlePath.CssDashboardLongitudinalIowaFlexPage)
+    }
+
+</head>
+<body class="pdf-dashboard">
+    <div class="body-content body-content-main-menu">
+        @Html.Raw(Model)
+    </div>
+</body>
+</html>

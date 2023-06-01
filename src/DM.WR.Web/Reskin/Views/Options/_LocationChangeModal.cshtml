@@ -1,0 +1,7 @@
+﻿@model LocationChangeModalModel
+
+@{
+    Layout = MVC.Shared.Views.dm_ui._ModalLayout;
+}
+
+@Html.DmUiSingleSelectDropdown(Model.Locations, id: "location-change-dropdown", allowDiselection: false, defaultText: null, label: Model.Label)

@@ -1,0 +1,16 @@
+﻿@{
+    var alerts = TempData.ContainsKey(Alert.KeyForTempData)
+                ? (List<Alert>)TempData[Alert.KeyForTempData]
+                : new List<Alert>();
+}
+
+@foreach (var alert in alerts)
+{
+    <div id="divAlertMessage" class="@alert.HtmlClass">
+        @Html.Raw(alert.Message)
+        @if (alert.IsDismissable)
+        {
+            <a href="#" class="dm-ui-alert-close" aria-label="close alert" aria-describedby="divAlertMessage">&times;</a>
+        }
+    </div>
+}

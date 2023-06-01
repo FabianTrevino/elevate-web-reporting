@@ -1,0 +1,80 @@
+﻿@model OptionsViewModel
+
+@if (Model.InvalidGroup != null)
+{
+    <input type="hidden" id="invalid-group-alert" value="@Json.Encode(new Alert { AlertType = AlertType.Info, IsDismissable = true, Message = $"Saved '{Model.InvalidGroup.DisplayName}' group is currently invalid. Criteria was loaded with default values." })" />
+}
+
+<input type="hidden" id="run-in-foreground" value="@Json.Encode(Model.RunInForeground)" />
+<input type="hidden" id="location-name" value="@Model.LocationName" />
+
+<div class="primary-options">
+    <div class="primary-options-left">
+        @{ Html.RenderPartial(MVC.Options.Views._OptionsGroupSwitch, Model.PrimaryGroupsLeft); }
+    </div>
+    <div class="primary-options-right">
+        @{ Html.RenderPartial(MVC.Options.Views._OptionsGroupSwitch, Model.PrimaryGroupsRight); }
+    </div>
+    <div class="clear"></div>
+</div>
+<hr />
+<div class="secondary-options">
+    <div class="secondary-options-left">
+        @{ Html.RenderPartial(MVC.Options.Views._OptionsGroupSwitch, Model.SecondaryAndLocationsGroupsLeft); }
+    </div>
+    <div class="secondary-options-right">
+        @{ Html.RenderPartial(MVC.Options.Views._OptionsGroupSwitch, Model.SecondaryAndLocationsGroupsRight); }
+    </div>
+    <div class="clear"></div>
+</div>
+<hr />
+
+@if (Model.IsMultimeasure)
+{
+    <div class="multimeasure-controls">
+        <span id="spanMultiMeasure" class="mm-element">Multimeasure Report Columns</span>
+        <span class="mm-element">
+            @if (Model.CurrentPage > 1)
+            {
+                <a class="go-to-column-link" tabindex="0" data-go-to-column="@(Model.CurrentPage - 1)" aria-describedby="spanMultiMeasure">&lt; PREV</a> @:|
+            }
+            else
+            {
+                <span>&lt; PREV</span>
+            }
+
+                <span id="spanPageNumber" tabindex="0" aria-label="Showing @Model.CurrentPage of @Model.TotalPages" aria-describedby="spanMultiMeasure">
+                    @Model.CurrentPage of @Model.TotalPages
+                </span>
+
+            @if (Model.CurrentPage < 10 && Model.CurrentPage != Model.TotalPages)
+            {
+                @:|
+                <a class="go-to-column-link" tabindex="0" data-go-to-column="@(Model.CurrentPage + 1)" aria-describedby="spanMultiMeasure"> NEXT &gt;</a>
+            }
+            else
+            {
+                <span> NEXT &gt;</span>
+            }
+        </span>
+        <span class="mm-element">
+            @if (Model.TotalPages < 10)
+            {
+                <a id="add-column-button" tabindex="0" aria-describedby="spanMultiMeasure">ADD</a>
+            }
+            else
+            {
+                <span>ADD</span>
+            }
+            |
+            @if (Model.TotalPages > 1)
+            {
+                <a id="delete-column-button" tabindex="0" aria-describedby="spanMultiMeasure">DELETE</a>
+            }
+            else
+            {
+                <span>DELETE</span>
+            }
+        </span>
+    </div>
+}

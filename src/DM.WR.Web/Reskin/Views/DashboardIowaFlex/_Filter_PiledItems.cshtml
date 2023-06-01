@@ -1,0 +1,51 @@
+﻿@using DM.WR.Models.IowaFlex
+@model DM.WR.Models.IowaFlex.Filter
+
+@{
+    var modalId = $"{Model.Type}Modal";
+
+    var cancelButtonId = $"{modalId}-cancel-button";
+    var applyButtonId = $"{modalId}-apply-button";
+
+    var piledOptions = Model.Items.Cast<PiledFilterItem>().GroupBy(o => o.PileLabel).ToList();
+    var text = Model.SelectedValues.Count > 0 ? string.Join(", ", Model.Items.Where(o => o.IsSelected).Select(o => o.Text)) : "None selected";
+}
+
+<label>@Model.DisplayName</label>
+@Html.WrSpecialGroupLink(modalId, "lblGroupPiledOptions", "divGroupPiledOptions")
+
+<div id="divGroupPiledOptions" class="option-group-selected-text">@text</div>
+
+<input id="@Model.TypeCode" type="hidden" value="@JsonConvert.SerializeObject(Model.SelectedValues, Formatting.None)" class="dm-ui-hidden-input" />
+
+<div id="@modalId" class="dm-ui-modal-container dm-ui-hide" role="alertdialog" aria-label="@Model.DisplayName">
+    <div class="dm-ui-modal dm-ui-modal-green piled-options-group">
+        <header><h1>@Model.DisplayName</h1></header>
+        <section>
+
+            @foreach (var pile in piledOptions)
+            {
+                var items = pile.Select(p => new DropdownItem
+                {
+                    Text = p.Text,
+                    Value = p.Value,
+                    Selected = p.IsSelected
+                }).ToList();
+
+                var selectedValue = pile.Any(o => o.IsSelected) ? pile.Where(o => o.IsSelected).Select(o => o.Value).First() : "";
+                var displayLabel = pile.Key;
+
+                @Html.DmUiSingleSelectDropdown(items, Html.RandomId(), allowDiselection: true, defaultText: "None", label: displayLabel, htmlAttributes: new { data_original_value = selectedValue })
+            }
+
+            <div class="dm-ui-modal-button-container-dual">
+                <button id="@cancelButtonId" class="dm-ui-button-small dm-ui-button-secondary">Cancel</button>
+                <button id="@applyButtonId" class="dm-ui-button-small dm-ui-button-primary">Apply</button>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script type="text/javascript">
+    Options.AssignPiledOptionsGroupHandler('#@applyButtonId', '#@cancelButtonId', '#@modalId', '#@Model.TypeCode');
+</script>

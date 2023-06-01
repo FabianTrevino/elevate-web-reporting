@@ -1,0 +1,50 @@
+﻿@{
+    Layout = MVC.Shared.Views.dm_ui._Layout_NoMenu;
+    ViewBag.BodyContentMainMenu = "body-content-main-menu";
+}
+
+@section page_css
+{
+    @RenderSection("page_css", required: false)
+}
+
+@section main_menu
+{
+    @if (ViewBag.MagicMenuModel != null)
+    {
+        @Html.Partial(MVC.Shared.Views.dm_ui._MagicMainMenuContainer, (List<MagicMenuItem>)ViewBag.MagicMenuModel)
+        //@Html.Partial(MVC.Shared.Views.dm_ui._MainMenu, (MainMenuViewModel)ViewBag.MainMenuModel)
+    }
+    else
+    {
+        @Html.Partial(MVC.Shared.Views.dm_ui._MainMenu, (MainMenuViewModel)ViewBag.MainMenuModel)
+    }
+}
+
+@*@section bread_crumbs
+{
+    <div class="bread-crumbs">
+        @RenderSection("bread_crumbs", required: false)
+    </div>
+}*@
+
+@section floating_buttons
+{
+    <div class="floating-buttons">
+        @RenderSection("floating_buttons", required: false)
+    </div>
+}
+
+@RenderBody()
+
+@section page_js
+{
+    @RenderSection("page_js", required: false)
+}
+
+@section js_on_document_ready
+{
+    DmUiMainMenu.Init();
+
+    @RenderSection("js_on_document_ready", required: false)
+}

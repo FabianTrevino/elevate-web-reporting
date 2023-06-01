@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="23px" height="23px" viewBox="0 0 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>icon-info-circle-blue</title>
+    <desc>Created with Sketch.</desc>
+    <g id="FINAL" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Test-Record-Admin---Domain-Menu-(step-1)" transform="translate(-980.000000, -151.000000)">
+            <g id="Group-5" transform="translate(0.000000, 114.000000)">
+                <g id="icon-info-circle" transform="translate(981.000000, 38.000000)">
+                    <g id="Group" transform="translate(8.411765, 2.588235)" fill="#147CBD">
+                        <path d="M4.31102941,2.49207648 C4.31102941,1.53333046 3.80648734,0.970588235 2.90551936,0.970588235 C1.9504933,0.970588235 1.30179635,1.7000689 1.30179635,2.72134183 C1.30179635,3.68008785 1.80633842,4.24283007 2.7073064,4.24283007 C3.66233246,4.24283007 4.31102941,3.51334941 4.31102941,2.49207648 Z M3.84252606,5.28494531 L1.15764147,5.28494531 L0.0404411765,15.2058824 L2.74334512,15.2058824 L3.84252606,5.28494531 Z" id="i"></path>
+                    </g>
+                    <circle id="Oval" stroke="#147CBD" cx="10.6764706" cy="10.6764706" r="10.6764706"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,135 @@
+html.elevate-custom-error {
+	overflow: auto !important;
+}
+	html.elevate-custom-error body {
+		position: fixed;
+		top: 0;
+	 	bottom: 0;
+		left: 0;
+		right: 0;
+		overflow: auto !important;
+		padding-right: 0 !important;
+	}
+	html.elevate-custom-error .body-content {
+		display: none;
+	}
+.app-layout-app-error .error-page-body .error-page-contact-email {
+	font-size: 1.05em;
+}
+	 .app-layout-app-error .error-page-body .error-page-contact-email a {
+	 	color: #fff;
+	 	text-decoration: underline;
+		position: relative;
+		display: inline-block;
+	 }
+	 .app-layout-app-error .error-page-body .error-page-contact-email a:before,
+	 .app-layout-app-error .error-page-body .error-page-contact-email a:after {
+	 	 content: '';
+	 	 position: absolute;
+	 	 width: 2px;
+	 	 height: 8px;
+	 	 top: 50%;
+	 	 right: 0px;
+	 	 background: #fff;
+		 margin-top: -2px;
+		 opacity: 0;
+	 	 transition-property: all;
+		 transition-duration: 0.3s;
+		 transition-timing-function: ease-in-out;
+	 }
+	 .app-layout-app-error .error-page-body .error-page-contact-email a:before {
+	 	 -webkit-transform: rotate(45deg);
+	 	 transform: rotate(45deg);
+	 }
+	 .app-layout-app-error .error-page-body .error-page-contact-email a:after {
+	 	 -webkit-transform: rotate(-45deg);
+	 	 transform: rotate(-45deg);
+		 margin-top: -7px;
+	 }
+		 .app-layout-app-error .error-page-body .error-page-contact-email a:hover:before,
+		 .app-layout-app-error .error-page-body .error-page-contact-email a:hover:after {
+		 	opacity: 1;
+		 	 right: -13px;
+		 }
+
+
+.app-layout-app-error {
+	background: #003E64;
+	position: fixed;
+	top: 4em;
+ 	bottom: 0;
+	left: 0;
+	right: 0;
+}
+ .app-layout-app-error .elevate-header-toolbar-wrapper {
+	 display: none;
+}
+ .app-layout-app-error .app-header .app-header-section {
+	 visibility: hidden;
+}
+ .app-layout-app-error .app-header .app-header-section.app-header-navigation {
+	 visibility: visible;
+}
+ .app-layout-app-error .app-header .app-header-section.app-header-navigation .app-header-bar {
+	 border-right-color: transparent;
+}
+ .app-layout-app-error .error-page-body {
+	 flex: 1 0 auto;
+	 display: grid;
+	 padding: 4em 6em;
+	 grid-template-columns: auto 25vw;
+	 grid-gap: 2em;
+	 align-items: center;
+	 color: #fff;
+}
+ .app-layout-app-error .error-page-body .error-page-title {
+	 font-weight: 600;
+	 font-size: 3.75em;
+}
+ .app-layout-app-error .error-page-body .error-page-message {
+	 font-weight: 300;
+	 font-size: 1.625em;
+	padding: 0 6em 2em 0;
+}
+ .app-layout-app-error .error-page-body .error-page-actions {
+	 margin: 1.5em 0;
+	 display: grid;
+	 grid-template-columns: repeat(auto-fill, minmax(10ch, auto));
+	 grid-gap: 0.6em;
+	 align-items: center;
+}
+ .app-layout-app-error .error-page-body .error-page-actions .app-button {
+	 background: #fff;
+	 /*color: #258bd9;*/
+	color: #0e5b8b;
+	 text-transform: unset;
+	cursor: pointer;
+}
+ .app-layout-app-error .error-page-body .error-page-additional-info {
+	 font-weight: 300;
+}
+ .app-layout-app-error .error-page-body .error-page-additional-info .error-page-support-link {
+	 margin-left: 0.5ch;
+	 color: #fff;
+	 text-decoration: none;
+}
+ .app-layout-app-error .error-page-body .error-page-additional-info .error-page-support-link .error-page-support-link-text {
+	 text-decoration: underline;
+}
+ .app-layout-app-error .error-page-body .error-page-additional-info .error-page-support-link .hidden-link-arrow {
+	 opacity: 0;
+	 margin-left: -0.5ch;
+	 transition-property: opacity, margin;
+	 transition-duration: 0.3s;
+	 transition-timing-function: ease-in-out;
+}
+ .app-layout-app-error .error-page-body .error-page-additional-info .error-page-support-link:hover .hidden-link-arrow {
+	 margin-left: 0.5ch;
+	 opacity: 1;
+}
+ .app-loading-user .app-layout-app-error {
+	 background: #fff;
+}
+ .app-loading-user .error-page-wrapper {
+	 background: #096da9;
+}

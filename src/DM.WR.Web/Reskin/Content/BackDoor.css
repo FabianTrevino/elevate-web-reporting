@@ -1,0 +1,47 @@
+﻿html {
+    background-color: transparent;
+}
+
+body {
+    background-size: cover;
+}
+
+.back-door-form {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h1 {
+    width: 100%;
+    text-align: center;
+}
+
+textarea {
+    height: 80px;
+}
+
+textarea, input[type=text] {
+    background-color: transparent;
+    border: solid 1px #3d3f3f;
+}
+
+.bd-button-container {
+    width: 100%;
+    text-align: center;
+}
+
+.back-door-form > label,
+.back-door-form > .bd-button-container,
+.back-door-form > .dm-ui-error-text {
+    margin-top: 24px;
+}
+
+label,
+.dm-ui-checkbox label {
+    font-size: 18px;
+    color: #3d3f3f;
+}

@@ -1,0 +1,192 @@
+﻿@model DifferentiatedReportKto1ViewModel
+
+@{
+    Layout = MVC.Shared.Views._Layout_Pdf;
+}
+
+@Styles.Render(BundlePath.CssDashboardIowaFlexPage)
+<style>
+    html {
+        background-color: transparent !important;
+    }
+</style>
+
+@{
+    string ConvertToList(string text)
+    {
+        var result = "<ul>";
+        string[] arrStr = text.Split('\n');
+        foreach (var str in arrStr)
+        {
+            result += "<li>" + str + "</li>";
+        }
+        result += "</ul>";
+        return result;
+    }
+}
+
+
+@{
+    foreach (var building in Model.Values.Buildings)
+    {
+        foreach (var pldStage in building.PldStages)
+        {
+            foreach (var pldLevel in pldStage.PldLevels)
+            {
+                <div class="profile-differentiated-k1-wrapper">
+                    <img src="@Links.Reskin.Content.img.logoIowaAssessmentsAdaptive_png" class="logo-iowa-flex-k1" />
+                    <h1>Differentiated Instruction Report</h1>
+
+                    <table class="header">
+                        <tbody>
+                            <tr>
+                                <td>Grade @Model.Values.Grade</td>
+                                <td>Test Event: @Model.Values.TestEventName</td>
+                                <td>School: @building.BuildingName</td>
+                                <td>District: @Model.Values.DistrictName</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2>Students</h2>
+                    <hr />
+                    <hr />
+                    <div class="students-wrapper">
+                        @{
+                            //var totalNum = pldLevel.Classes.Count;
+                            var totalNum = 0;
+                            var tmpClassName = "";
+                            foreach (var objClass in pldLevel.Classes)
+                            {
+                                totalNum += objClass.StudentNames.Count;
+                                if (tmpClassName != objClass.ClassName)
+                                {
+                                    tmpClassName = objClass.ClassName;
+                                    totalNum++;
+                                }
+                            }
+                            var divider = totalNum / 3;
+                            if (totalNum % 3 > 0)
+                            {
+                                divider++;
+                            }
+                            if (divider < 2)
+                            {
+                                divider = 2;
+                            }
+
+                            var i = 0;
+                            bool isColumnBegin = false;
+                            var columnBegin = "";
+                            var columnCounter = 0;
+                            tmpClassName = "";
+                            foreach (var objClass in pldLevel.Classes)
+                            {
+                                if (tmpClassName != objClass.ClassName)
+                                {
+                                    i++;
+                                    tmpClassName = objClass.ClassName;
+
+                                    if (isColumnBegin)
+                                    {
+                                        @Html.Raw("</div>")
+                                    }
+                                    columnBegin = "";
+                                    if ((i == divider - 1) || (i == divider * 2 - 1) || (i == divider * 3 - 1))
+                                    {
+                                        columnBegin = "<div class=\"column\">";
+                                        isColumnBegin = true;
+                                        columnCounter++;
+                                    }
+                                    @Html.Raw(columnBegin)
+
+                                    <div class="class-name">@objClass.ClassName</div>
+                                }
+
+                                foreach (var student in objClass.StudentNames)
+                                {
+                                    i++;
+                                    columnBegin = "";
+                                    var columnEnd = "";
+                                    if ((i == divider - 1) || (i == divider * 2 - 1) || (i == divider * 3 - 1))
+                                    {
+                                        columnBegin = "<div class=\"column\">";
+                                        isColumnBegin = true;
+                                        columnCounter++;
+                                    }
+                                    if ((i == divider) || (i == divider * 2) || (i == divider * 3))
+                                    {
+                                        columnEnd = "</div>";
+                                        isColumnBegin = false;
+                                    }
+                                    @Html.Raw(columnBegin)
+                                    <div class="student-name">@student</div>
+                                    @Html.Raw(columnEnd)
+                                }
+                            }
+                            if (isColumnBegin)
+                            {
+                                @Html.Raw("</div>")
+                            }
+                            if (columnCounter == 2)
+                            {
+                                @Html.Raw("<div class=\"column\"></div>")
+                            }
+                        }
+                    </div>
+                    <hr />
+                    <hr />
+
+                    <div class="pld-stage-description">@Html.Raw(pldStage.PldStageDescriptorText)</div>
+
+                    <table class="pld-level-info">
+                        <thead>
+                            <tr>
+                                @if (pldLevel.CanStatement != "")
+                                {
+                                    <th>
+                                        <div>@pldLevel.CanDescriptor</div>
+                                    </th>
+                                }
+                                @if (pldLevel.ReadyStatement != "")
+                                {
+                                    <th>
+                                        <div>@pldLevel.ReadyDescriptor</div>
+                                    </th>
+                                }
+                                @if (pldLevel.NeedPracticeStatement != "")
+                                {
+                                    <th>
+                                        <div>@pldLevel.NeedPracticeDescriptor</div>
+                                    </th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @if (pldLevel.CanStatement != "")
+                                {
+                                    <td>
+                                        <div>@Html.Raw(ConvertToList(pldLevel.CanStatement))</div>
+                                    </td>
+                                }
+                                @if (pldLevel.ReadyStatement != "")
+                                {
+                                    <td>
+                                        <div>@Html.Raw(ConvertToList(pldLevel.ReadyStatement))</div>
+                                    </td>
+                                }
+                                @if (pldLevel.NeedPracticeStatement != "")
+                                {
+                                    <td>
+                                        <div>@Html.Raw(ConvertToList(pldLevel.NeedPracticeStatement))</div>
+                                    </td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            }
+        }
+    }
+}

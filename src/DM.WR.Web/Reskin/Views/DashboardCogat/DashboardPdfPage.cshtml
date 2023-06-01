@@ -1,0 +1,21 @@
+﻿@model string
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @*<meta name="viewport" content="width=device-width" />*@
+    @*<meta name="viewport" content="width=1924, initial-scale=1" />*@
+    @*<title></title>*@
+    @Styles.Render(DmUiBundlePath.CssBundle)
+    @Styles.Render(BundlePath.CssDashboardCogatPage)
+</head>
+<body class="pdf-dashboard">
+<div class="body-content body-content-main-menu">
+    @Html.Raw(Model)
+</div>
+</body>
+</html>

@@ -1,0 +1,532 @@
+#root {
+  #site-wrapper {
+    position: relative;
+    font-family: "Open Sans", sans-serif;
+    overflow: hidden;
+    max-width: inherit;
+  }
+  #site-content {
+    position: relative;
+    clear: both;
+    background-color: #f8f8f8;
+    max-width: inherit;
+    min-height: 100vh;
+  }
+  .non-clickable {
+    cursor: default;
+    pointer-events: none;
+  }
+  .icon-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    line-height: 14px;
+
+    svg {
+      cursor: pointer;
+      transition: transform 0.25s, opacity 0.25s;
+
+      &:hover {
+        transform: rotate(90deg);
+
+        .a {
+          fill: #096da9;
+        }
+      }
+
+      .a {
+        fill: #6a6d6d;
+        transition: fill 0.05s linear;
+      }
+    }
+  }
+  .video-container {
+    position: relative;
+
+    &.video-off:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, rgba(0, 0, 0, 0.9) 2px);
+      background-size: 100% 2px;
+      /*background: repeating-radial-gradient(circle, rgba(0,0,0,0.1), rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.7) 2px, rgba(0,0,0,0.1) 4px);*/
+    }
+
+    button {
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+      border: none;
+      outline: none;
+      box-shadow: none;
+      position: absolute;
+      width: 45px;
+      height: 45px;
+      background-color: #096da9;
+      background-color: rgba(9, 109, 169, 0.5);
+      cursor: pointer;
+      transition: all 0.05s linear;
+      z-index: 1;
+
+      &:hover {
+        background-color: #0e5b8b;
+        background-color: rgba(14, 91, 139, 0.5);
+      }
+
+      &.active {
+        background-color: #bf0000;
+        background-color: rgba(191, 0, 0, 0.5);
+
+        &:hover {
+          background-color: #950000;
+          background-color: rgba(149, 0, 0, 0.5);
+        }
+      }
+
+      svg {
+        .a {
+          fill: #fff;
+        }
+
+        .mic-small-a {
+          stroke: #fff;
+        }
+      }
+    }
+
+    .button-close {
+      top: 0;
+      left: 377px;
+
+      svg {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        transition: transform 0.25s;
+      }
+
+      &:hover svg {
+        transform: rotate(90deg);
+      }
+    }
+
+    .button-audio {
+      bottom: 0;
+      left: 377px;
+    }
+
+    .button-video {
+      bottom: 0;
+      left: 331px;
+      width: 46px;
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .button-p-in-p {
+      bottom: 0;
+      left: 285px;
+      width: 46px;
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .video-p-in-p-container {
+      display: none;
+      position: absolute;
+      top: 3px;
+      right: 2px;
+      width: 120px;
+
+      &.active {
+        display: block;
+        z-index: 1;
+      }
+
+      img {
+        max-width: 100%;
+      }
+    }
+  }
+  .center-align {
+    text-align: center;
+  }
+  .center-align ~ .blank {
+    display: none;
+  }
+
+  .popup-modal {
+    position: relative;
+
+    &.hidden {
+      display: none;
+    }
+
+    &:before {
+      content: "";
+      background: rgba(0, 0, 0, 0.5);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 100;
+    }
+
+    .popup-modal-window {
+      position: fixed;
+      /*top: 50%;*/
+      top: 115px;
+      left: 50%;
+      /*transform: translate(-50%, -50%);*/
+      transform: translateX(-50%);
+      width: 400px;
+      border-radius: 6px;
+      background-color: #ffffff;
+      border: 1px solid #e4e8f1;
+      color: #262626;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 25px;
+      box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.26);
+      z-index: 101;
+      overflow: auto;
+      max-height: calc(100vh - 10px);
+
+      .icon-close {
+        position: absolute;
+        top: 21px;
+        right: 23px;
+      }
+
+      .popup-modal-header {
+        font-size: 16px;
+        line-height: 60px;
+        font-weight: 600;
+        background-color: #f6f6f6;
+        padding: 0 60px 0 16px;
+        height: 60px;
+      }
+
+      .popup-modal-content {
+        padding: 32px 16px 40px 16px;
+        text-align: center;
+      }
+
+      .text-switcher {
+        position: relative;
+        height: 200px;
+        padding-top: 55px;
+
+        .popup-modal-text {
+          position: absolute;
+          left: 20px;
+          right: 20px;
+          top: 20px;
+          opacity: 0;
+          margin-top: 20px;
+          transition: all 0.5s ease-in-out;
+
+          &.visible {
+            opacity: 1;
+            margin-top: 0px;
+          }
+        }
+      }
+
+      .button-wrapper {
+        padding: 18px 16px 16px;
+        background-color: #eee;
+      }
+    }
+
+    &.error .popup-modal-window .popup-modal-header {
+      background-color: #fff1f1;
+    }
+  }
+
+  .app-button {
+    color: #d8e1e9;
+    background-color: #096da9;
+    padding: 0 20px 2px 20px;
+    margin: 0;
+    border: 1px solid #2281b9;
+    outline: none;
+    box-shadow: none;
+    display: inline-block;
+    text-align: center;
+    line-height: 36px;
+    font-size: 16px;
+    border-radius: 7px;
+    transition: all 0.2s ease-in-out;
+    white-space: nowrap;
+
+    svg {
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    &[disabled] {
+      color: #e1e1e1;
+      background: #f8f8f8;
+      border-color: #e3e3e3;
+
+      svg {
+        opacity: 0.2;
+        -webkit-filter: grayscale(100%);
+        -moz-filter: grayscale(100%);
+        -ms-filter: grayscale(100%);
+        -o-filter: grayscale(100%);
+        filter: grayscale(100%);
+        filter: gray; /* IE 6-9 */
+      }
+    }
+
+    &:hover:not(:disabled) {
+      color: #fff;
+      background-color: #0e5b8b;
+    }
+  }
+
+  @-moz-document url-prefix() {
+    /*FF scrollbar fixes*/
+    /*fix for missing bottom borders of disabled dropdown & input inside modal popup */
+    .popup-modal .popup-modal-window {
+      /*transform: translate(-50%, -50%) scale(1.001);*/
+      transform: translateX(-50%) scale(1.001);
+    }
+  }
+
+  .spinner-wrapper {
+    display: inline-block;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(180deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .loader-spinner {
+    animation: spin 2s linear infinite;
+  }
+
+  .button {
+    padding: 0 25px;
+    font-size: 16px;
+    line-height: 40px;
+    border: 1px solid #e3e3e3;
+    color: #258bd9;
+    background-color: #fff;
+    outline: none;
+    border-radius: 6px;
+    margin-left: 10px;
+    transition: all 0.05s linear;
+
+    &:hover {
+      border: 1px solid #096da9;
+    }
+
+    &:disabled {
+      color: #e1e1e1 !important;
+      background-color: #f8f8f8 !important;
+      border: 1px solid #e3e3e3 !important;
+    }
+
+    &.primary {
+      border: 1px solid #096da9;
+      color: #fff;
+      background-color: #096da9;
+
+      &:hover {
+        border: 1px solid #0e5b8b;
+        background-color: #0e5b8b;
+      }
+    }
+
+    &.small {
+      font-size: 14px;
+      line-height: 35px;
+      padding: 0 19px;
+      border-radius: 2px;
+    }
+  }
+
+  .bubble-number {
+    background-color: #ff8000;
+    padding: 2px 0 3px 0;
+    font-size: 10px;
+    line-height: 10px;
+    position: absolute;
+    top: 2px;
+    right: 7px;
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 15px;
+      background-color: #ff8000;
+      border-radius: 50%;
+    }
+
+    &:before {
+      left: -6.5px;
+    }
+
+    &:after {
+      right: -6.5px;
+    }
+
+    b {
+      position: relative;
+      color: #fff;
+      font-weight: normal;
+      z-index: 1;
+    }
+  }
+
+  .tooltip-custom {
+    position: relative;
+    overflow: visible !important;
+
+    .tooltiptext {
+      color: #fff;
+      background-color: #000;
+      font-size: 12px;
+      line-height: 15px;
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      margin-top: 5px;
+      padding: 3.5px 8px 5px 8px;
+      text-align: center;
+      white-space: nowrap;
+      border-radius: 9px;
+      transform: translate(-50%, 0);
+      transition: all 0.15s ease-in-out;
+      z-index: 2;
+      display: none;
+      opacity: 0;
+
+      & + .tooltiptext-tail,
+      &:before {
+        content: "";
+        display: none;
+        position: absolute;
+        z-index: 1;
+        bottom: 100%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border: 4px solid transparent;
+        border-bottom-color: #000;
+        margin-bottom: 1px;
+        transform: translate(-50%, 0);
+      }
+
+      & + .tooltiptext-tail {
+        bottom: auto;
+        top: 100%;
+        margin-top: -4px;
+      }
+
+      &.left-aligned {
+        left: 0;
+        transform: translate(0, 0) !important;
+
+        &:before {
+          display: none !important;
+        }
+      }
+
+      &.right-aligned {
+        left: auto;
+        right: 0;
+        transform: translate(0, 0) !important;
+
+        &:before {
+          display: none !important;
+        }
+      }
+
+      &.middle-aligned-left {
+        left: auto;
+        right: 100%;
+        top: 50%;
+        transform: translate(-6px, -50%) !important;
+        margin-top: 0;
+
+        &:before {
+          bottom: auto;
+          left: 100%;
+          transform: rotate(90deg);
+          margin-top: 5px;
+          margin-left: 1px;
+        }
+      }
+      &.middle-aligned-right {
+        left: 100%;
+        right: auto;
+        top: 50%;
+        transform: translate(6px, -50%) !important;
+        margin-top: 0;
+
+        &:before {
+          bottom: auto;
+          left: auto;
+          right: 100%;
+          transform: rotate(-90deg);
+          margin-top: 5px;
+          margin-right: 1px;
+        }
+      }
+
+      &.top-aligned {
+        top: auto;
+        bottom: 100%;
+        margin-top: 0;
+        margin-bottom: 5px;
+
+        & + .tooltiptext-tail,
+        &:before {
+          bottom: auto;
+          top: 100%;
+          margin-bottom: 0;
+          margin-top: 1px;
+          border: 4px solid transparent;
+          border-top-color: #000;
+        }
+
+        & + .tooltiptext-tail {
+          bottom: 100%;
+          top: auto;
+          margin-top: 0;
+          margin-bottom: -5px;
+        }
+      }
+    }
+
+    &:hover {
+      .tooltiptext {
+        display: inline-block;
+        opacity: 1;
+        transform: translate(-50%, 0);
+
+        & + .tooltiptext-tail,
+        &:before {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}

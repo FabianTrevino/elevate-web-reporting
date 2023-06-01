@@ -1,0 +1,14 @@
+﻿/* ----- Library Page ----- */
+
+.library-page-section .library-iframe {
+    width: 100%;
+    min-height: calc(100vh - 173px - 32px - 32px - 22px - 32px - 42px - 20px - 12px - 12px);
+    overflow: auto;
+}
+
+.library-page-section .library-info {
+    width: 100%;
+    margin-top: 12px;
+    margin-bottom: 24px;
+    margin-left: 12px;
+}

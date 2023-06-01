@@ -1,0 +1,28 @@
+﻿@{
+    Layout = MVC.Shared.Views.dm_ui._Layout_Base;
+}
+
+@section page_css
+{
+    @RenderSection("page_css", required: false)
+}
+
+<div class="login-body-content">
+
+    <header class="login-logo">
+        <img id="login-logo" alt="DataManager" title="Data Manager" src="@Links.Reskin.Content.dm_ui.img.dm_logo_svg" />
+    </header>
+
+    @RenderBody()
+
+</div>
+
+@section page_js
+{
+    @RenderSection("page_js", required: false)
+}
+
+@section js_on_document_ready
+{
+    @RenderSection("js_on_document_ready", required: false)
+}

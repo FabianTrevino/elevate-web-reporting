@@ -1,0 +1,554 @@
+﻿@model DashboardIowaFlexViewModel
+@{
+    if (Model.ContentIndicator == "pdf")
+    {
+        Layout = MVC.Shared.Views._Layout_Pdf;
+    }
+    else if (Model.IsDemo)
+    {
+        Layout = MVC.Shared.Views.dm_ui._Layout_NoMenu;
+    }
+    ViewBag.Title = "IowaFlex Dashboard";
+    ViewBag.MainTitle = "IowaFlex Dashboard";
+}
+
+@if (Model.ContentIndicator == "pdf")
+{
+    ViewBag.pdf_wrapper = "pdf-wrapper dashboard-main-page";
+    <div id="pdf-debug-console"></div>
+}
+
+<div>
+    <img src="@Links.Reskin.Content.img.logoIowaAssessmentsAdaptive_png" class="logoIowaAssessmentsAdaptive dashboard-page" />
+    <div class="section-card filters root-tab-element" @*tabindex="1" data-tabindex="1"*@ role="region" aria-label="Dashboard Filters">
+        <div class="root-tab-hidden-content" @*aria-hidden="true"*@></div>
+    </div>
+
+    @Html.HiddenFor(m => m.IsAdaptive)
+    <div class="dm-ui-page-container dm-ui-page-container-800 @ViewBag.pdf_wrapper">
+        <section class="dm-ui-page-section carded-section dashboard-page-section">
+            <div class="section-card root-tab-element" @*tabindex="2" data-tabindex="2"*@ role="region" aria-label="Group Average Card">
+                <div class="root-tab-hidden-content" @*aria-hidden="true"*@>
+                    @*<div class="nvda-root-announce"></div>*@
+                    @*<label role="tab" class="nvda-announce" tabindex="-1" tabindex-important="true"></label>*@
+                    <h2 id="test-event-subject-name" class="tab first-tab-element" @*tabindex="-1"*@>&nbsp;</h2>
+                    <br />
+                    <div class="average-scores-wrapper">
+                        <div id="average-standard-score"></div>
+                        <div class="test-event-text" @*aria-hidden="true"*@>Average Standard Score</div>
+                        <div id="pie-chart-score"></div>
+                        <div class="test-event-text" @*aria-hidden="true"*@>
+                            National Percentile<br />
+                            Rank (NPR) of the<br />
+                            Average Standard Score
+                        </div>
+                        <div class="buttons-wrapper">
+                            <a class="dm-ui-button-primary dm-ui-button-small" id="longitudinal-button" href="@Model.AppPath/dashboard/iowaflex/longitudinal" style="display: none;" @*tabindex="-1"*@ role="button">Longitudinal Reporting</a>
+                            <div class="dm-ui-button-primary dm-ui-button-small tab" id="achievement-ability" style="display:none;" tabindex="0" role="button">Show Achievement / Ability</div>
+                        </div>
+                    </div>
+                    <div class="quantiles-wrapper" role="region" aria-label="Percent of Students in each Performance Band">
+                        <span id="total-students-num-quartiles" aria-hidden="true">@*Total Number: <span>0</span>*@</span>
+                        <h3 class="quantiles-header-text">Percent of Students in each Performance Band</h3>
+                        <div id="barChart4">
+                            <span class="sr-only">Activating these buttons will cause content on the page to be updated.</span>
+                            @*<div class="dm-ui-overlay-spinner-container-not-hide placed-in-block" style="display: block !important;"><div class="dm-ui-spinner" role="alert" aria-live="assertive"><div></div><div></div><div></div><div></div><p class="accessible-message-placeholder js-loading-spinner-copy">Content is loading...</p></div></div>*@
+                            <div class="spinner shifted"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>
+                        </div>
+                        <div id="quantiles-dashed-line-legend" aria-hidden="true">
+                            <span>--</span> Percent nationally in each performance band
+                            <div id="chart4bars-debug-warning" class="debug-warning quartile"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @{
+                var dropdownScores = new List<DropdownItem>
+                {
+                    new DropdownItem {Text = "Age Percentile Rank", Value = "APR", Selected = true},
+                    new DropdownItem {Text = "Grade Percentile Rank", Value = "GPR"},
+                    new DropdownItem {Text = "Standard Age Score", Value = "SAS"},
+                    new DropdownItem {Text = "Universal Scale Score", Value = "USS"},
+                    new DropdownItem {Text = "Age Stanine", Value = "AS"},
+                    new DropdownItem {Text = "Grade Stanine", Value = "GS"},
+                    new DropdownItem {Text = "Raw Score", Value = "RS"}
+                    //new DropdownItem {Text = "Local Stanine", Value = "LS"},
+                    //new DropdownItem {Text = "Local Percentile Rank", Value = "LPR"}
+                };
+                var dropdownContentScope = new List<DropdownItem>
+                {
+                    new DropdownItem {Text = "Verbal", Value = "V", Selected = true},
+                    new DropdownItem {Text = "Quantitative", Value = "Q", Selected = true},
+                    new DropdownItem {Text = "Non Verbal", Value = "N", Selected = true},
+                    new DropdownItem {Text = "Composite VQ", Value = "VQ", Selected = true},
+                    new DropdownItem {Text = "Composite VN", Value = "VN", Selected = true},
+                    new DropdownItem {Text = "Composite QN", Value = "QN", Selected = true},
+                    new DropdownItem {Text = "Composite VQN", Value = "VQN", Selected = true}
+                };
+            }
+
+            <div class="section-card roster-table-card root-tab-element" @*tabindex="4" data-tabindex="4"*@ role="region" aria-label="Comparison Table">
+                <div class="root-tab-hidden-content" @*aria-hidden="true"*@>
+                    @*<label role="tab" class="nvda-announce" tabindex="-1" tabindex-important="true"></label>*@
+                    @*<div class="nvda-root-announce"></div>*@
+                    <div id="roster-top-info-wrapper" class="hidden">
+                        <div id="roster-name-wrapper">
+                            <h2 id="roster-name" class="tab first-tab-element" @*tabindex="-1"*@></h2>
+                            <div id="roster-switcher-wrapper" class="hidden">
+                                <div class="dm-ui-switcher-blue dm-ui-switcher noselect">
+                                    <input id="roster-switcher-1" name="roster-switcher" class="roster-switcher" value="Percent" type="radio" checked="checked">
+                                    <label for="roster-switcher-1">Percent</label>
+                                    <input id="roster-switcher-2" name="roster-switcher" class="roster-switcher" value="Number" type="radio">
+                                    <label for="roster-switcher-2">Number</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="wcag-autocomplete-search-instructions" style="display: none">Begin typing to search, use arrow keys to navigate, Enter to select</div>
+                        <div id="wcag-autocomplete-search-results" aria-live="assertive" class="sr-only"></div>
+                        <div id="roster-top-buttons-wrapper">
+                            <span id="roster-search-field">
+                                <span data-field="node_name" class="k-filtercell" data-role="filtercell"><span><span tabindex="0" role="presentation" style="" class="k-widget k-autocomplete k-header k-autocomplete-clearable k-state-default"><input data-bind="value: value" aria-label="Search" data-role="autocomplete" data-text-field="node_name" data-filter="startswith" data-delay="200" data-min-length="1" data-value-primitive="true" type="text" class="k-input tab" autocomplete="off" role="textbox" aria-haspopup="true" aria-disabled="false" aria-readonly="false" aria-autocomplete="list" aria-owns="" placeholder="Enter a Student Name" data-full-title="Student Name" tabindex="0"><span unselectable="on" class="k-icon k-clear-value k-i-close k-hidden" title="Clear" role="button" tabindex="0"></span><span class="k-icon k-i-loading" style="display:none"></span></span><span class="k-widget k-dropdown k-header k-dropdown-operator tab" unselectable="on" role="listbox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-owns="" aria-live="polite" aria-disabled="false" aria-busy="false" aria-activedescendant="880f3c87-1d90-4c62-bba7-8aa5a7a4b01e"><span unselectable="on" class="k-dropdown-wrap k-state-default"><span unselectable="on" class="k-input">Contains</span><span unselectable="on" class="k-select" aria-label="select"><span class="k-icon k-i-filter"></span></span></span><input class="k-dropdown-operator tab" data-bind="value: operator" data-role="dropdownlist" style="display: none;" aria-label="Contains" tabindex="0"></span><button type="button" class="k-button k-button-icon" title="Clear" aria-label="Clear" data-bind="visible:operatorVisible" style="display: none;"><span class="k-icon k-i-filter-clear"></span></button></span></span>
+                            </span>
+                            @*@Html.DmUiMultiSelectDropdown(dropdownScores, "Score_Control", "CogAT score filter", false, true, 1, 1, "Placeholder text", false)*@
+                            @Html.DmUiSingleSelectDropdown(dropdownScores, "Score_Control", false, "Select score", "CogAT score filter")
+                            @Html.DmUiMultiSelectDropdown(dropdownContentScope, "Scope_Control", "CogAT content scope filter", true, true, 1, 7, "Placeholder text", false)
+                            <span id="roster-filters-popup-button" class="tab no-spacebar-scrolling" aria-label="Select Report Criteria" role="button"></span>
+                            <span id="roster-reset-button" class="dm-ui-button-primary dm-ui-button-small tab no-spacebar-scrolling" title="Reset" role="button"></span>
+                        </div>
+                        <div id="roster-selected-quantile-label"></div>
+                        <div id="roster-selected-domain-label"></div>
+                        <div id="roster-selected-cogat-label">
+                            <div class="arrow"></div><i>Identified <b id="roster-cogat-label-roster-type">students</b> by<br><span><b>Achievement</b> <b id="roster-cogat-label-achievement-value"></b> and <b>Ability</b> <b id="roster-cogat-label-ability-value"></b> for <b id="roster-cogat-label-scope-value">VQN</b> and <b id="roster-cogat-label-score-value">APR</b></span></i><div class="close tab" tabindex="0" aria-label="Clear Achievement/Ability filter" role="button">X</div>
+                        </div>
+                    </div>
+                    <span id="total-students-num-roster" aria-hidden="true">@*Total Number: <span>0</span>*@</span>
+                    @if (Model.ContentIndicator == "web")
+                    {
+                        <div id="roster-table-wrapper"></div>
+                    }
+                    <div id="roster-legend-wrapper" class="tab" @*tabindex="-1"*@></div>
+                    <div id="roster-debug-warning" class="debug-warning roster"></div>
+                </div>
+            </div>
+
+            <div class="section-card pld-stage-info-card root-tab-element" @*tabindex="4" data-tabindex="4"*@ role="region" aria-label="PLD Stage Narrative" style="display: none;">
+                <div class="root-tab-hidden-content" @*aria-hidden="true"*@>
+                    <div class="left-column">
+                        <h2 class="tab first-tab-element">Pre-Emerging</h2>
+                        <p class="tab last-tab-element">A typical <b>Pre-Emerging</b> has not yet demonstrated a developing mastery of the core mathematical standards and practices of the Kindergarten level. The student can solve some addition and subtraction problems and may demonstrate an emerging concept of place value. The student can classify objects and may be able identify and analyze basic geometric shapes.</p>
+                    </div>
+                    <div class="right-column">
+                        <img src="~/Reskin/Content/img/stage-info-card1.png" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card pld-level-info-card root-tab-element" @*tabindex="4" data-tabindex="4"*@ role="region" aria-label="PLD Level Narrative" style="display: none;">
+                <div class="root-tab-hidden-content" @*aria-hidden="true"*@>
+                    <div class="left-column tab first-tab-element">
+                        <h2>I CAN</h2>
+                        <ul>
+                            <li>show and name upper- and lowercase letters (RF.K.1)</li>
+                            <li>hear and say rhyming words. (RF.K.2)</li>
+                            <li>say the sounds in words. (RK.F.3)</li>
+                            <li>figure out what words mean (L.K.4)</li>
+                            <li>use action words correctly (L.K.1)</li>
+                            <li>add /s/ or /es/ to show more than one (L.K.1)</li>
+                            <li>add words to a sentence to make it clearer (L.K.1)</li>
+                            <li>change sounds to make new words. (RK.K.2)</li>
+                            <li>look at words and see how they are the same or different (RF.K.3)</li>
+                        </ul>
+                    </div>
+                    <div class="right-column tab last-tab-element">
+                        <h2>I AM READY TO</h2>
+                        <ul>
+                            <li>read high frequency words (RF.1.3)</li>
+                            <li>read first grade site words (RF.1.3)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <aside class="dm-ui-page-aside">
+            <div id="print-report-center" class="root-tab-element" @*tabindex="3" data-tabindex="3"*@ role="region" aria-label="Print Reports">
+                <div class="tabs one-tab root-tab-hidden-content" @*aria-hidden="true"*@>
+                    <input id="tab1" type="radio" name="tabs" checked="checked">
+                    <h2><label for="tab1" role="tab">Print Reports</label></h2>
+                    <input id="tab2" type="radio" name="tabs">
+                    <h2 style="display: none;"><label for="tab2" role="tab" style="display: none;">Reports Center</label></h2>
+                    <section id="content-tab1" role="tabpanel">
+                        <p>
+                            <span id="print-dashboard" class="print-button pdf-print no-spacebar-scrolling tab" pdf-type="dashboard" tabindex="0" role="button">
+                                <span class="icon-print-blue"></span> Print Dashboard
+                            </span>
+                            <span id="print-student-profile" class="print-button no-spacebar-scrolling tab" style="display: none;" tabindex="0" role="button">
+                                <span class="icon-print-blue"></span> Print Student Profile
+                            </span>
+                        </p>
+                        <form id="form-print-dashboard" name="print_preview_form" target="print_preview_popup" method="post" action="@Model.AppPath/dashboard/iowaflex/print/page">
+                            <input type="hidden" id="input" name="input" value="">
+                        </form>
+                        <form id="print_preview_form" name="print_preview_form" target="print_preview_popup" method="post" action="Pdf/">
+                            <input type="hidden" id="pdf_type" name="pdf_type" value="">
+                            <input type="hidden" id="pdf_model" name="pdf_model" value="">
+                        </form>
+                        <form id="print_profile_narrative_form" name="print_profile_narrative_form" target="print_preview_popup" method="post" action="@Model.AppPath/dashboard/iowaflex/print/profile_narrative"></form>
+                        <form id="print_profile_narrative_form_k1" name="print_profile_narrative_form_k1" target="print_preview_popup" method="post" action="@Model.AppPath/dashboard/iowaflex/print/profile_narrative_k1"></form>
+                    </section>
+                    <section id="content-tab2" role="tabpanel">
+                        <p>
+                            <table class="print-report-table" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                                <thead>
+                                    <tr>
+                                        <th>Report Name</th>
+                                        <th>Date Created</th>
+                                        <th>Days Available</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="#">Report Name 1</a></td>
+                                        <td>3/19/19</td>
+                                        <td>5</td>
+                                        <td><i class="far fa-clock"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#">Report Name 2</a></td>
+                                        <td>3/15/19</td>
+                                        <td>1</td>
+                                        <td><i class="fas fa-check"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#">Report Name 3</a></td>
+                                        <td>3/17/19</td>
+                                        <td>3</td>
+                                        <td><i class="fas fa-check"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#">Report Name 4</a></td>
+                                        <td>3/16/19</td>
+                                        <td>2</td>
+                                        <td><i class="fas fa-check"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </p>
+                    </section>
+                </div>
+            </div>
+            <div id="flex-cogat-diagram" class="dm-ui-card" tabindex="3" data-tabindex="3" style="display: none;">
+                <div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>
+                <h2>Achievement & Ability Summary</h2>
+                <div class="dropdown-wrapper">
+                    @Html.DmUiSingleSelectDropdown(new List<DropdownItem>
+                    {
+                        new DropdownItem {Text = "APR", Value = "APR", Selected = true},
+                        new DropdownItem {Text = "GPR", Value = "GPR"}
+                    }, "flex-cogat-content-type", false, "---", "CONTENT TYPE")
+                </div>
+                <h3>Number of Students in each Achievement/Ability Quintile</h3>
+                <h4 class="vertical">Achievement</h4>
+                <div class="matrix-wrapper">
+                    <table class="table-matrix">
+                        <tbody>
+                        <tr role="row">
+                            <th scope="row">High</th>
+                            <td data-achievement="5" data-ability="1" aria-describedby="iowa-cogat-column1" class="data"><span><b>0</b></span></td>
+                            <td data-achievement="5" data-ability="2" aria-describedby="iowa-cogat-column2" class="data"><span><b>0</b></span></td>
+                            <td data-achievement="5" data-ability="3" aria-describedby="iowa-cogat-column3" class="selected"><span><b>2</b></span></td>
+                            <td data-achievement="5" data-ability="4" aria-describedby="iowa-cogat-column4" class="data"><span><b>0</b></span></td>
+                            <td data-achievement="5" data-ability="5" aria-describedby="iowa-cogat-column5" class="data"><span><b>1</b></span></td>
+                        </tr>
+                        <tr role="row">
+                            <th scope="row">High Avg</th>
+                            <td data-achievement="4" data-ability="1" aria-describedby="iowa-cogat-column1" class="data"><span><b>0</b></span></td>
+                            <td data-achievement="4" data-ability="2" aria-describedby="iowa-cogat-column2" class="data"><span><b>0</b></span></td>
+                            <td data-achievement="4" data-ability="3" aria-describedby="iowa-cogat-column3" class="data"><span><b>0</b></span></td>
+                            <td data-achievement="4" data-ability="4" aria-describedby="iowa-cogat-column4" class="data"><span><b>2</b></span></td>
+                            <td data-achievement="4" data-ability="5" aria-describedby="iowa-cogat-column5" class="data"><span><b>1</b></span></td>
+                        </tr>
+                        <tr role="row">
+                            <th scope="row">Avg</th>
+                            <td data-achievement="3" data-ability="1" aria-describedby="iowa-cogat-column1" class="data"><span><b>0</b></span></td>
+                            <td data-achievement="3" data-ability="2" aria-describedby="iowa-cogat-column2" class="data"><span><b>3</b></span></td>
+                            <td data-achievement="3" data-ability="3" aria-describedby="iowa-cogat-column3" class="data"><span><b>6</b></span></td>
+                            <td data-achievement="3" data-ability="4" aria-describedby="iowa-cogat-column4" class="data"><span><b>3</b></span></td>
+                            <td data-achievement="3" data-ability="5" aria-describedby="iowa-cogat-column5" class="data"><span><b>0</b></span></td>
+                        </tr>
+                        <tr role="row">
+                            <th scope="row">Low Avg</th>
+                            <td data-achievement="2" data-ability="1" aria-describedby="iowa-cogat-column1" class="data"><span><b>0</b></span></td>
+                            <td data-achievement="2" data-ability="2" aria-describedby="iowa-cogat-column2" class="data"><span><b>2</b></span></td>
+                            <td data-achievement="2" data-ability="3" aria-describedby="iowa-cogat-column3" class="data"><span><b>4</b></span></td>
+                            <td data-achievement="2" data-ability="4" aria-describedby="iowa-cogat-column4" class="data"><span><b>0</b></span></td>
+                            <td data-achievement="2" data-ability="5" aria-describedby="iowa-cogat-column5" class="data"><span><b>0</b></span></td>
+                        </tr>
+                        <tr role="row">
+                            <th scope="row">Low</th>
+                            <td data-achievement="1" data-ability="1" aria-describedby="iowa-cogat-column1" class="data"><span><b>1</b></span></td>
+                            <td data-achievement="1" data-ability="2" aria-describedby="iowa-cogat-column2" class="data"><span><b>0</b></span></td>
+                            <td data-achievement="1" data-ability="3" aria-describedby="iowa-cogat-column3" class="data"><span><b>0</b></span></td>
+                            <td data-achievement="1" data-ability="4" aria-describedby="iowa-cogat-column4" class="data"><span><b>0</b></span></td>
+                            <td data-achievement="1" data-ability="5" aria-describedby="iowa-cogat-column5" class="data"><span><b>0</b></span></td>
+                        </tr>
+                        </tbody>
+                        <tfoot role="rowgroup">
+                        <tr role="row">
+                            <th scope="col" role="columnheader"></th>
+                            <th id="iowa-cogat-column1" scope="col" role="columnheader">Low</th>
+                            <th id="iowa-cogat-column2" scope="col" role="columnheader">Low Avg</th>
+                            <th id="iowa-cogat-column3" scope="col" role="columnheader">Avg</th>
+                            <th id="iowa-cogat-column4" scope="col" role="columnheader">High Avg</th>
+                            <th id="iowa-cogat-column5" scope="col" role="columnheader">High</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                    <h4>Ability</h4>
+                </div>
+            </div>
+            <div id="dashboard-right-column">
+                <div class="dm-ui-card" @*tabindex="3" data-tabindex="3"*@>
+                    <div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div id="modal-dashboard-report-criteria" class="dm-ui-modal-container">
+        <div class="dm-ui-modal dm-ui-modal-green" role="dialog" aria-modal="true" aria-label="Select Report Criteria">
+            <button type="button" class="close_icon first-tab-element wcag-modal-first-element" aria-label="Close"></button>
+            <h1 class="modal-header">Select Report Criteria</h1>
+            <section>
+                @*<div class="session-modal-text-1 tab" tabindex="0">Enter information below to add a student. Fields with an asterisk are required.</div>*@
+                <div class="dm-ui-alert dm-ui-alert-error hidden" role="alert"><a href="#" class="dm-ui-alert-close" aria-label="Close alert message" role="button">×</a>There are no items that match your query. Please change your selections and click Run Report again.</div>
+                @{
+                    var dropdownScore = new List<DropdownItem>
+                    {
+                        new DropdownItem {Text = "National Percentile Rank", Value = "NationalPercentileRank", Selected = true},
+                        new DropdownItem {Text = "Standard Score", Value = "StandardScore"}
+                    };
+                    var dropdownBoolean = new List<DropdownItem>
+                    {
+                        new DropdownItem {Text = "AND", Value = "and"},
+                        new DropdownItem {Text = "OR", Value = "or"}
+                    };
+                    var dropdownScoreRange = new List<DropdownItem>
+                    {
+                        new DropdownItem {Text = "Low", Value = "1"},
+                        new DropdownItem {Text = "Mid", Value = "2"},
+                        new DropdownItem {Text = "High", Value = "3"}
+                    };
+                }
+                <table class="table-report-filters" role="presentation">
+                    <tr>
+                        <td class="column-score">
+                            @Html.DmUiSingleSelectDropdown(dropdownScore, "dropdown-score-1", false, "Select score", "SCORE")
+                        </td>
+                        <td class="column-content-area">
+                            @Html.DmUiSingleSelectDropdown(new List<DropdownItem>(), "dropdown-content-area-1", false, "Select content area", "CONTENT AREA", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                        <td class="column-condition">
+                            @Html.DmUiSingleSelectDropdown(new List<DropdownItem>(), "dropdown-condition-1", false, "Select condition", "CONDITION")
+                        </td>
+                        <td class="column-val1">
+                            <div id="wrapper-input-score-1">
+                                <label for="input-score-1-val1">VALUE</label>
+                                <input id="input-score-1-val1" type="text" maxlength="3">
+                            </div>
+                            @*<div id="wrapper-dropdown-score-1" style="display: none;">
+                                @Html.DmUiSingleSelectDropdown(dropdownScoreRange, "dropdown-score-range-1", false, "---", "SCORE", htmlAttributes: new { disabled = "disabled" })
+                            </div>*@
+                        </td>
+                        <td class="column-val2 hidden">
+                            <div id="wrapper-input-score-1-val2" class="hidden">
+                                <label for="input-score-1-val2">&nbsp;</label>
+                                <div class="wrapper-val2">
+                                    and
+                                    <input id="input-score-1-val2" type="text" disabled="disabled" maxlength="3">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="column-boolean">
+                            @Html.DmUiSingleSelectDropdown(dropdownBoolean, "dropdown-boolean-1", true, "---", "BOOLEAN")
+                        </td>
+                    </tr>
+                    <tr class="filter-row-disabled">
+                        <td class="column-score">
+                            @Html.DmUiSingleSelectDropdown(dropdownScore, "dropdown-score-2", false, "Select score", "SCORE", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                        <td class="column-content-area">
+                            @Html.DmUiSingleSelectDropdown(new List<DropdownItem>(), "dropdown-content-area-2", false, "Select content area", "CONTENT AREA", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                        <td class="column-condition">
+                            @Html.DmUiSingleSelectDropdown(new List<DropdownItem>(), "dropdown-condition-2", false, "Select condition", "CONDITION", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                        <td class="column-val1">
+                            <div id="wrapper-input-score-2">
+                                <label for="input-score-2-val1">VALUE</label>
+                                <input id="input-score-2-val1" type="text" disabled="disabled" maxlength="3">
+                            </div>
+                            @*<div id="wrapper-dropdown-score-2" style="display: none;">
+                                @Html.DmUiSingleSelectDropdown(dropdownBoolean, "dropdown-score-range-2", false, "---", "SCORE", htmlAttributes: new { disabled = "disabled" })
+                            </div>*@
+                        </td>
+                        <td class="column-val2 hidden">
+                            <div id="wrapper-input-score-2-val2" class="hidden">
+                                <label for="input-score-2-val2">&nbsp;</label>
+                                <div class="wrapper-val2">
+                                    and
+                                    <input id="input-score-2-val2" type="text" disabled="disabled" maxlength="3">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="column-boolean">
+                            @Html.DmUiSingleSelectDropdown(dropdownBoolean, "dropdown-boolean-2", true, "---", "BOOLEAN", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr class="filter-row-disabled">
+                        <td class="column-score">
+                            @Html.DmUiSingleSelectDropdown(dropdownScore, "dropdown-score-3", false, "Select score", "SCORE", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                        <td class="column-content-area">
+                            @Html.DmUiSingleSelectDropdown(new List<DropdownItem>(), "dropdown-content-area-3", false, "Select content area", "CONTENT AREA", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                        <td class="column-condition">
+                            @Html.DmUiSingleSelectDropdown(new List<DropdownItem>(), "dropdown-condition-3", false, "Select condition", "CONDITION", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                        <td class="column-val1">
+                            <div id="wrapper-input-score-3">
+                                <label for="input-score-3-val1">VALUE</label>
+                                <input id="input-score-3-val1" type="text" disabled="disabled" maxlength="3">
+                            </div>
+                            @*<div id="wrapper-dropdown-score-3" style="display: none;">
+                                @Html.DmUiSingleSelectDropdown(dropdownBoolean, "dropdown-score-range-3", false, "---", "SCORE", htmlAttributes: new { disabled = "disabled" })
+                            </div>*@
+                        </td>
+                        <td class="column-val2 hidden">
+                            <div id="wrapper-input-score-3-val2" class="hidden">
+                                <label for="input-score-3-val2">&nbsp;</label>
+                                <div class="wrapper-val2">
+                                    and
+                                    <input id="input-score-3-val2" type="text" disabled="disabled" maxlength="3">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="column-boolean">
+                        </td>
+                    </tr>
+                </table>
+                <div class="dm-ui-modal-button-container-dual">
+                    <button class="dm-ui-button-medium dm-ui-button-secondary last-tab-element wcag-modal-last-element" id="cancel-dashboard-report-button">Cancel</button>
+                    <button class="dm-ui-button-medium dm-ui-button-primary" id="apply-dashboard-report-button" disabled="disabled">Run Report</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div id="modal-dashboard-print-students" class="dm-ui-modal-container">
+        <div class="dm-ui-modal dm-ui-modal-green" role="dialog" aria-modal="true" aria-label="Print Reports: Student Profile">
+            <button type="button" class="close_icon first-tab-element wcag-modal-first-element" aria-label="Close"></button>
+            <h1 class="modal-header">Print Reports: Student Profile</h1>
+            <section>
+                <div aria-checked="false" class="dm-ui-checkbox dm-ui-menuitem-checkbox" role="checkbox" tabindex="0"><input id="check-all-students-modal" name="check-all-students-modal" type="checkbox"><label for="check-all-students-modal"> Select All</label></div>
+                <div class="students-wrapper" @*tabindex="-1"*@></div>
+                <div class="dm-ui-modal-button-container-dual">
+                    <button class="dm-ui-button-medium dm-ui-button-secondary" id="cancel-dashboard-print-students">Cancel</button>
+                    <button class="dm-ui-button-medium dm-ui-button-primary last-tab-element wcag-modal-last-element" id="apply-dashboard-print-students">Generate PDF</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+@{
+    var dropdownPrintReportType = new List<DropdownItem>
+    {
+        //new DropdownItem {Text = "Dashboard", Value = "Dashboard"},
+        new DropdownItem {Text = "Differentiated Instruction Report", Value = "DifferentiatedInstructionReport", Selected = true}
+    };
+    var dropdownEmpty = new List<DropdownItem>
+    {
+    };
+}
+    <div id="modal-dashboard-print-reports" class="dm-ui-modal-container">
+        <div class="dm-ui-modal dm-ui-modal-green" role="dialog" aria-modal="true" aria-label="Print Reports">
+                <div class="tabs one-tab root-tab-hidden-content">
+                    <input id="reports-tab1" type="radio" name="reports-tabs" checked="checked" class="tab1">
+                    <label for="reports-tab1" role="tab" aria-label="Print Center" class="tab tab1 first-tab-element wcag-modal-first-element" @*tabindex="0"*@>Print Center</label>
+                    <section class="content-tab1" role="tabpanel">
+                        <section>
+                            <button type="button" class="close_icon first-tab-element wcag-modal-first-element" aria-label="Close"></button>
+                            <h1 class="modal-header">Print Center</h1>
+                            <div class="session-modal-text-1">Select your report type and criteria before selecting the district, buildings, and classes to include in your report.</div>
+                            <div class="filter-wrapper">
+                                <div class="filter print-report-type">@Html.DmUiSingleSelectDropdown(dropdownPrintReportType, "print-report-type", false, "Select report type", "REPORT TYPE")</div>
+                                <div class="filter print-performance-stages">@Html.DmUiMultiSelectDropdown(dropdownEmpty, "print-performance-stages", "PERFORMANCE STAGES", true, true, maxToSelect: 999, defaultText: "Select performance stages")</div>
+                            </div>
+                            <div class="dm-ui-checkbox-container">
+                                <div aria-checked="true" aria-disabled="true" class="dm-ui-checkbox dm-ui-disabled" role="checkbox" tabindex="-1"><input id="check-all-students-modal-reports" name="check-all-students-modal-reports" type="checkbox" checked="checked" disabled="disabled" /><label for="check-all-students-modal-reports"> Select All</label></div>
+                            </div>
+                            <div id="students-treeview-wrapper" @*tabindex="-1"*@>
+                                @Html.DmUiGroupMultiSelectTreeDropdown(dropdownEmpty, "treeStudentsMultiSelectDropdownList", null, true, true, null, null, "Placeholder text", true, isAllNodesExpanded: false, treeList: true, treeListColumnNum: 3)
+                                <br>
+                            </div>
+                            <div class="dm-ui-modal-button-container-dual">
+                                <button class="dm-ui-button-medium dm-ui-button-secondary" id="cancel-dashboard-print-reports">Cancel</button>
+                                <button class="dm-ui-button-medium dm-ui-button-primary last-tab-element wcag-modal-last-element" id="apply-dashboard-print-reports">Generate PDF</button>
+                            </div>
+                        </section>
+
+                        <form id="print_differentiated_profile_form" name="print_profile_narrative_form" target="print_preview_popup" method="post" action="@Model.AppPath/dashboard/iowaflex/print/differentiated_instruction">
+                        </form>
+                    </section>
+                </div>
+        </div>
+    </div>
+
+    @if (!Model.IsProd)
+    {
+        <div id="debug-graphql">
+            <h3>GraphQL Queries:</h3>
+            <div id="debug-graphql-filters"><h4>Filters: <span></span></h4><textarea readonly="readonly"></textarea></div>
+            <div id="debug-graphql-quantiles"><h4>Quantiles: <span></span></h4><textarea readonly="readonly"></textarea></div>
+            <div id="debug-graphql-domains"><h4>Domains: <span></span></h4><textarea readonly="readonly"></textarea></div>
+            <div id="debug-graphql-roster"><h4>Roster: <span></span></h4><textarea readonly="readonly"></textarea></div>
+            <div id="debug-graphql-hierarchy" style="display: none;"><h4>Hierarchy: <span></span></h4><textarea readonly="readonly"></textarea></div>
+            <div id="debug-graphql-achievement-ability-summary" style="display: none;"><h4>Achievement & Ability Summary: <span></span></h4><textarea readonly="readonly"></textarea></div>
+        </div>
+    }
+</div>
+
+@section floating_buttons
+{
+    <a href="#" class="dm-ui-button-primary dm-ui-button-small disabled-element no-spacebar-scrolling" id="print-reports-button" @*tabindex="1"*@ role="button" style="display: none;">Print Reports</a>
+}
+
+@*@if (Model.IsDemo)
+{
+    @section bread_crumbs
+    {
+        <div class="bread-crumbs"></div>
+    }
+}*@
+
+@section page_js
+{
+    @Scripts.Render(BundlePath.JsDashboardIowaFlexPage)
+}
+
+@section js_on_document_ready
+{
+    var pdf_model = '@ViewBag.pdf_model';
+    var isProdEnvironment = '@Model.IsProd';
+
+    Common.Init();
+    Dashboard.Init(isProdEnvironment);
+    Options.InitButtonsHandlers();
+}
+
+@section page_css
+{
+    @Styles.Render(BundlePath.CssDashboardIowaFlexPage)
+    @Styles.Render(BundlePath.CssResponsiveDashboardIowaFlexPage)
+}

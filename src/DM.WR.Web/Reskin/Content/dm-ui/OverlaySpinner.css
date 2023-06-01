@@ -1,0 +1,107 @@
+﻿.accessible-message-placeholder {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip: rect(0 0 0 0);
+}
+
+.dm-ui-overlay-spinner-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 300;
+    animation: showspinner 2s forwards;
+}
+
+@keyframes showspinner {
+    0%, 50% {
+        opacity: 0;
+    }
+
+    51%, 80% {
+        opacity: 1;
+    }
+
+    81%, 100% {
+        opacity: 1;
+    }
+}
+
+.dm-ui-overlay-spinner-container > .dm-ui-overlay {
+    opacity: 0.5;
+    background: #000;
+    width: 100%;
+    height: 100%;
+    z-index: 300;
+    top: 0;
+    left: 0;
+    position: fixed;
+}
+
+.dm-ui-spinner {
+    height: 46px;
+    width: 46px;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -23px 0 0 -23px;
+    z-index: 301;
+}
+
+    .dm-ui-spinner div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 46px;
+        height: 46px;
+        border: 5px solid #fff;
+        border-radius: 50%;
+        animation: SpinnerRotate .9s ease-in-out infinite, SpinnerBorderColor 4s ease-in-out infinite;
+    }
+
+        .dm-ui-spinner div:nth-child(1) {
+            animation-delay: -0.225s;
+        }
+
+        .dm-ui-spinner div:nth-child(2) {
+            animation-delay: -0.15s;
+        }
+
+        .dm-ui-spinner div:nth-child(3) {
+            animation-delay: -0.075s;
+        }
+
+@keyframes SpinnerRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes SpinnerBorderColor {
+    100%, 0% {
+        border-color: #f2a900 transparent transparent transparent;
+    }
+
+    40% {
+        border-color: #e966b1 transparent transparent transparent;
+    }
+
+    66% {
+        border-color: #c67af7 transparent transparent transparent;
+    }
+
+    80%, 90% {
+        border-color: #72be44 transparent transparent transparent;
+    }
+}

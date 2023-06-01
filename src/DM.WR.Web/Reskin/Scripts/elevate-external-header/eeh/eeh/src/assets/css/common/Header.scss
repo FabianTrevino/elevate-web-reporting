@@ -1,0 +1,211 @@
+header.app-header .app-header-bar {
+  background-color: var(--app-background-color-inverse);
+}
+
+// .sidebar {
+//     height: 100vh;
+//     position: fixed;
+//     width: 7ch;
+//     z-index: 2;
+//     top: 0;
+//     left: 0;
+//     background-color: rgb(255, 255, 255);
+//     overflow-x: hidden;
+//     padding-top: 1em;
+//     box-shadow: 10px 0px 0px rgba(0,0,0,0.2);
+//     padding-left: 0.8em;
+//     margin: 0;
+// }
+
+// .sidebar li {
+//     padding: 6px 8px 6px 16px;
+//     text-decoration: none;
+//     font-size: 20px;
+//     display: block;
+//     width: 60px;
+//     height: 60px;
+//     color: grey;
+// }
+
+// .sidebar a {
+//     color: grey;
+// }
+
+// .sidebar img:hover {
+//     color: #096DA9;
+// }
+
+// .main {
+//     padding: 0px 10px;
+// }
+
+// @media screen and (max-height: 450px) {
+//     .sidebar {padding-top: 15px;}
+//     .sidebar a {font-size: 18px;}
+// }
+
+// .nav-menu {
+//     display: flex;
+//     justify-content: center;
+//     position: fixed;
+//     top: 0;
+//     left: -100%;
+// }
+
+// .subsidebar {
+//     height: 100vh;
+//     position: fixed;
+//     z-index: 1;
+//     top: 0;
+//     left: 0;
+//     background-color: var(--page-background-color);
+//     overflow-x: hidden;
+//     padding-top: 1em;
+//     box-shadow: 10px 0px 0px rgba(0,0,0,0.2);
+// }
+
+// .sidenavopen {
+//     width: 25ch;
+//     height: 100vh;
+//     position: fixed;
+//     z-index: 1;
+//     top: 0;
+//     left: 86px;
+//     background-color: rgb(255, 255, 255);;
+//     overflow-x: hidden;
+//     transition: 0.5s;
+//     padding-top: 60px;
+//     box-shadow: 10px 0px 0px rgba(0,0,0,0.2);
+// }
+
+// .sidenavclose {
+//     height: 100vh;
+//     width: 0px;
+//     position: fixed;
+//     z-index: 1;
+//     top: 0;
+//     left: 0;
+//     background-color: #111;
+//     overflow-x: hidden;
+//     transition: 0.5s;
+//     padding-top: 60px;
+// }
+
+// .sidenav a {
+//     text-decoration: none;
+//     font-size: 25px;
+//     color: #818181;
+//     display: block;
+// }
+
+// .sidenavopen .text {
+//     position: absolute;
+//     top: 0;
+//     right: 25px;
+//     font-size: 15px;
+//     margin-left: 50px;
+//     color: grey;
+// }
+
+// .sidenavclose .text {
+//     position: absolute;
+//     top: 0;
+//     right: 25px;
+//     font-size: 15px;
+//     margin-left: 50px;
+//     color: grey;
+// }
+
+// @media screen and (max-height: 450px) {
+//     .sidenav {
+//         padding-top: 15px;
+//         padding-right: 50px;
+//     }
+//   .sidenav a {font-size: 18px;}
+// }
+
+// .sidenavmenu{
+//     width: 300px;
+//     height: 40px;
+//     fill: #f9f9f9;
+//     box-shadow: 0px 1px 0px rgba(203,203,203,1);
+//     text-align: left;
+//     padding-left: 10px;
+//     text-decoration: none;
+//     text-decoration: none;
+//     color: #818181;
+//     display: block;
+// }
+
+// .hover:hover{
+//     color: #096DA9;
+// }
+
+// .texttip {
+//     position: relative;
+//     display: inline-block;
+// }
+
+// .texttip .texttiptext {
+//     width: 120px;
+//     background-color: #555;
+//     color: #fff;
+//     text-align: center;
+//     border-radius: 6px;
+//     padding: 5px 0;
+//     position: absolute;
+//     z-index: 1;
+//     bottom: 125%;
+//     left: 50%;
+//     margin-left: -60px;
+//     transition: opacity 0.3s;
+// }
+
+// .texttip .texttiptext::after {
+//     content: "";
+//     position: absolute;
+//     top: 100%;
+//     left: 50%;
+//     margin-left: -5px;
+//     border-width: 5px;
+//     border-style: solid;
+//     border-color: #555 transparent transparent transparent;
+// }
+
+// .iconname {
+//     padding: 35px 8px 6px 100px;
+//     text-decoration: none;
+//     font-size: 20px;
+//     display: block;
+//     width: 60px;
+//     height: 60px;
+// }
+
+// @media screen and (max-width: 600px) {
+//     .sidenavmenu{
+//         font-size: 10px;
+//         width: 300px;
+//         height: 40px;
+//         fill: #f9f9f9;
+//         box-shadow: 0px 1px 0px rgba(203,203,203,1);
+//         text-align: left;
+//         padding-left: 10px;
+//         text-decoration: none;
+//         text-decoration: none;
+//         color: #818181;
+//         display: block;
+//     }
+//     .sidenavopen {
+//         height: 100%;
+//         width: 125px;
+//         position: fixed;
+//         z-index: 1;
+//         top: 0;
+//         left: 86px;
+//         background-color: rgb(255, 255, 255);;
+//         overflow-x: hidden;
+//         transition: 0.5s;
+//         padding-top: 60px;
+//         box-shadow: 10px 0px 0px rgba(0,0,0,0.2);
+//     }
+// }

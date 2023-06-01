@@ -1,0 +1,42 @@
+﻿@model List<MagicMenuItem>
+
+@foreach (var menuItem in Model)
+{
+    var aID = string.Format("subMenu-{0}", menuItem.Key);
+    <li class="@menuItem.HtmlClass">
+        @if (menuItem.HasSubMenu)
+        {
+
+            if (menuItem.IsCurrentPage)
+            {
+                <a class="has-sub-menu" aria-controls="@aID" aria-current="page" aria-expanded="false" href="javascript:;">
+                    @menuItem.Text
+                    <div class="main-menu-arrow main-menu-arrow-down"></div>
+                </a>
+
+            }
+            else
+            {
+                <a class="has-sub-menu" aria-controls="@aID" aria-expanded="false" href="javascript:;">
+                    @menuItem.Text
+                    <div class="main-menu-arrow main-menu-arrow-down"></div>
+                </a>
+
+            }
+            <ul id="@aID" class="sub-menu">
+                @Html.Partial(MVC.Shared.Views.dm_ui._MagicMainMenu, menuItem.Items)
+            </ul>
+        }
+        else
+        {
+            if (menuItem.IsCurrentPage)
+            {
+                <a href="@menuItem.Link" aria-current="page">@menuItem.Text</a>
+            }
+            else
+            {
+                <a href="@menuItem.Link">@menuItem.Text</a>
+            }
+        }
+    </li>
+}

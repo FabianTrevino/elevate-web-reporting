@@ -1,0 +1,35 @@
+﻿/* ----- Criteria Page ----- */
+
+.criteria-page-section .criteria-selector-left,
+.criteria-page-section .criteria-selector-right {
+    width: 50%;
+    padding-right: 40px;
+    margin-bottom: 20px;
+}
+
+.criteria-page-section .criteria-selector-left {
+    float: left;
+}
+
+.criteria-page-section .criteria-selector-right {
+    float: right;
+}
+
+.criteria-page-section .criteria-selector-left label,
+.criteria-page-section .criteria-selector-right label {
+    margin-bottom: 8px;
+}
+
+/* Table */
+.criteria-page-section table td:nth-last-of-type(-n+2) {
+    width: 160px;
+    text-align: center;
+}
+.criteria-page-section table .load-criteria-link {
+    margin-right: 16px;
+}
+
+.criteria-page-section .dm-ui-table td:nth-child(2),
+.criteria-page-section .dm-ui-table td:first-child {
+    max-width: 1px;
+}

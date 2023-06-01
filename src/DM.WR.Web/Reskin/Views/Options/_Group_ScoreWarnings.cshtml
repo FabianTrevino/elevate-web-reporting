@@ -1,0 +1,70 @@
+﻿@model OptionGroup
+
+@{
+    var modalId = $"{Model.Type}Modal";
+
+    var cancelButtonId = $"{modalId}-cancel-button";
+    var applyButtonId = $"{modalId}-apply-button";
+
+    var group = (ScoreWarningsGroup)Model;
+}
+
+<label id="lblGroupScoreWarnings" style="display: none;">@string.Format("{0} Change", Model.DisplayName)</label>
+<label>@Model.DisplayName</label> @Html.WrSpecialGroupLink(modalId, "lblGroupScoreWarnings", "divGroupScoreWarnings")
+<div id="divGroupScoreWarnings" class="option-group-selected-text">@group.SelectionText</div>
+
+<input id="@Model.TypeCode" type="hidden" value="" class="dm-ui-hidden-input" />
+
+<div id="@modalId" class="dm-ui-modal-container dm-ui-hide" role="alertdialog">
+    <div class="dm-ui-modal dm-ui-modal-green score-warnings-modal">
+        <header><h1>@Model.DisplayName</h1></header>
+        <section>
+            <div id="output">Score warning/indicator filters narrow results by a particular score warning message or indicator. For more on score warning/indicator filters, see DataManager Online Help. </div>
+
+            <div class="score-warnings-row head-row">
+                <div class="score-warnings-col col-concat"> </div>
+                <div class="score-warnings-col col-dropdown">SCORE WARNING/INDICATOR</div>
+                <div class="score-warnings-col col-switch"> </div>
+            </div>
+
+            @for (int c = 0; c < group.Rows.Count; ++c)
+            {
+                var row = group.Rows[c];
+
+                var concatItems = row.Concatenation == ConcatOperatorEnum.None ?
+                        null :
+                        new List<SwitcherItem>
+                        {
+                            new SwitcherItem{Text = "AND", Value = "AND", IsSelected = row.Concatenation == ConcatOperatorEnum.AND},
+                            new SwitcherItem{Text = "OR", Value = "OR", IsSelected = row.Concatenation == ConcatOperatorEnum.OR},
+                        };
+
+                var dropdown = group.GetSequenceDropdown();
+                if (row.HasSelection) { dropdown.First(i => i.Value == row.SequenceNumber).Selected = true; }
+
+                var filterSwitch = new List<SwitcherItem>
+                        {
+                            new SwitcherItem{Text = "Include", Value = "Include", IsSelected = row.Switch == ScoreWarningsFilterSwitchEnum.Include},
+                            new SwitcherItem{Text = "Exclude", Value = "Exclude", IsSelected = row.Switch == ScoreWarningsFilterSwitchEnum.Exclude},
+                        };
+
+                <div class="score-warnings-row">
+                    <div class="score-warnings-col col-concat">@Html.DmUiSwitcher(concatItems, $"score_warnings_concat_{c}", SectionColor.Green, new { data_original_value = row.Concatenation.ToString() })</div>
+                    <div class="score-warnings-col col-dropdown">@Html.DmUiSingleSelectDropdown(dropdown, $"sequence-dd-{c}", true, "None selected", htmlAttributes: new { data_original_value = row.SequenceNumber })</div>
+                    <div class="score-warnings-col col-switch">@Html.DmUiSwitcher(filterSwitch, $"filter_switch_{c}", SectionColor.Green, new { @class = row.HasSelection ? null : "dm-ui-hide", data_original_value = row.Switch })</div>
+                </div>
+            }
+
+            <hr />
+
+            <div class="dm-ui-modal-button-container-dual">
+                <button id="@cancelButtonId" class="dm-ui-button-small dm-ui-button-secondary">Cancel</button>
+                <button id="@applyButtonId" class="dm-ui-button-small dm-ui-button-primary">Apply</button>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script type="text/javascript">
+    Options.AssignScoreWarningsGroupHandler('#@applyButtonId', '#@cancelButtonId', '#@modalId', '#@Model.TypeCode');
+</script>

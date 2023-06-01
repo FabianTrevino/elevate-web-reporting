@@ -1,0 +1,986 @@
+﻿@model DashboardCogatViewModel
+@{
+    ViewBag.Title = "CogAT Dashboard";
+    ViewBag.MainTitle = "CogAT Dashboard";
+}
+
+@*<div style="font-size:35px;">@Model.Message</div>*@
+
+<div class="dashboard-wrapper">
+    @*<img src="@Links.Reskin.Content.img.logoIowaAssessmentsAdaptive_png" class="logoIowaAssessmentsAdaptive dashboard-page" />*@
+    <div class="section-card filters root-tab-element" @*tabindex="1" data-tabindex="1"*@ role="region" aria-label="Dashboard Filters">
+        <div class="root-tab-hidden-content" @*aria-hidden="true"*@></div>
+        <div id="progress-bar"><span></span></div>
+    </div>
+
+    @*@Html.HiddenFor(m => m.IsAdaptive)*@
+    <div class="dm-ui-page-container dm-ui-page-container-800 @ViewBag.pdf_wrapper">
+        <section class="dm-ui-page-section carded-section dashboard-page-section">
+            <div class="section-card root-tab-element stanine-card with-header" @*tabindex="2" data-tabindex="2"*@ role="region" aria-label="Age Stanine">
+                <div class="root-tab-hidden-content" @*aria-hidden="true"*@>
+                    <div class="card-header"><h2 class="card-header-content"><span id="cogat-header-type">CogAT</span> Form <span id="cogat-header-form">XX</span> - <span id="cogat-header-year">XX</span> Norms</h2></div>
+                    @*<div class="nvda-root-announce"></div>*@
+                    @*<label role="tab" class="nvda-announce" tabindex="-1" tabindex-important="true"></label>*@
+                    <h3 id="test-event-subject-name">Percentage of Students by Age Stanine</h3>
+                    <div class="dropdown-graph-content-wrapper">
+                        @{
+                            var dropdownGraphContent = new List<DropdownItem>
+                            {
+                                //new DropdownItem {Text = "Verbal", Value = "Verbal"},
+                                //new DropdownItem {Text = "Quantitative", Value = "Quantitative"},
+                                //new DropdownItem {Text = "Nonverbal", Value = "Nonverbal"},
+                                //new DropdownItem {Text = "VQ Composite", Value = "VQ Composite"},
+                                //new DropdownItem {Text = "VN Composite ", Value = "VN Composite"},
+                                //new DropdownItem {Text = "QN Composite", Value = "QN Composite"},
+                                //new DropdownItem {Text = "VQN Composite", Value = "VQN Composite", Selected = true},
+                                //new DropdownItem {Text = "S: Standard Age Score", Value = "StandardAgeScore"},
+                                //new DropdownItem {Text = "A: Age Percentile Rank", Value = "AgePercentileRank"},
+                                //new DropdownItem {Text = "G: Grade Percentil Rank", Value = "GradePercentilRank"}
+                            };
+                        }
+                        @Html.DmUiSingleSelectDropdown(dropdownGraphContent, "dropdown-graph-content", false, "Select content", "Content graph filter")
+                    </div>
+                    <div class="quantiles-wrapper">
+                        <span id="total-students-num-quartiles" aria-hidden="true">@*Total Number: <span>0</span>*@</span>
+                        <h4 class="quantiles-header-text" @*aria-label="Composite (VQN) Students by Age Stanine"*@>Composite (VQN) Students by Age Stanine</h4>
+                        <div id="barChart4">
+                            @*<div class="dm-ui-overlay-spinner-container-not-hide placed-in-block" style="display: block !important;"><div class="dm-ui-spinner" role="alert" aria-live="assertive"><div></div><div></div><div></div><div></div><p class="accessible-message-placeholder js-loading-spinner-copy">Content is loading...</p></div></div>*@
+                            <div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>
+                        </div>
+                        <div id="graph-stanine-vertical-axis-label">Percentage of Students</div>
+                        <div id="quantiles-dashed-line-legend" aria-hidden="true">
+                            @*<span>--</span>*@ Age Stanine
+                            <div id="chart4bars-debug-warning" class="debug-warning quartile"></div>
+                        </div>
+                    </div>
+                    <div id="wcag-stanine-table-wrapper" class="sr-only">
+                        <h4>Students by Age Stanine Table</h4>
+                        <div class="dashboard-table without-ordering k-grid k-widget k-display-block">
+                            <table>
+                                <thead class="k-grid-header" role="rowgroup">
+                                    <tr role="row">
+                                        <th scope="col" class="k-header">Content Area</th>
+                                        <th scope="col" class="k-header">1</th>
+                                        <th scope="col" class="k-header">2</th>
+                                        <th scope="col" class="k-header">3</th>
+                                        <th scope="col" class="k-header">4</th>
+                                        <th scope="col" class="k-header">5</th>
+                                        <th scope="col" class="k-header">6</th>
+                                        <th scope="col" class="k-header">7</th>
+                                        <th scope="col" class="k-header">8</th>
+                                        <th scope="col" class="k-header">9</th>
+                                    </tr>
+                                </thead>
+                                <tbody role="rowgroup">
+                                    <tr role="row">
+                                        <th scope="row">Verbal</th>
+                                        <td>0%</td>
+                                        <td>0%</td>
+                                        <td>0%</td>
+                                        <td>0%</td>
+                                        <td>0%</td>
+                                        <td>0%</td>
+                                        <td>0%</td>
+                                        <td>0%</td>
+                                        <td>0%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="stanine-table-wrapper" class="dashboard-table without-ordering"></div>
+                    <div id="stanine-table-legend" class="legend-wrpapper">
+                        <h3 class="legend-header">Legend</h3>
+                        <dl class="legend">
+                            <dt>VQ:</dt>
+                            <dd>Composite Verbal and Quantitative</dd>
+                            <dt>VN:</dt>
+                            <dd>Composite Verbal and Nonverbal</dd>
+                            <dt>QN:</dt>
+                            <dd>Composite Quantitative and Nonverbal</dd>
+                            <dt>VQN:</dt>
+                            <dd>Overall composite score for Verbal, Quantitative, and Nonverbal</dd>
+                            <dt><span class="sr-only">Graph plot points:</span><span class="legend-scatter-plot"></span></dt>
+                            <dd>Percent of Students Nationally</dd>
+                            <dt></dt>
+                            <dd>Numbers may not sum to 100% due to rounding</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <aside class="dm-ui-page-aside">
+            <!-- #region Report Center  -->
+
+            <iframe id="actuateIframe" class="library-iframe" src="@Model.QueryString" frameborder="0" name="library_iframe" hidden="hidden" style="display:none"></iframe>
+            <div id="tabstrip">
+
+                <ul style="display: none;">
+                    <li class="k-state-active">
+                        Reports
+                    </li>
+                </ul>
+                <div id="tabreports">
+                    <h2 for="tab2" role="tab" class="report-center-label">REPORTS CENTER</h2>
+                    <br />
+                    <div id="gridCompleted" style="height: 100px"></div>
+                    <button id="AfterTimeout" class="dm-ui-button" hidden="hidden"> Please click here to view the reports</button>
+                </div>
+            </div>
+            <form id="form-input-dataexport" name="print_data_exporter" target="print_preview_popup" method="post" action="@Model.AppPath/Library/PrintDataExporter">
+                <input type="hidden" id="input" name="input" value="" />
+            </form>
+            <div class="dm-ui-modal-container data-export-modal-container" id="dataExporterReportModal" role="alertdialog" aria-label="Report Viewer" style="display: none;">
+                <div class="dm-ui-modal data-export-modal" style="width:80%">
+                    <div class="report-viewer-content">
+                        <header id="hdrReportViewer" class="exporter-hdr-report-viewer" tabindex="0">
+                            <h3>REPORT VIEWER</h3>
+                            <br />
+                            <br />
+                            <div class="report-viewer-buttons-container">
+
+                                <button id="printDataExporter" class="dm-ui-button-secondary dm-ui-button-small">Print</button>
+                                <div id="dataExporterData" hidden="hidden"></div>
+                                <button id="close-button-data-export" class="dm-ui-button-secondary dm-ui-button-small">Close</button>
+                            </div>
+                        </header>
+                        <section id="dataExportContentValue">
+
+                            <h3 style="inline-size:max-content">Data Export</h3>
+                            <div id="TestFamily"></div>
+                            <table class="exporter-header-table">
+                                <tr>
+                                    <td>
+
+                                        <div>Test Date:<span id="TestDateData"></span></div>
+                                        <div>Norms: <span id="NormsData"></span></div>
+                                    </td>
+                                    <td>
+                                        <div id="blbl" class="data-export-header"></div>
+                                        <div id="albl" class="data-export-header"></div>
+                                        <div id="flbl" class="data-export-header"></div>
+                                    </td>
+                                    <td>
+                                        <div id="clbl" class="data-export-header"></div>
+                                        <div id="dlbl" class="data-export-header"></div>
+                                        <div id="elbl" class="data-export-header"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <hr />
+                            &nbsp;
+                            &nbsp;
+                            &nbsp;
+                            <h2 style="position:center" align="center"><span id="FileName"><b></b></span><b> is available to download by clicking the link below:</b></h2>
+                            &nbsp;
+                            &nbsp;
+                            &nbsp;
+                            &nbsp;
+                            <div align="center"><span id="FileDownloadLink" style="display:block" align="center"></span></div>
+                            &nbsp;
+                            &nbsp;
+                            &nbsp;
+                            <div align="center"><b>Export Format : </b><span id="ExportFormat"><b></b></span></div>
+                            &nbsp;
+                            &nbsp;
+                            &nbsp;
+                            <div align="center"><b>Grade : </b><span id="Grade"><b></b></span></div>
+                            &nbsp;
+                            &nbsp;
+                            &nbsp;
+                            <div id="export-layout-wrapper">
+                                <div id="fieldsAndLengths" class="data-export-fields-and-lengths"></div>
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+            <!-- #endregion -->
+            <div id="print-report-center2" class="root-tab-element" tabindex="3" data-tabindex="3" role="region" aria-label="Print Reports">
+                <div class="tabs one-tab root-tab-hidden-content" aria-hidden="true">
+                    @*<div class="nvda-root-announce"></div>*@
+                    <!-- input id="tab1" type="radio" name="tabs">
+                    <label for="tab1" role="tab">Print Reports</label -->
+                    <input id="tab2" type="radio" name="tabs" checked="checked">
+
+                    <!-- section id="content-tab1" role="tabpanel">
+                        <p>
+                            <span id="print-dashboard" class="print-button pdf-print no-spacebar-scrolling tab first-tab-element" pdf-type="dashboard" tabindex="-1" role="button">
+                                <span class="icon-print-blue"></span> Print Dashboard
+                            </span>
+                            <span id="print-student-profile" class="print-button no-spacebar-scrolling tab last-tab-element" style="display: none;" tabindex="-1" role="button">
+                                <span class="icon-print-blue"></span> Print Student Profile
+                            </span>
+                        </p>
+                        <p>
+                            <span id="print-differentiated-instruction-report" class="print-button no-spacebar-scrolling tab" tabindex="-1" role="button">
+                                <span class="icon-print-blue"></span> Print Differentiated Instruction Report
+                            </span>
+                        </p>
+                        <p>
+                            <span id="print-student-profile-narrative" class="print-button no-spacebar-scrolling tab" tabindex="-1" role="button">
+                                <span class="icon-print-blue"></span> Print Student Profile Narrative
+                            </span>
+                        </p>
+                        <p>
+                            <span id="print-list-of-student-report" class="print-button no-spacebar-scrolling tab" tabindex="-1" role="button">
+                                <span class="icon-print-blue"></span> Print List of Student Report
+                            </span>
+                        </p>
+                        <p>
+                            <span id="print-print-group-summary-report" class="print-button no-spacebar-scrolling tab last-tab-element" tabindex="-1" role="button">
+                                <span class="icon-print-blue"></span> Print Group Summary Report
+                            </span>
+                        </p>
+                        <form id="form-print-dashboard" name="print_preview_form" target="print_preview_popup" method="post" action="PdfDashboardCogat/">
+                            <input type="hidden" id="html" name="html" value="">
+                        </form>
+                        <form id="print_preview_form" name="print_preview_form" target="print_preview_popup" method="post" action="Pdf/">
+                            <input type="hidden" id="pdf_type" name="pdf_type" value="">
+                            <input type="hidden" id="pdf_model" name="pdf_model" value="">
+                        </form>
+                        <form id="print_profile_narrative_form" name="print_profile_narrative_form" target="print_preview_popup" method="post" action="Pdf/">
+                            <input type="hidden" name="pdf_type" value="student-profile">
+                            <div id="pdf_post_profile_narrative_parameters"></div>
+                        </form>
+                    </section -->
+
+                    <section id="content-tab2" role="tabpanel">
+
+
+                        <table class="print-report-table" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                            <thead>
+                                <tr>
+                                    <th>Report Name</th>
+                                    <th>Date Created</th>
+                                    <th>Days Available</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a href="#">Report Name 1</a></td>
+                                    <td>3/19/19</td>
+                                    <td>5</td>
+                                    <td><i class="far fa-clock"></i></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#">Report Name 2</a></td>
+                                    <td>3/15/19</td>
+                                    <td>1</td>
+                                    <td><i class="fas fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#">Report Name 3</a></td>
+                                    <td>3/17/19</td>
+                                    <td>3</td>
+                                    <td><i class="fas fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#">Report Name 4</a></td>
+                                    <td>3/16/19</td>
+                                    <td>2</td>
+                                    <td><i class="fas fa-check"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+            </div>
+
+            <div id="dashboard-right-column">
+
+                <div class="dm-ui-card root-tab-element right-column-card overlayed" id="right-card1" @*tabindex="3" data-tabindex="3"*@ role="region" aria-label="Identified Students by School">
+                    <h2 class="right-card-title limited">Identified Students by School</h2>
+                    <div id="right-card-top-buttons-wrapper">
+                        <span id="right-card-popup-button" class="tab no-spacebar-scrolling disabled-element" tabindex="0" aria-label="Select Report Criteria" role="button"></span>
+                        <span id="right-card-reset-button" class="dm-ui-button-primary dm-ui-button-small tab no-spacebar-scrolling disabled-element" tabindex="0" aria-label="Reset" role="button"></span>
+                    </div>
+                    <div class="right-card-number-wrapper">
+                        <span class="right-card-number" id="right-card-table-number">0</span>
+                        <span class="right-card-text">Total Identified Students</span>
+                    </div>
+                    <div id="right-card-table-wrapper" class="dashboard-table"></div>
+                    <div class="overlay-text">Select a cut score to see identified students by <span id="right-card-overlay-type">school</span>.</div>
+                </div>
+
+                <div class="dm-ui-card root-tab-element right-column-card" id="right-card2" @*tabindex="3" data-tabindex="3"*@ role="region" aria-label="Ability Profile Distribution">
+                    @*<div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>*@
+                    <h2 class="right-card-title">Ability Profile Distribution</h2>
+                    <div class="right-card-number-wrapper">
+                        <span class="right-card-number" id="right-card-table2-number">0</span>
+                        <span class="right-card-text">Differentiated Instruction Opportunities</span>
+                    </div>
+                    <div id="right-card-table2-wrapper" class="dashboard-table"></div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    @{
+        var dropdownScores = new List<DropdownItem>
+{
+        new DropdownItem {Text = "Age Percentile Rank", Value = "APR", Selected = true},
+        new DropdownItem {Text = "Age Stanine", Value = "AS"},
+        new DropdownItem {Text = "Grade Percentile Rank", Value = "GPR"},
+        new DropdownItem {Text = "Grade Stanine", Value = "GS"},
+        new DropdownItem {Text = "Universal Scale Score", Value = "USS"},
+        new DropdownItem {Text = "Standard Age Score", Value = "SAS"},
+        new DropdownItem {Text = "Raw Score", Value = "RS"},
+        new DropdownItem {Text = "No. Att/No. of Items", Value = "NANI"}
+    };
+    }
+    <div class="dm-ui-page-container dm-ui-page-container-800 @ViewBag.pdf_wrapper">
+        <section class="dm-ui-page-section carded-section dashboard-page-section">
+            <div class="section-card roster-table-card root-tab-element" @*tabindex="4" data-tabindex="4"*@ role="region" aria-label="Students Comparison Table">
+                <div class="root-tab-hidden-content" @*aria-hidden="true"*@>
+                    @*<label role="tab" class="nvda-announce" tabindex="-1" tabindex-important="true"></label>*@
+                    @*<div class="nvda-root-announce"></div>*@
+                    <div id="roster-top-info-wrapper">
+                        <div id="roster-name-wrapper">
+                            <h2 id="roster-name">Student Roster</h2>
+                            @*<div id="roster-switcher-wrapper" class="hidden">
+                                    <div class="dm-ui-switcher-blue dm-ui-switcher noselect">
+                                        <input id="roster-switcher-1" name="roster-switcher" class="roster-switcher" value="Percent" type="radio" checked="checked">
+                                        <label for="roster-switcher-1">Percent</label>
+                                        <input id="roster-switcher-2" name="roster-switcher" class="roster-switcher" value="Number" type="radio">
+                                        <label for="roster-switcher-2">Number</label>
+                                    </div>
+                                </div>*@
+                        </div>
+
+                        <div id="roster-selected-labels-wrapper" style="display: none;">
+                            <div id="stanine-table-selected-label">
+                                @*<div class="arrow"></div>
+                                    <i>Identified students by<br><span><b>VQ Composite</b> and <b>Stanine 1</b></span></i>
+                                    <div class="close tab" tabindex="-1" aria-label="Clear filter" role="button">X</div>*@
+                            </div>
+                            <div id="right-card-selected-label">
+                                @*<div class="arrow"></div>
+                                    <span><b>School</b>: Building 1</span>
+                                    <div class="close tab" tabindex="-1" aria-label="Clear filter" role="button">X</div>*@
+                            </div>
+                            <div id="roster-card-selected-popup-filters-label">
+                                @*<div class="arrow"></div>
+                                    <i>Identified students by<br><span><b>Grade Percentile is greater then 3 AND</b></span><br><span><b>Age Percentile Rank is greater then 7 OR</b></span><br><span><b>Age Stanine is greater then 3</b></span></i>
+                                    <div class="close tab" tabindex="-1" aria-label="Clear filter" role="button">X</div>*@
+                            </div>
+                            <div id="right-card2-selected-label">
+                                @*<div class="arrow"></div>
+                                    <span><b>Ability Profile</b>: 1A</span>
+                                    <div class="close tab" tabindex="-1" aria-label="Clear filter" role="button">X</div>*@
+                            </div>
+                            <div id="roster-card-selected-popup-warning-filters-label">
+                                @*<div class="arrow"></div>
+                                    <i>Identified students by<br><span><b>‡ Inconsistent response pattern AND</b></span><br><span><b>^ Many items omitted OR</b></span><br><span><b># Too few items attempted</b></span></i>
+                                    <div class="close tab" tabindex="-1" aria-label="Clear filter" role="button">X</div>*@
+                            </div>
+                        </div>
+                        <div id="wcag-autocomplete-search-instructions" style="display: none">Begin typing to search, use arrow keys to navigate, Enter to select</div>
+                        <div id="wcag-autocomplete-search-results" aria-live="assertive" class="sr-only"></div>
+                        <div id="roster-top-buttons-wrapper">
+                            @Html.DmUiMultiSelectDropdown(dropdownScores, "Score_Control", "Score filters", false, true, 1, 3, "Placeholder text", false)
+                            <span id="roster-filters-popup-button" class="tab no-spacebar-scrolling" tabindex="0" aria-label="Select Report Criteria" role="button"></span>
+                            <span id="roster-score-warning-filters-popup-button" class="tab no-spacebar-scrolling" tabindex="0" aria-label="Select Score Warning Report Criteria" role="button"></span>
+                            <span id="roster-export-button" class="dm-ui-button-primary dm-ui-button-small tab no-spacebar-scrolling disabled-element" tabindex="0" aria-label="Export" role="button"></span>
+                            <span id="roster-reset-button" class="dm-ui-button-primary dm-ui-button-small tab no-spacebar-scrolling disabled-element" tabindex="0" aria-label="Reset" role="button"></span>
+                            <span id="roster-search-field">
+                                <span data-field="node_name" class="k-filtercell" data-role="filtercell"><span><span tabindex="0" role="presentation" style="" class="k-widget k-autocomplete k-header k-autocomplete-clearable k-state-default"><input data-bind="value: value" aria-label="Search" data-role="autocomplete" data-text-field="node_name" data-filter="startswith" data-delay="200" data-min-length="1" data-value-primitive="true" type="text" class="k-input tab" autocomplete="off" role="textbox" aria-haspopup="true" aria-disabled="false" aria-readonly="false" aria-autocomplete="list" aria-owns="" placeholder="Enter a Student Name" data-full-title="Student Name" tabindex="0"><span unselectable="on" class="k-icon k-clear-value k-i-close k-hidden" title="Clear" role="button" tabindex="0"></span><span class="k-icon k-i-loading" style="display:none"></span></span><span class="k-widget k-dropdown k-header k-dropdown-operator tab" unselectable="on" role="listbox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-owns="" aria-live="polite" aria-disabled="false" aria-busy="false" aria-activedescendant="880f3c87-1d90-4c62-bba7-8aa5a7a4b01e"><span unselectable="on" class="k-dropdown-wrap k-state-default"><span unselectable="on" class="k-input">Contains</span><span unselectable="on" class="k-select" aria-label="select"><span class="k-icon k-i-filter"></span></span></span><input class="k-dropdown-operator tab" data-bind="value: operator" data-role="dropdownlist" style="display: none;" aria-label="Contains" tabindex="0"></span><button type="button" class="k-button k-button-icon" title="Clear" aria-label="Clear" data-bind="visible:operatorVisible" style="display: none;"><span class="k-icon k-i-filter-clear"></span></button></span></span>
+                            </span>
+                        </div>
+                    </div>
+                    <span id="total-students-num-roster" aria-hidden="true">@*Total Number: <span>0</span>*@</span>
+                    <div id="roster-table-wrapper"></div>
+                    <div id="roster-legend-wrapper"></div>
+                    <div id="roster-debug-warning" class="debug-warning roster"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="modal-dashboard-report-criteria" class="dm-ui-modal-container">
+        <div class="dm-ui-modal dm-ui-modal-green" role="dialog" aria-modal="true" aria-label="Select Report Criteria">
+            @*<button type="button" class="close_icon first-tab-element wcag-modal-first-element" aria-label="Close"></button>*@
+            <h1 class="modal-header">Select Report Criteria</h1>
+            <section>
+                @*<div class="session-modal-text-1 tab" tabindex="0">Enter information below to add a student. Fields with an asterisk are required.</div>*@
+                <div class="dm-ui-alert dm-ui-alert-error hidden" role="alert"><a href="#" class="dm-ui-alert-close" aria-label="Close alert message" role="button">×</a>There are no items that match your query. Please change your selections and click Run Report again.</div>
+                @{
+                    var dropdownEmpty = new List<DropdownItem>
+                    {
+                    };
+                    var dropdownScore = new List<DropdownItem>
+                                                                                                        {
+                    new DropdownItem {Text = "National Percentile Rank", Value = "NationalPercentileRank", Selected = true},
+                    new DropdownItem {Text = "Standard Score", Value = "StandardScore"}
+                };
+                    var dropdownScore2 = new List<DropdownItem>
+                                                                                                        {
+                    new DropdownItem {Text = "National Percentile Rank", Value = "NationalPercentileRank"},
+                    new DropdownItem {Text = "Standard Score", Value = "StandardScore"},
+                    new DropdownItem {Text = "Domain Performance Level", Value = "DomainPerformanceLevel", Selected = true}
+                };
+                    var dropdownScore3 = new List<DropdownItem>
+                                                                                                        {
+                    new DropdownItem {Text = "Age Percentile Rank", Value = "APR", Selected = true},
+                    new DropdownItem {Text = "Age Stanine", Value = "AS"},
+                    new DropdownItem {Text = "Grade Percentile Rank", Value = "GPR"},
+                    new DropdownItem {Text = "Grade Stanine", Value = "GS"},
+                    new DropdownItem {Text = "Universal Scale Score", Value = "USS"},
+                    new DropdownItem {Text = "Standard Age Score", Value = "SAS"},
+                    new DropdownItem {Text = "Raw Score", Value = "RS"}
+                    //new DropdownItem {Text = "No. Att/No. of Items", Value = "NANI"}
+                };
+                    //var dropdownCondition = new List<DropdownItem>
+                    //{
+                    //    new DropdownItem {Text = "is equal to", Value = "eq", Selected = true},
+                    //    new DropdownItem {Text = "is greater than", Value = "gt"},
+                    //    new DropdownItem {Text = "is less than", Value = "lt"},
+                    //    new DropdownItem {Text = "is greater than or equal to", Value = "gte"},
+                    //    new DropdownItem {Text = "is less than or equal to", Value = "lte"},
+                    //    new DropdownItem {Text = "is in between", Value = "is_in_between"}
+                    //};
+                    var dropdownBoolean = new List<DropdownItem>
+                                                                                                        {
+                    new DropdownItem {Text = "AND", Value = "and"},
+                    new DropdownItem {Text = "OR", Value = "or"}
+                };
+                    var dropdownScoreRange = new List<DropdownItem>
+                                                                                                        {
+                    new DropdownItem {Text = "Low", Value = "1"},
+                    new DropdownItem {Text = "Mid", Value = "2"},
+                    new DropdownItem {Text = "High", Value = "3"}
+                };
+                }
+                <table class="table-report-filters" role="presentation">
+                    <tr>
+                        <td class="column-score">
+                            @Html.DmUiSingleSelectDropdown(dropdownScore3, "dropdown-score-1", false, "Select score", "SCORE")
+                        </td>
+                        <td class="column-content-area">
+                            @Html.DmUiSingleSelectDropdown(dropdownEmpty, "dropdown-content-area-1", false, "Select content area", "CONTENT AREA")
+                        </td>
+                        <td class="column-condition">
+                            @Html.DmUiSingleSelectDropdown(dropdownEmpty, "dropdown-condition-1", false, "Select condition", "CONDITION")
+                        </td>
+                        <td class="column-val1">
+                            <div id="wrapper-input-score-1">
+                                <label for="input-score-1-val1">VALUE</label>
+                                <input id="input-score-1-val1" type="text" maxlength="3">
+                            </div>
+                        </td>
+                        <td class="column-val2 hidden">
+                            <div id="wrapper-input-score-1-val2" class="hidden">
+                                <label for="input-score-1-val2">&nbsp;</label>
+                                <div class="wrapper-val2">
+                                    and
+                                    <input id="input-score-1-val2" type="text" disabled="disabled" maxlength="3">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="column-boolean">
+                            @Html.DmUiSingleSelectDropdown(dropdownBoolean, "dropdown-boolean-1", true, "---", "BOOLEAN")
+                        </td>
+                    </tr>
+                    <tr class="filter-row-disabled">
+                        <td class="column-score">
+                            @Html.DmUiSingleSelectDropdown(dropdownScore3, "dropdown-score-2", false, "Select score", "SCORE", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                        <td class="column-content-area">
+                            @Html.DmUiSingleSelectDropdown(dropdownEmpty, "dropdown-content-area-2", false, "Select content area", "CONTENT AREA", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                        <td class="column-condition">
+                            @Html.DmUiSingleSelectDropdown(dropdownEmpty, "dropdown-condition-2", false, "Select condition", "CONDITION", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                        <td class="column-val1">
+                            <div id="wrapper-input-score-2">
+                                <label for="input-score-2-val1">VALUE</label>
+                                <input id="input-score-2-val1" type="text" disabled="disabled" maxlength="3">
+                            </div>
+                        </td>
+                        <td class="column-val2 hidden">
+                            <div id="wrapper-input-score-2-val2" class="hidden">
+                                <label for="input-score-2-val2">&nbsp;</label>
+                                <div class="wrapper-val2">
+                                    and
+                                    <input id="input-score-2-val2" type="text" disabled="disabled" maxlength="3">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="column-boolean">
+                            @Html.DmUiSingleSelectDropdown(dropdownBoolean, "dropdown-boolean-2", true, "---", "BOOLEAN", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr class="filter-row-disabled">
+                        <td class="column-score">
+                            @Html.DmUiSingleSelectDropdown(dropdownScore3, "dropdown-score-3", false, "Select score", "SCORE", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                        <td class="column-content-area">
+                            @Html.DmUiSingleSelectDropdown(dropdownEmpty, "dropdown-content-area-3", false, "Select content area", "CONTENT AREA", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                        <td class="column-condition">
+                            @Html.DmUiSingleSelectDropdown(dropdownEmpty, "dropdown-condition-3", false, "Select condition", "CONDITION", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                        <td class="column-val1">
+                            <div id="wrapper-input-score-3">
+                                <label for="input-score-3-val1">VALUE</label>
+                                <input id="input-score-3-val1" type="text" disabled="disabled" maxlength="3">
+                            </div>
+                        </td>
+                        <td class="column-val2 hidden">
+                            <div id="wrapper-input-score-3-val2" class="hidden">
+                                <label for="input-score-3-val2">&nbsp;</label>
+                                <div class="wrapper-val2">
+                                    and
+                                    <input id="input-score-3-val2" type="text" disabled="disabled" maxlength="3">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="column-boolean">
+                            @*@Html.DmUiSingleSelectDropdown(dropdownEmpty, "dropdown-boolean-3", true, "---", "BOOLEAN", htmlAttributes: new { disabled = "disabled" })*@
+                        </td>
+                    </tr>
+                </table>
+                @*<div class="popup-report-filters-checkboxes-wrapper">
+                        <hr />
+                        <h3>Score Warning / Indicator Filters</h3>
+                        <div aria-label="" class="dm-ui-checkbox-container" aria-hidden="true"><div aria-checked="true" class="dm-ui-checkbox" role="checkbox" tabindex="0"><input checked="checked" id="targeted-score-modal" name="targeted-score-modal" type="checkbox"><label for="targeted-score-modal"> Targeted Score</label></div></div>
+                        <div aria-label="" class="dm-ui-checkbox-container" aria-hidden="true"><div aria-checked="true" class="dm-ui-checkbox" role="checkbox" tabindex="0"><input checked="checked" id="extremely-variable-responses-modal" name="extremely-variable-responses-modal" type="checkbox"><label for="extremely-variable-responses-modal"> Extremely Variable Responses</label></div></div>
+                        <div aria-label="" class="dm-ui-checkbox-container" aria-hidden="true"><div aria-checked="true" class="dm-ui-checkbox" role="checkbox" tabindex="0"><input checked="checked" id="age-unusual-for-coded-level-modal" name="age-unusual-for-coded-level-modal" type="checkbox"><label for="age-unusual-for-coded-level-modal"> Age Unusual for coded Level</label></div></div>
+                    </div>*@
+                <div class="dm-ui-modal-button-container-dual">
+                    <button class="dm-ui-button-medium dm-ui-button-secondary last-tab-element wcag-modal-last-element" id="cancel-dashboard-report-button">Cancel</button>
+                    <button class="dm-ui-button-medium dm-ui-button-primary" id="apply-dashboard-report-button" disabled="disabled">Run Report</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div id="modal-dashboard-score-warning-report-criteria" class="dm-ui-modal-container">
+        <div class="dm-ui-modal dm-ui-modal-green" role="dialog" aria-modal="true" aria-label="Score Warning/Indicator Filters">
+            @*<button type="button" class="close_icon first-tab-element wcag-modal-first-element" aria-label="Close"></button>*@
+            <h1 class="modal-header">Score Warning/Indicator Filters</h1>
+            <section>
+                <div class="session-modal-text-1">Score warning/indicator filters narrow results by a particular score warning message or indicator. For more on score warning/indicator filters, see DataManager Online Help.</div>
+                <div class="dm-ui-alert dm-ui-alert-error hidden" role="alert"><a href="#" class="dm-ui-alert-close" aria-label="Close alert message" role="button">×</a>There are no items that match your query. Please change your selections and click Run Report again.</div>
+                @{
+                    var dropdownWarning = new List<DropdownItem>
+                    {
+                        //new DropdownItem {Text = "~ Estimated level", Value = "el", Selected = true},
+                        //new DropdownItem {Text = "§ Level unusual for coded grade", Value = "lucg"},
+                        //new DropdownItem {Text = "ã Age unusual for coded level", Value = "aucl"},
+                        //new DropdownItem {Text = "« Age is out-of-range", Value = "aoor"},
+                        //new DropdownItem {Text = "¥ Sentence Completion is not included in the Verbal Battery score", Value = "scni"},
+                        //new DropdownItem {Text = "• Targeted score", Value = "ts"},
+                        //new DropdownItem {Text = "‡ Inconsistent response pattern", Value = "irp"},
+                        //new DropdownItem {Text = "^ Many items omitted", Value = "mio"},
+                        //new DropdownItem {Text = "# Too few items attempted", Value = "tfia"}
+                    };
+                }
+                <table class="table-warning-report-filters" role="presentation">
+                    <tr>
+                        <td class="column-warning-score">
+                            @Html.DmUiSingleSelectDropdown(dropdownWarning, "dropdown-warning-score-1", false, "Select score", "SCORE")
+                        </td>
+                        <td class="column-warning-boolean">
+                            @Html.DmUiSingleSelectDropdown(dropdownBoolean, "dropdown-warning-boolean-1", true, "---", "BOOLEAN")
+                        </td>
+                    </tr>
+                    <tr class="filter-row-disabled">
+                        <td class="column-warning-score">
+                            @Html.DmUiSingleSelectDropdown(dropdownWarning, "dropdown-warning-score-2", false, "Select score", "SCORE", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                        <td class="column-warning-boolean">
+                            @Html.DmUiSingleSelectDropdown(dropdownBoolean, "dropdown-warning-boolean-2", true, "---", "BOOLEAN", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr class="filter-row-disabled">
+                        <td class="column-warning-score">
+                            @Html.DmUiSingleSelectDropdown(dropdownWarning, "dropdown-warning-score-3", false, "Select score", "SCORE", htmlAttributes: new { disabled = "disabled" })
+                        </td>
+                        <td class="column-warning-boolean">
+                            @*@Html.DmUiSingleSelectDropdown(dropdownEmpty, "dropdown-warning-boolean-3", true, "---", "BOOLEAN", htmlAttributes: new { disabled = "disabled" })*@
+                        </td>
+                    </tr>
+                </table>
+                <div class="dm-ui-modal-button-container-dual">
+                    <button class="dm-ui-button-medium dm-ui-button-secondary" id="cancel-dashboard-warning-report-button">Cancel</button>
+                    <button class="dm-ui-button-medium dm-ui-button-primary last-tab-element wcag-modal-last-element" id="apply-dashboard-warning-report-button">Run Report</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+    @{
+        var dropdownPrintReportType = new List<DropdownItem>
+{
+       new DropdownItem {Text = "Dashboard", Value = "Dashboard", Selected = true},
+       //new DropdownItem {Text = "Student Profile", Value = "StudentProfile"},
+       new DropdownItem {Text = "Differentiated Instruction Report", Value = "DifferentiatedInstructionReport"},
+       //new DropdownItem {Text = "List of Student Scores Report", Value = "ListOfStudentReport"},
+       new DropdownItem {Text = "Student Profile Narrative Report", Value = "StudentProfileNarrative"},
+       new DropdownItem {Text = "Data Exporter", Value = "CatalogExporter"}
+       //new DropdownItem {Text = "Group Summary Report", Value = "GroupSummaryReport"}
+   };
+
+        var dropdownPrintGrade = new List<DropdownItem>
+{
+           new DropdownItem {Text = "Grade K", Value = "K", Selected = false},
+           new DropdownItem {Text = "Grade 1", Value = "1", Selected = false},
+           new DropdownItem {Text = "Grade 2", Value = "2", Selected = false},
+           new DropdownItem {Text = "Grade 3", Value = "3", Selected = false},
+           new DropdownItem {Text = "Grade 4", Value = "4", Selected = false},
+           new DropdownItem {Text = "Grade 5", Value = "5", Selected = false},
+           new DropdownItem {Text = "Grade 6", Value = "6", Selected = false},
+           new DropdownItem {Text = "Grade 7", Value = "7", Selected = false},
+           new DropdownItem {Text = "Grade 8", Value = "8", Selected = false},
+           new DropdownItem {Text = "Grade 9", Value = "9", Selected = false},
+           new DropdownItem {Text = "Grade 10", Value = "10", Selected = false},
+           new DropdownItem {Text = "Grade 11", Value = "11", Selected = false},
+           new DropdownItem {Text = "Grade 12", Value = "12", Selected = false}
+        };
+
+        var dropdownPrintDisplayOptions_ListOfStudentReport = new List<DropdownItem>
+{
+           new DropdownItem {Text = "Single Data Points", Value = "point", Selected = false},
+           new DropdownItem {Text = "Confidence bands", Value = "bands", Selected = true}
+        };
+
+        var dropdownPrintDisplayOptions_StudentProfileNarrative = new List<DropdownItem>
+{
+           new DropdownItem {Text = "Bar Graph", Value = "bars", Selected = true},
+           new DropdownItem {Text = "Bar Graph with Confidence Interval", Value = "bands", Selected = false}
+        };
+
+        var dropDownPrintExporterTemplate = new List<DropdownItem>
+{
+           new DropdownItem {Text = "Standard", Value = "standard", Selected = true}
+        };
+
+        var dropdownPrintExportFormat = new List<DropdownItem>
+{
+           new DropdownItem {Text = "ASCII Fixed-Width (.txt file)", Value = "none", Selected = true},
+           new DropdownItem {Text = "ASCII Tab-Delimited (.txt file)", Value = "tab", Selected = false},
+           new DropdownItem {Text = "ASCII Comma-Delimited (.txt file)", Value = "comma", Selected = false},
+           new DropdownItem {Text = "ASCII Pipe-Delimited (.txt file)", Value = "pipe", Selected = false}
+        };
+
+        var dropdownPrintAbilityProfile = new List<DropdownItem>
+{
+           new DropdownItem {Text = "Yes", Value = "false", Selected = true},
+           new DropdownItem {Text = "No", Value = "true", Selected = false}
+        };
+
+        var dropdownPrintHomeReporting = new List<DropdownItem>
+{
+           new DropdownItem {Text = "English", Value = "English", Selected = true},
+           new DropdownItem {Text = "Spanish", Value = "Spanish", Selected = false}
+           //new DropdownItem {Text = "As Coded - English for students coded 1; Spanish for students coded 2", Value = "ascoded", Selected = false}
+        };
+
+        var dropdownPrintReportGrouping = new List<DropdownItem>
+{
+           new DropdownItem {Text = "Building", Value = "BUILDING", Selected = false},
+           new DropdownItem {Text = "Section", Value = "CLASS", Selected = true}
+           //new DropdownItem {Text = "Class", Value = "CLASS", Selected = true}
+        };
+
+        var dropdownPrintSortDirection = new List<DropdownItem>
+{
+           new DropdownItem {Text = "A-Z by Student last name", Value = "LastName", Selected = true},
+           new DropdownItem {Text = "Ascending by Test/Composite", Value = "ASC", Selected = false},
+           new DropdownItem {Text = "Descending by Test/Composite", Value = "DESC", Selected = false}
+};
+
+        var dropdownPrintSortBySubtest = new List<DropdownItem>
+{
+           new DropdownItem {Text = "Verbal", Value = "AVERBAL", Selected = false},
+           new DropdownItem {Text = "Quantitative", Value = "AQUANT", Selected = false},
+           new DropdownItem {Text = "Nonverbal", Value = "ANONVERB", Selected = false},
+           new DropdownItem {Text = "Composite (VQN)", Value = "ACOMP", Selected = true}
+        };
+
+        var dropdownPrintSortType = new List<DropdownItem>
+{
+           new DropdownItem {Text = "Age Scores", Value = "SAS", Selected = true},
+           new DropdownItem {Text = "Grade Scores", Value = "USS", Selected = false}
+        };
+
+        var dropdownPrintScoreType = new List<DropdownItem>
+        {
+            //new DropdownItem {Text = "Age Percentile Rank", Value = "APR", Selected = true},
+            //new DropdownItem {Text = "Age Stanine", Value = "AS", Selected = true},
+            //new DropdownItem {Text = "Grade Percentile Rank", Value = "GPR"},
+            //new DropdownItem {Text = "Grade Stanine", Value = "GS"},
+            //new DropdownItem {Text = "Universal Scale Score", Value = "USS"},
+            //new DropdownItem {Text = "Standard Age Score", Value = "SAS"},
+            //new DropdownItem {Text = "Raw Score", Value = "RS"},
+            //new DropdownItem {Text = "No. Att/No. of Items", Value = "NANI"}
+        };
+        var dropdownPrintContentType = new List<DropdownItem>
+        {
+            //new DropdownItem {Text = "Verbal", Value = "Verbal", Selected = true},
+            //new DropdownItem {Text = "Quantitative", Value = "Quant", Selected = true},
+            //new DropdownItem {Text = "Nonverbal", Value = "NonVerb", Selected = true},
+            //new DropdownItem {Text = "Composite (VQ)", Value = "CompVQ", Selected = true},
+            //new DropdownItem {Text = "Composite (VN)", Value = "CompVN", Selected = true},
+            //new DropdownItem {Text = "Composite (QN)", Value = "CompQN", Selected = true},
+            //new DropdownItem {Text = "Composite (VQN)", Value = "CompVQN", Selected = true}
+        };
+    }
+    <div id="modal-dashboard-print-students" class="dm-ui-modal-container">
+        <div class="dm-ui-modal dm-ui-modal-green" role="dialog" aria-modal="true" aria-label="Print Reports">
+            @*<button type="button" class="close_icon first-tab-element wcag-modal-first-element" aria-label="Close"></button>*@
+            <div id="print-report-center">
+                <div class="tabs one-tab root-tab-hidden-content">
+                    <input id="tab1" type="radio" name="tabs" checked="checked">
+                    <label for="tab1" role="tab" aria-label="Print Center" class="tab first-tab-element wcag-modal-first-element" tabindex="0">Print Center</label>
+                    @*<input id="tab2" type="radio" name="tabs" disabled="disabled">
+                        <label for="tab2" role="tab" aria-label="Report Center">Report Center</label>*@
+                    <section id="content-tab1" role="tabpanel">
+                        @*<div class="modal-header tab first-tab-element" tabindex="0" aria-label="Print Reports: Student Profile">Print Reports: Student Profile</div>*@
+                        <section>
+                            <button type="button" class="close_icon first-tab-element wcag-modal-first-element" aria-label="Close"></button>
+                            <h1 class="modal-header">Print Center</h1>
+                            <div class="session-modal-text-1">Select your report type and criteria before selecting the district, buildings, and classes to include in your report.</div>
+                            <div class="filter-wrapper">
+                                <div class="filter print-report-type">@Html.DmUiSingleSelectDropdown(dropdownPrintReportType, "print-report-type", false, "Select report type", "REPORT TYPE")</div>
+                                <div class="filter print-background-report-pdf-name">
+                                    <label>REPORT NAME</label>
+                                    <input id="background-repot-pdf-file-name" name="fileName" type="text" value="" placeholder="REPORT NAME">
+                                </div>
+                                <div class="filter print-grade">@Html.DmUiMultiSelectDropdown(dropdownPrintGrade, "print-grade", "GRADE", true, true, 1, 99, "Placeholder text", false)</div>
+                                <div class="filter print-display-options_ListOfStudentReport">@Html.DmUiSingleSelectDropdown(dropdownPrintDisplayOptions_ListOfStudentReport, "print-display-options_ListOfStudentReport", false, "Select report type", "DISPLAY OPTIONS")</div>
+                                <div class="filter print-display-options_StudentProfileNarrative">@Html.DmUiSingleSelectDropdown(dropdownPrintDisplayOptions_StudentProfileNarrative, "print-display-options_StudentProfileNarrative", false, "Select report type", "DISPLAY OPTIONS")</div>
+                                <div class="filter print-exporter-template">@Html.DmUiSingleSelectDropdown(dropDownPrintExporterTemplate, "print-exporter-template", false, "Select report type", "EXPORT TEMPLATE")</div>
+
+                                @*<div class="filter">@Html.DmUiSingleSelectDropdown(dropdownPrintScoreType, "print-score-type", false, "Select content")</div>*@
+                                <div class="filter print-score-type">@Html.DmUiMultiSelectDropdown(dropdownPrintScoreType, "print-score-type", "SCORE TYPE", true, true, 1, 99, "Placeholder text", false)</div>
+                                @*<div class="filter">@Html.DmUiSingleSelectDropdown(dropdownPrintContentType, "print-composite-types", false, "Select content")</div>*@
+                                <div class="filter print-ability-profile_StudentProfileNarrative">@Html.DmUiSingleSelectDropdown(dropdownPrintAbilityProfile, "print-ability-profile_StudentProfileNarrative", false, "Select ability profile", "ABILITY PROFILE")</div>
+                                <div class="filter print-home-reporting">@Html.DmUiSingleSelectDropdown(dropdownPrintHomeReporting, "print-home-reporting", false, "Select home reporting", "DISPLAY LANGUAGE")</div>
+                                <div class="filter print-report-grouping">@Html.DmUiSingleSelectDropdown(dropdownPrintReportGrouping, "print-report-grouping", false, "Select report grouping", "REPORT GROUPING")</div>
+                                <div class="filter print-export-format">@Html.DmUiSingleSelectDropdown(dropdownPrintExportFormat, "print-export-format", false, "Select report grouping", "EXPORT FORMAT")</div>
+
+
+
+                                <div class="filter print-composite-types">@Html.DmUiMultiSelectDropdown(dropdownPrintContentType, "print-composite-types", "CONTENT TYPE", true, true, 1, 99, "Placeholder text", false)</div>
+                                <div class="filter print-sort-direction">@Html.DmUiSingleSelectDropdown(dropdownPrintSortDirection, "print-sort-direction", false, "Select sort direction", "SORT DIRECTION")</div>
+                                <div class="filter print-sort-by-subtest">@Html.DmUiSingleSelectDropdown(dropdownPrintSortBySubtest, "print-sort-by-subtest", false, "Select subtest", "SORT BY SUBTEST")</div>
+                                <div class="filter print-sort-type">@Html.DmUiSingleSelectDropdown(dropdownPrintSortType, "print-sort-type", false, "Select sort type", "SORT TYPE")</div>
+                                @*<div class="filter print-ability-profile" style="display: none;">@Html.DmUiSingleSelectDropdown(dropdownPrintContentType, "print-ability-profile", false, "Select content", "ABILITY PROFILE")</div>*@
+                                <div class="filter print-ability-profile" style="display: none;">@Html.DmUiMultiSelectDropdown(dropdownPrintContentType, "print-ability-profile", "ABILITY PROFILE", true, true, maxToSelect: 999, defaultText: "Select ability profiles")</div>
+                            </div>
+                            @*<div style="clear: both;"></div>*@
+                            <div class="dm-ui-checkbox-container">
+                                <div aria-checked="true" aria-disabled="true" class="dm-ui-checkbox dm-ui-disabled" role="checkbox" tabindex="0"><input id="check-all-students-modal" name="check-all-students-modal" type="checkbox" checked="checked" disabled="disabled" /><label for="check-all-students-modal"> Select All</label></div>
+                            </div>
+                            @*<div class="students-wrapper" tabindex="-1"></div>*@
+                            <div id="students-treeview-wrapper">
+                                @Html.DmUiGroupMultiSelectTreeDropdown(dropdownEmpty, "testTreeMultiSelectDropdownList", null, true, true, null, null, "Placeholder text", true, isAllNodesExpanded: false, treeList: true, treeListColumnNum: 3)
+                                <br>
+                            </div>
+                            <div id="students-treeview-wrapper-background" hidden="hidden">
+                                @Html.DmUiGroupMultiSelectTreeDropdown(dropdownEmpty, "testTreeMultiSelectDropdownListBackground", null, true, true, null, null, "Placeholder text", true, isAllNodesExpanded: false, treeList: true, treeListColumnNum: 3)
+                                <br>
+                            </div>
+                            <div class="dm-ui-modal-button-container-dual">
+                                <button class="dm-ui-button-medium dm-ui-button-secondary" id="cancel-dashboard-print-students">Cancel</button>
+                                <button class="dm-ui-button-medium dm-ui-button-primary last-tab-element wcag-modal-last-element" id="apply-dashboard-print-students">Generate PDF</button>
+                            </div>
+                        </section>
+
+                        <form id="form-print-dashboard" name="print_preview_form" target="print_preview_popup" method="post" action="@Model.AppPath/dashboard/cogat/print/page">
+                            <input type="hidden" id="input" name="input" value="">
+                        </form>
+                        <form id="print_preview_form" name="print_preview_form" target="print_preview_popup" method="post" action="Pdf/IndexCogat">
+                            <input type="hidden" id="pdf_type" name="pdf_type" value="">
+                            <input type="hidden" id="pdf_model" name="pdf_model" value="">
+                        </form>
+                        <form id="print_profile_narrative_form" name="print_profile_narrative_form" target="print_preview_popup" method="post" action="@Model.AppPath/dashboard/cogat/print/differentiated_instruction">
+                            <input type="hidden" name="pdf_type" value="student-profile">
+                            <div id="pdf_post_profile_narrative_parameters"></div>
+                        </form>
+                    </section>
+                    <!-- section id="content-tab2" role="tabpanel">
+                        <p>
+                        </p><table class="print-report-table" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                            <thead>
+                                <tr>
+                                    <th>Report Name</th>
+                                    <th>Date Created</th>
+                                    <th>Days Available</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a href="#" tabindex="3" class="tab">Report Name 1</a></td>
+                                    <td>3/19/19</td>
+                                    <td>5</td>
+                                    <td><i class="far fa-clock"></i></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#" tabindex="3" class="tab">Report Name 2</a></td>
+                                    <td>3/15/19</td>
+                                    <td>1</td>
+                                    <td><i class="fas fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#" tabindex="3" class="tab">Report Name 3</a></td>
+                                    <td>3/17/19</td>
+                                    <td>3</td>
+                                    <td><i class="fas fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#" tabindex="3" class="tab">Report Name 4</a></td>
+                                    <td>3/16/19</td>
+                                    <td>2</td>
+                                    <td><i class="fas fa-check"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p></p>
+                    </section -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-dashboard-student-info" class="dm-ui-modal-container">
+        <div class="dm-ui-modal dm-ui-modal-green" role="dialog" aria-modal="true" aria-label="Student Detail">
+            <div role="button" class="close_icon tab first-tab-element wcag-modal-first-element" tabindex="0" aria-label="Close"></div>
+            <div class="top"></div>
+            <h1 class="modal-header">Student Detail</h1>
+            <section>
+                <div class="block">
+                    <div class="block-title">Student:</div>
+                    <div class="block-content" id="student-info-name"></div>
+                </div>
+                <div class="block2">
+                    <div class="block block-left">
+                        <div class="block-title">Age:</div>
+                        <div class="block-content" id="student-info-age"></div>
+                    </div>
+                    <div class="block block-right">
+                        <div class="block-title">Date of Birth:</div>
+                        <div class="block-content" id="student-info-dob"></div>
+                    </div>
+                </div>
+                <div class="block">
+                    <div class="block-title">Section:</div>
+                    <div class="block-content" id="student-info-class"></div>
+                </div>
+                <div class="block">
+                    <div class="block-title">School:</div>
+                    <div class="block-content" id="student-info-school"></div>
+                </div>
+                <div class="block">
+                    <div class="block-title">Ability Profile:</div>
+                    <div class="block-content"><a id="student-info-ability-profile" href="#" target="_blank" class="last-tab-element wcag-modal-last-element"></a></div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div id="modal-feedback" class="dm-ui-modal-container" style="display: none;">
+        <div class="dm-ui-modal dm-ui-modal-green" role="dialog" aria-modal="true" aria-label="CogAT Dashboard Feedback">
+            <button type="button" class="close_icon first-tab-element wcag-modal-first-element" aria-label="Close"></button>
+            <section class="form">
+                <h1 class="modal-header">COGAT DASHBOARD FEEDBACK</h1>
+
+                <div>
+                    @Html.DmUiCheckBox(text: "", isChecked: false, id: "feedback-chk")
+                    <span>
+                        This form is designed to give the user the ability to provide what improvements/enhancements should be made to make the reporting aspect better.
+                        Any questions or issues with the reporting dashboard should be directed to Riverside Insights Customer Service Team at Phone: 877-246-8337 / Email: <a href="mailto:techsupport@riversideinsights.com">techsupport@riversideinsights.com</a> that they may better assist you.
+                        Any feedback left here may or may not be answered in a timely manner.
+                        Please check this box to continue.
+                    </span>
+                </div>
+
+                <form id="form-feedback" name="form-feedback" method="post" action="@Model.AppPath/Utility/SendFeedback">
+                    <label for="feedbackFirstName">FIRST NAME <span class="asterisk">*</span></label>
+                    <input name="FirstName" id="feedbackFirstName" type="text" value="" maxlength="100">
+                    <label for="feedbackLastName">LAST NAME <span class="asterisk">*</span></label>
+                    <input name="LastName" id="feedbackLastName" type="text" value="" maxlength="100">
+                    <label for="feedbackEmailAddress">EMAIL ADDRESS <span class="asterisk">*</span></label>
+                    <input name="EmailAddress" id="feedbackEmailAddress" type="text" value="" maxlength="100">
+                    <label for="feedbackDistrict">DISTRICT</label>
+                    <input name="District" id="feedbackDistrict" type="text" value="" maxlength="100">
+                    <label for="feedbackSchool">SCHOOL</label>
+                    <input name="School" id="feedbackSchool" type="text" value="" maxlength="100">
+                    <label for="feedbackRole">ROLE</label>
+                    <input name="Role" id="feedbackRole" type="text" value="" maxlength="100">
+                    <label for="feedbackMessage">MESSAGE <span class="asterisk">*</span></label>
+                    <textarea name="Message" id="feedbackMessage" maxlength="2000" placeholder="Maximum 2000 Characters"></textarea>
+                    <p><span class="asterisk">*</span> Required Field</p>
+                    <div class="validation-error-message hidden" role="alert">You missed one of the required fields, please enter information in the required fields and click submit again.</div>
+                    <div class="ajax-error-message" role="alert"></div>
+                    <div class="dm-ui-modal-button-container-single">
+                        <button class="dm-ui-button-primary dm-ui-button-medium last-tab-element wcag-modal-last-element" type="submit" value="Submit">Submit</button>
+                    </div>
+                </form>
+            </section>
+            <section class="success" style="display: none;">
+                <h1 class="modal-header">THANK YOU</h1>
+                <div class="icon-success">
+                    <img src="~/Reskin/Content/img/icon-tick.svg" />
+                </div>
+                <p role="alert">Your feedback has been sent.</p>
+                <div class="dm-ui-modal-button-container-single">
+                    <button class="dm-ui-button-secondary dm-ui-button-medium last-tab-element wcag-modal-last-element" type="submit" value="Submit">Close</button>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div id="debug-api">
+        <h3>SMI Web Api Queries:</h3>
+        @*<div id="debug-api-filters"><h4>Filters: <span></span></h4><textarea readonly="readonly"></textarea></div>*@
+        <div id="debug-api-elevate-test-assignments"><h4>Test Assignments Grades Locations <span></span></h4><textarea readonly="readonly"></textarea></div>
+        <div id="debug-api-age-stanine"><h4>Age Stanine: <span></span></h4><textarea readonly="readonly"></textarea></div>
+        <div id="debug-api-ability-profile"><h4>Ability Profile: <span></span></h4><textarea readonly="readonly"></textarea></div>
+        <div id="debug-api-roster"><h4>Roster: <span></span></h4><textarea readonly="readonly"></textarea></div>
+        <div id="debug-api-roster-group-total"><h4>Roster (Group Total): <span></span></h4><textarea readonly="readonly"></textarea></div>
+        <div id="debug-api-roster-data-issues"><h4>Roster data issues: <span></span></h4><textarea readonly="readonly"></textarea></div>
+    </div>
+</div>
+
+@section floating_buttons
+{
+    @*@if (!Model.IsGuidUser)
+        {
+            <div href="#" class="dm-ui-button-secondary dm-ui-button-small tab" id="display-reporting-key-modal-button" tabindex="0" role="button">Add Reporting Key</div>
+        }*@
+
+    <div href="#" class="dm-ui-button-primary dm-ui-button-small tab" id="print-reports-button" tabindex="0" role="button">Print Reports</div>
+}
+
+@section page_js
+{
+    @Scripts.Render(BundlePath.JsDashboardCogatPage)
+    @*@Scripts.Render(BundlePath.JsOptionsPage)*@
+    <script>
+        var pdf_model = '@ViewBag.pdf_model';
+    </script>
+}
+
+@section js_on_document_ready
+{
+    var isProdEnvironment = '@Model.IsProd';
+    var returnUrl = '@Model.ReturnUrl';
+
+    Common.Init();
+    Dashboard.Init(isProdEnvironment,returnUrl);
+    Options.InitButtonsHandlers();
+    DashBoardReportCeneter.Init(@Model.IsTelerikReportFeatureEnabled,'@(Model.ActuateWebLocation)','@(Model.ActuateGenerateUrl)','@(Model.UserID)','@(Model.Password)');
+}
+
+@section page_css
+{
+    @Styles.Render(BundlePath.CssDashboardCogatPage)
+    @Styles.Render(BundlePath.CssResponsiveDashboardIowaFlexPage)
+}

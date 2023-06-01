@@ -1,0 +1,18 @@
+﻿@model ReportingKeyModalModel
+
+@{
+    Layout = MVC.Shared.Views.dm_ui._ModalLayout;
+}
+
+
+<div class="reporting-key-modal-body">
+    <label for="reporting-key-text">REPORTING KEY</label>
+    <input id="reporting-key-text" type="text" value="@Model.Key" @Html.Attr(!Model.Success, "class", "dm-ui-error") @Html.Attr(!Model.Success, "aria-describedby", "spanInvalidKey") />
+
+
+    @if (!Model.Success)
+    {
+        <br /><br />
+        <div id="spanInvalidKey" style="color: #ba0e10;"> You entered a key that is invalid or has expired. Contact your school system’s DataManager Account Holder or Administrator for a new key.</div>
+    }
+</div>

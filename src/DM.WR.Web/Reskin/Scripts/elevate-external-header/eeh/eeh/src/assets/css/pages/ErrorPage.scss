@@ -1,0 +1,89 @@
+.app-layout-app-error {
+  background: #096da9;
+
+  & .app-header {
+    & .app-header-section {
+      visibility: hidden;
+
+      &.app-header-navigation {
+        visibility: visible;
+        & .app-header-bar {
+          border-right-color: transparent;
+        }
+      }
+    }
+  }
+
+  & .error-page-body {
+    flex: 1 0 auto;
+    display: grid;
+    padding: 4em;
+    grid-template-columns: auto 25vw;
+    grid-gap: 2em;
+    align-items: center;
+    color: #ffffff;
+
+    & .error-page-title {
+      font-weight: 600;
+      font-size: 3.75em;
+    }
+
+    & .error-page-message {
+      font-weight: 300;
+      font-size: 1.625em;
+    }
+
+    & .error-page-actions {
+      margin: 1.5em 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(10ch, auto));
+      grid-gap: 0.6em;
+      align-items: center;
+
+      & .app-button {
+        background: #ffffff;
+        color: #258bd9;
+        text-transform: unset;
+      }
+    }
+
+    & .error-page-additional-info {
+      font-weight: 300;
+
+      & .error-page-support-link {
+        margin-left: 0.5ch;
+        color: #ffffff;
+        text-decoration: none;
+
+        & .error-page-support-link-text {
+          text-decoration: underline;
+        }
+
+        & .hidden-link-arrow {
+          opacity: 0;
+          margin-left: -0.5ch;
+          transition-property: opacity, margin;
+          transition-duration: 0.3s;
+          transition-timing-function: ease-in-out;
+        }
+
+        &:hover {
+          & .hidden-link-arrow {
+            margin-left: 0.5ch;
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}
+
+.app-loading-user {
+  & .app-layout-app-error {
+    background: #ffffff;
+  }
+
+  & .error-page-wrapper {
+    background: #096da9;
+  }
+}

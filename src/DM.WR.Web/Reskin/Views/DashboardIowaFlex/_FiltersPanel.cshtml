@@ -1,0 +1,57 @@
+﻿@model IowaFlexFiltersViewModel
+
+<input type="hidden" id="locations-path" value="@JsonConvert.SerializeObject(Model.LocationsBreadCrumbs, Formatting.None)" />
+<input type="hidden" id="root-location-level" value="@Model.RootLocationLevel" />
+<input type="hidden" id="is-k-to-1" value="@Model.IsKto1.ToString().ToLower()" />
+<input type="hidden" id="has-differentiated-k-to-1-report" value="@Model.HasDifferentiatedKto1Report.ToString().ToLower()" />
+
+<div id="FiltersGraphqlQuery" style="display:none;">@Model.GraphqlQuery</div>
+
+@foreach (var filter in Model.Filters)
+{
+    <div class="dashboard-filter">
+        @if (filter.InputControl == OptionsInputControl.SingleSelect)
+        {
+            <input id="@filter.TypeCode" type="hidden" value="@JsonConvert.SerializeObject(filter.SelectedValues, Formatting.None)" class="dm-ui-hidden-input" />
+            @Html.DmUiSingleSelectDropdown(
+                items: filter.GetDropdownList(),
+                id: $"{filter.Type.ToString()}_Control",
+                allowDiselection: false,
+                defaultText: null,
+                label: filter.DisplayName)
+        }
+        else if (filter.InputControl == OptionsInputControl.MultiSelect)
+        {
+            <input id="@filter.TypeCode" type="hidden" value="@JsonConvert.SerializeObject(filter.SelectedValues, Formatting.None)" class="dm-ui-hidden-input" />
+            @Html.DmUiMultiSelectDropdown(
+                items: filter.GetDropdownList(),
+                id: $"{filter.Type.ToString()}_Control",
+                label: filter.DisplayName,
+                hasSelectAll: true,
+                hasSelectNone: true,
+                minToSelect: filter.MinToSelect,
+                maxToSelect: filter.MaxToSelect,
+                defaultText: null,
+                hasIndicator: true)
+        }
+        else if (filter.InputControl == OptionsInputControl.PiledSingleSelect)
+        {
+            <input id="@filter.TypeCode" type="hidden" value="@JsonConvert.SerializeObject(filter.SelectedValues, Formatting.None)" class="dm-ui-hidden-input" />
+
+            @Html.DmUiGroupMultiSelectDropdown(
+                items: filter.GetGroupDropdownList(),
+                id: $"{filter.Type.ToString()}_Control",
+                label: filter.DisplayName,
+                hasSelectAll: true,
+                hasSelectNone: true,
+                minToSelect: filter.MinToSelect,
+                defaultText: null,
+                hasIndicator: true
+                )
+        }
+        else
+        {
+            <span>UNKNOWN FILTER TYPE</span>
+        }
+    </div>
+}

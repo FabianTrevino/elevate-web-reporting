@@ -1,0 +1,105 @@
+﻿@model OptionsViewModel
+
+<div class="options-top-to-bottom">
+
+    @if (Model.InvalidGroup != null)
+    {
+        <input type="hidden" id="invalid-group-alert" value="@Json.Encode(new Alert { AlertType = AlertType.Info, IsDismissable = true, Message = $"Saved '{Model.InvalidGroup.DisplayName}' group is currently invalid. Criteria was loaded with default values." })" />
+    }
+
+    <input type="hidden" id="run-in-foreground" value="@Json.Encode(Model.RunInForeground)" />
+
+    @if (Model.IsMultimeasure)
+    {
+        <div class="multimeasure-controls">
+            @*<span class="mm-element">Multimeasure Report Columns</span>
+            <span class="mm-element">
+                @if (Model.CurrentPage > 1)
+                {
+                    <a class="go-to-column-link" data-go-to-column="@(Model.CurrentPage - 1)">&lt; PREV</a> @:|
+                }
+                else
+                {
+                    <span>&lt; PREV</span>
+                }
+
+                @Model.CurrentPage of @Model.TotalPages
+
+                @if (Model.CurrentPage < 10 && Model.CurrentPage != Model.TotalPages)
+                {
+                    @:|
+                    <a class="go-to-column-link" data-go-to-column="@(Model.CurrentPage + 1)"> NEXT &gt;</a>
+                }
+                else
+                {
+                    <span> NEXT &gt;</span>
+                }
+            </span>
+            <span class="mm-element">
+                @if (Model.TotalPages < 10)
+                {
+                    <a id="add-column-button">ADD</a>
+                }
+                else
+                {
+                    <span>ADD</span>
+                }
+                |
+                @if (Model.TotalPages > 1)
+                {
+                    <a id="delete-column-button">DELETE</a>
+                }
+                else
+                {
+                    <span>DELETE</span>
+                }
+            </span>*@
+            <span class="mm-element">
+                @if (Model.TotalPages < 10)
+                {
+                    <a id="add-column-button"><span class="plus"></span>Add Column</a>
+                }
+                else
+                {
+                    <span class="disabled"><span class="plus"></span>Add Column</span>
+                }
+                @if (Model.TotalPages > 1)
+                {
+                    <a id="delete-column-button"><span class="minus"></span> Delete Column</a>
+                }
+                else
+                {
+                    <span class="disabled"><span class="minus"></span>Delete Column</span>
+                }
+            </span>
+        </div>
+        <div class="option-group">
+            <label>MULTIMEASURE REPORT COLUMNS</label>
+            <div class="dm-ui-dropdown-widget">
+                @for (int i = 1; i <= Model.TotalPages; ++i)
+                {
+                    if (i == Model.CurrentPage)
+                    {
+                        <strong>Column @i</strong>
+                    }
+                    else
+                    {
+                        <a href="#" class="go-to-column-link" data-go-to-column="@i">Column @i</a>
+                    }
+                    if (i != Model.TotalPages)
+                    {
+                        <span class="columns-divider">|</span>
+                    }
+                }
+            </div>
+        </div>
+    }
+    <hr />
+    <div class="primary-options">
+        @{ Html.RenderPartial(MVC.Options.Views._OptionsGroupSwitch, Model.PrimaryGroups); }
+    </div>
+    <hr />
+    <div class="secondary-options">
+        @{ Html.RenderPartial(MVC.Options.Views._OptionsGroupSwitch, Model.SecondaryAndLocationsGroups); }
+    </div>
+</div>

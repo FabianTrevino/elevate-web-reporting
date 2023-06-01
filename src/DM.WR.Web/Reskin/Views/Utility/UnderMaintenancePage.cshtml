@@ -1,0 +1,29 @@
+﻿@{
+    Layout = MVC.Shared.Views.dm_ui._Layout_NoMenu;
+}
+
+<div class="dm-ui-page-container">
+    <section class="dm-ui-page-section">
+        <h2>Web Reporting will be back soon.</h2>
+        <div>
+            <em>DataManager</em> Web Reporting is currently unavailable due to maintenance. This work is necessary to
+            <br />
+            bring you the latest tools for managing and reporting your test results.
+            <br />
+            <br />
+            We apologize for the inconvience and appreciate your patience. If you have any questions or need
+            <br />
+            assistance, please contact us.
+        </div>
+
+        <br />
+
+        @Html.Partial(MVC.Partials.Views.ViewNames._ContactInfo)
+
+    </section>
+</div>
+
+@section js_on_document_ready
+{
+    DmUiLibrary.HideOverlaySpinner();
+}

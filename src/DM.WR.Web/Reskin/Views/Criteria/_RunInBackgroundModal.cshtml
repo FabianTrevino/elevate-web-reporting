@@ -1,0 +1,11 @@
+﻿@model SaveCriteriaModalModel
+
+@{
+    Layout = MVC.Shared.Views.dm_ui._ModalLayout;
+}
+
+<div class="run-in-background-modal-body">
+    <label for="report-name">REPORT NAME</label>
+    <input id="report-name" type="text" value="@Model.ReportTypeName" />
+    <div class="dm-ui-error-text" style="display: none;">You must enter a valid report name.</div>
+</div>

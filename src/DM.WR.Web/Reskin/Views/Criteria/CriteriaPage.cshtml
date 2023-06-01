@@ -1,0 +1,39 @@
+﻿@model CriteriaPageViewModel
+
+<div class="dm-ui-page-container">
+    <section class="dm-ui-page-section criteria-page-section">
+
+        @Html.DmUiTabNav((List<TabItem>)ViewBag.Tabs)
+
+        <div class="page-error dm-ui-error-text"></div>
+
+        <div id="criteria-place-holder"></div>
+
+    </section>
+</div>
+
+@{ Html.RenderPartial(MVC.Report.Views._ReportViewer); }
+
+@if (!Model.IsGuidUser)
+{
+    @section floating_buttons
+    {
+        <a href="#" class="dm-ui-button-secondary dm-ui-button-small" id="display-reporting-key-modal-button">Add Reporting Key</a>
+    }
+}
+
+@section page_js
+{
+    @Scripts.Render(BundlePath.JsCriteriaPage)
+}
+
+@section js_on_document_ready
+{
+    Common.Init();
+    Criteria.Init(true);
+}
+
+@section page_css
+{
+    @Styles.Render(BundlePath.CssCriteriaPage)
+}

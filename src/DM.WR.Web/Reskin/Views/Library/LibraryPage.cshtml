@@ -1,0 +1,127 @@
+﻿@model LibraryPageViewModel
+
+
+<div class="dm-ui-page-container">
+    <section class="dm-ui-page-section library-page-section">
+        @Html.DmUiTabNav((List<TabItem>)ViewBag.Tabs)
+
+        <div class="page-error dm-ui-error-text"></div>
+
+        <div class="library-info">
+
+            Completed reports are available for 5 days. Print or download important reports before they are deleted.
+        </div>
+
+        <iframe id="actuateIframe" class="library-iframe" src="@Model.QueryString" frameborder="0" name="library_iframe" hidden="hidden" style="display:none"></iframe>
+
+
+        <div id="tabstrip">
+            <ul>
+                <li class="k-state-active">
+                    Reports
+                </li>
+
+            </ul>
+            <div>
+                <div id="gridCompleted"></div>
+                <button id="AfterTimeout" class="dm-ui-button" hidden="hidden"> Please click here to view the reports</button>
+            </div>
+
+
+        </div>
+        <form id="form-input-dataexport" name="print_data_exporter" target="print_preview_popup" method="post" action="@Model.appPath/Library/PrintDataExporter">
+            <input type="hidden" id="input" name="input" value="" />
+        </form>
+        <div class="dm-ui-modal-container data-export-modal-container" id="dataExporterReportModal" role="alertdialog" aria-label="Report Viewer" style="display: none;">
+            <div class="dm-ui-modal data-export-modal" style="width:80%">
+                <div class="report-viewer-content">
+                    <header id="hdrReportViewer" class="exporter-hdr-report-viewer" tabindex="0">
+                        <h3>REPORT VIEWER</h3>
+                        <div class="report-viewer-buttons-container">
+
+                            <button id="printDataExporter" class="dm-ui-button-secondary dm-ui-button-small">Print</button>
+                            <div id="dataExporterData" hidden="hidden"></div>
+                            <button id="edit-report-button-data-export" class="dm-ui-button-secondary dm-ui-button-small">Edit This Report</button>
+                            <button id="close-button-data-export" class="dm-ui-button-secondary dm-ui-button-small">Close</button>
+                        </div>
+                    </header>
+                    <section id="dataExportContentValue">
+                        <h3>Data Export</h3>
+                        <div id="TestFamily"></div>
+                        <table class="exporter-header-table">
+                            <tr>
+                                <td>
+
+                                    <div>Test Date:<span id="TestDateData"></span></div>
+                                    <div>Norms: <span id="NormsData"></span></div>
+                                </td>
+                                <td>
+                                    <div id="blbl" class="data-export-header"></div>
+                                    <div id="albl" class="data-export-header"></div>
+                                    <div id="flbl" class="data-export-header"></div>
+                                </td>
+                                <td>
+                                    <div id="clbl" class="data-export-header"></div>
+                                    <div id="dlbl" class="data-export-header"></div>
+                                    <div id="elbl" class="data-export-header"></div>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr />
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <h2 style="position:center" align="center"><span id="FileName"><b></b></span><b> is available to download by clicking the link below:</b></h2>
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <div align="center"><span id="FileDownloadLink" style="display:block" align="center"></span></div>
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <div align="center"><b>Export Format : </b><span id="ExportFormat"><b></b></span></div>
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <div align="center"><b>Grade : </b><span id="Grade"><b></b></span></div>
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <div id="export-layout-wrapper">
+                            <div id="fieldsAndLengths" class="data-export-fields-and-lengths"></div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+@{ Html.RenderPartial(MVC.Report.Views._ReportViewer); }
+@if (!Model.IsGuidUser)
+{
+    @section floating_buttons
+    {
+        <a href="#" class="dm-ui-button-secondary dm-ui-button-small" id="display-reporting-key-modal-button">Add Reporting Key</a>
+    }
+}
+@section page_js
+{
+
+    @Scripts.Render(BundlePath.JsLibraryPage)
+
+}
+@section js_on_document_ready
+{
+
+    Common.Init();
+    Library.Init(@Model.IsTelerikReportFeatureEnabled,'@(Model.ActuateWebLocation)','@(Model.ActuateGenerateUrl)','@(Model.UserID)','@(Model.Password)');
+
+}
+@section page_css
+{
+    @Styles.Render(BundlePath.CssLibraryPage)
+
+}

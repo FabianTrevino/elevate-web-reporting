@@ -1,0 +1,14 @@
+.app-page {
+  & .app-layout-root {
+    & .page-wrapper.home-page {
+      & .home-page-body {
+        & pre {
+          font-family: monospace;
+          color: #333333;
+          // margin: 2em 1em;
+          // border: 1px solid #333;
+        }
+      }
+    }
+  }
+}

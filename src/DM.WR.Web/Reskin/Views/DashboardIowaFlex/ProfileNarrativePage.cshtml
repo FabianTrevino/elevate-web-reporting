@@ -1,0 +1,385 @@
+﻿@model IowaFlexProfileNarrativeViewModel
+@{
+    Layout = MVC.Shared.Views._Layout_Pdf;
+}
+@Styles.Render(BundlePath.CssDashboardIowaFlexPage)
+<style>
+    html {
+        background-color: transparent !important;
+    }
+</style>
+
+@{
+    //left commented here only to make it easier to check each grade Level 1-5 ranges
+    //var m = new int[10, 6, 2];
+    //var r = new int[10, 6, 2];
+    //m[3, 1, 0] = 120; m[3, 1, 1] = 168;
+    //m[3, 2, 0] = 169; m[3, 2, 1] = 180;
+    //m[3, 3, 0] = 181; m[3, 3, 1] = 191;
+    //m[3, 4, 0] = 192; m[3, 4, 1] = 204;
+    //m[3, 5, 0] = 205; m[3, 5, 1] = 245;
+
+    //m[4, 1, 0] = 124; m[4, 1, 1] = 180;
+    //m[4, 2, 0] = 181; m[4, 2, 1] = 195;
+    //m[4, 3, 0] = 196; m[4, 3, 1] = 206;
+    //m[4, 4, 0] = 207; m[4, 4, 1] = 223;
+    //m[4, 5, 0] = 224; m[4, 5, 1] = 270;
+
+    //m[5, 1, 0] = 128; m[5, 1, 1] = 190;
+    //m[5, 2, 0] = 191; m[5, 2, 1] = 206;
+    //m[5, 3, 0] = 207; m[5, 3, 1] = 222;
+    //m[5, 4, 0] = 223; m[5, 4, 1] = 241;
+    //m[5, 5, 0] = 242; m[5, 5, 1] = 290;
+
+    //m[6, 1, 0] = 131; m[6, 1, 1] = 200;
+    //m[6, 2, 0] = 201; m[6, 2, 1] = 218;
+    //m[6, 3, 0] = 219; m[6, 3, 1] = 237;
+    //m[6, 4, 0] = 238; m[6, 4, 1] = 258;
+    //m[6, 5, 0] = 259; m[6, 5, 1] = 309;
+
+    //m[7, 1, 0] = 134; m[7, 1, 1] = 208;
+    //m[7, 2, 0] = 209; m[7, 2, 1] = 229;
+    //m[7, 3, 0] = 230; m[7, 3, 1] = 250;
+    //m[7, 4, 0] = 251; m[7, 4, 1] = 273;
+    //m[7, 5, 0] = 274; m[7, 5, 1] = 327;
+
+    //m[8, 1, 0] = 137; m[8, 1, 1] = 216;
+    //m[8, 2, 0] = 217; m[8, 2, 1] = 239;
+    //m[8, 3, 0] = 240; m[8, 3, 1] = 261;
+    //m[8, 4, 0] = 262; m[8, 4, 1] = 285;
+    //m[8, 5, 0] = 286; m[8, 5, 1] = 343;
+
+
+    //r[3, 1, 0] = 119; r[3, 1, 1] = 166;
+    //r[3, 2, 0] = 167; r[3, 2, 1] = 180;
+    //r[3, 3, 0] = 181; r[3, 3, 1] = 191;
+    //r[3, 4, 0] = 192; r[3, 4, 1] = 209;
+    //r[3, 5, 0] = 210; r[3, 5, 1] = 260;
+
+    //r[4, 1, 0] = 122; r[4, 1, 1] = 176;
+    //r[4, 2, 0] = 177; r[4, 2, 1] = 193;
+    //r[4, 3, 0] = 194; r[4, 3, 1] = 208;
+    //r[4, 4, 0] = 209; r[4, 4, 1] = 229;
+    //r[4, 5, 0] = 230; r[4, 5, 1] = 279;
+
+    //r[5, 1, 0] = 125; r[5, 1, 1] = 186;
+    //r[5, 2, 0] = 187; r[5, 2, 1] = 206;
+    //r[5, 3, 0] = 207; r[5, 3, 1] = 224;
+    //r[5, 4, 0] = 225; r[5, 4, 1] = 244;
+    //r[5, 5, 0] = 245; r[5, 5, 1] = 299;
+
+    //r[6, 1, 0] = 128; r[6, 1, 1] = 194;
+    //r[6, 2, 0] = 195; r[6, 2, 1] = 217;
+    //r[6, 3, 0] = 218; r[6, 3, 1] = 237;
+    //r[6, 4, 0] = 238; r[6, 4, 1] = 259;
+    //r[6, 5, 0] = 260; r[6, 5, 1] = 316;
+
+    //r[7, 1, 0] = 131; r[7, 1, 1] = 203;
+    //r[7, 2, 0] = 204; r[7, 2, 1] = 228;
+    //r[7, 3, 0] = 229; r[7, 3, 1] = 250;
+    //r[7, 4, 0] = 251; r[7, 4, 1] = 272;
+    //r[7, 5, 0] = 273; r[7, 5, 1] = 333;
+
+    //r[8, 1, 0] = 134; r[8, 1, 1] = 211;
+    //r[8, 2, 0] = 212; r[8, 2, 1] = 238;
+    //r[8, 3, 0] = 239; r[8, 3, 1] = 261;
+    //r[8, 4, 0] = 262; r[8, 4, 1] = 286;
+    //r[8, 5, 0] = 287; r[8, 5, 1] = 349;
+
+    //var level1Left = PercentValueLeft(arrayScales[grade, 1, 0]);
+    //var level1Width = PercentValueWidth(arrayScales[grade, 2, 0] - arrayScales[grade, 1, 0]);
+    //var level2Left = PercentValueLeft(arrayScales[grade, 2, 0]);
+    //var level2Width = PercentValueWidth(arrayScales[grade, 3, 0] - arrayScales[grade, 2, 0]);
+    //var level3Left = PercentValueLeft(arrayScales[grade, 3, 0]);
+    //var level3Width = PercentValueWidth(arrayScales[grade, 4, 0] - arrayScales[grade, 3, 0]);
+    //var level4Left = PercentValueLeft(arrayScales[grade, 4, 0]);
+    //var level4Width = PercentValueWidth(arrayScales[grade, 5, 0] - arrayScales[grade, 4, 0]);
+    //var level5Left = PercentValueLeft(arrayScales[grade, 5, 0]);
+    //var level5Width = PercentValueWidth(arrayScales[grade, 5, 1] - arrayScales[grade, 5, 0]);
+
+    double PercentValueLeft(double value)
+    {
+        value -= 0.5; //correction for middle line of the neighbor values
+        return Math.Round((value - 100) * 100 / 300, 3);
+    }
+    double PercentValueWidth(double value)
+    {
+        value += 1; //correction for middle line of the neighbor values
+        return Math.Round(value * 100 / 300, 3);
+    }
+}
+
+@foreach (var report in Model.Reports)
+{
+    var ssPercentValue = Convert.ToDouble(report.StandardScore);
+    ssPercentValue = Math.Round((ssPercentValue - 100) * 100 / 300, 3);
+    var formattedTestDate = "";
+    if (report.TestDate != null)
+    {
+        formattedTestDate = DateTime.Parse(report.TestDate).ToString("MMM dd, yyyy");
+    }
+
+    var strList = Model.Ranges[report.Grade][0].RangeBand.Split(':');
+    var level1Left = PercentValueLeft(double.Parse(strList[0]));
+    var level1Width = PercentValueWidth((double.Parse(strList[1]) + 1) - double.Parse(strList[0]));
+
+    strList = Model.Ranges[report.Grade][1].RangeBand.Split(':');
+    var level2Left = PercentValueLeft(double.Parse(strList[0]));
+    var level2Width = PercentValueWidth((double.Parse(strList[1]) + 1) - double.Parse(strList[0]));
+
+    strList = Model.Ranges[report.Grade][2].RangeBand.Split(':');
+    var level3Left = PercentValueLeft(double.Parse(strList[0]));
+    var level3Width = PercentValueWidth((double.Parse(strList[1]) + 1) - double.Parse(strList[0]));
+
+    strList = Model.Ranges[report.Grade][3].RangeBand.Split(':');
+    var level4Left = PercentValueLeft(double.Parse(strList[0]));
+    var level4Width = PercentValueWidth((double.Parse(strList[1]) + 1) - double.Parse(strList[0]));
+
+    strList = Model.Ranges[report.Grade][4].RangeBand.Split(':');
+    var level5Left = PercentValueLeft(double.Parse(strList[0]));
+    var level5Width = PercentValueWidth(double.Parse(strList[1]) - double.Parse(strList[0]));
+
+    var levelNumber = "";
+    if (ssPercentValue <= level1Left + level1Width)
+    {
+        levelNumber = "level1";
+    }
+    if (ssPercentValue >= level2Left && ssPercentValue <= level2Left + level2Width)
+    {
+        levelNumber = "level2";
+    }
+    if (ssPercentValue >= level3Left && ssPercentValue <= level3Left + level3Width)
+    {
+        levelNumber = "level3";
+    }
+    if (ssPercentValue >= level4Left && ssPercentValue <= level4Left + level4Width)
+    {
+        levelNumber = "level4";
+    }
+    if (ssPercentValue >= level5Left)
+    {
+        levelNumber = "level5";
+    }
+
+    <div class="page-break-before"></div>
+    <div class="dm-ui-page-container dm-ui-page-container-800 pdf-wrapper pdf_wrapper_num_@ViewBag.student_num">
+        <section class="dm-ui-page-section carded-section student-profile-section">
+            <img src="@Links.Reskin.Content.img.logoIowaAssessmentsAdaptive_png" class="logoIowaAssessmentsAdaptive" />
+            <h3><span>Student Profile Narrative:</span> @report.StudentFirstName @report.StudentLastName</h3>
+            <div class="student-info-wrapper">
+                <div class="block">
+                    <div class="row">
+                        <div class="title">Student ID:</div>
+                        <div class="value">@report.StudentExternalId</div>
+                    </div>
+                    <div class="row">
+                        <div class="title">Grade:</div>
+                        <div class="value">@report.Grade</div>
+                    </div>
+                    <div class="row">
+                        <div class="title">Test Event:</div>
+                        <div class="value">@formattedTestDate</div>
+                    </div>
+                </div>
+                <div class="block">
+                    <div class="row">
+                        <div class="title">Class:</div>
+                        <div class="value">@report.Class</div>
+                    </div>
+                    <div class="row">
+                        <div class="title">School:</div>
+                        <div class="value">@report.School</div>
+                    </div>
+                    <div class="row">
+                        <div class="title">District:</div>
+                        <div class="value">@report.District</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="student-progress-block">
+                <h3>@report.StudentFirstName’s Overall @report.SubjectName Score</h3>
+                <hr><hr>
+                <div class="left-column centred">
+                    <div class="block">
+                        <div class="score">@report.StandardScore</div>
+                        <div class="title">Standard Score</div>
+                    </div>
+                    <div class="block">
+                        <div class="score">@report.NprScore</div>
+                        <div class="title">National Percentile<br> Rank (NPR) </div>
+                    </div>
+                    @*<div class="block">
+                            <div class="score">820Q-920Q</div>
+                            <div class="title">Quantile Range</div>
+                        </div>*@
+                </div>
+                <div class="right-column">
+                    <div class="standard_score_graph current">
+                        <div class="graph-wrapper">
+                            <div class="title">Standard Score Graph</div>
+                            <div class="chart">
+                                <div class="bg level1" style="left: @level1Left%; width: @level1Width%;"></div>
+                                <div class="bg level2" style="left: @level2Left%; width: @level2Width%;"></div>
+                                <div class="bg level3" style="left: @level3Left%; width: @level3Width%;"></div>
+                                <div class="bg level4" style="left: @level4Left%; width: @level4Width%;"></div>
+                                <div class="bg level5" style="left: @level5Left%; width: @level5Width%;"></div>
+                                <div class="blocks-wrapper">
+                                    <div class="block"><span>100</span></div>
+                                    <div class="block"><span>125</span></div>
+                                    <div class="block"><span>150</span></div>
+                                    <div class="block"><span>175</span></div>
+                                    <div class="block"><span>200</span></div>
+                                    <div class="block"><span>225</span></div>
+                                    <div class="block"><span>250</span></div>
+                                    <div class="block"><span>275</span></div>
+                                    <div class="block"><span>300</span></div>
+                                    <div class="block"><span>325</span></div>
+                                    <div class="block"><span>350</span></div>
+                                    <div class="block"><span>375</span><span>400</span></div>
+                                </div>
+                                <div class="score_line @levelNumber" style="width: @ssPercentValue%;"></div>
+                            </div>
+                        </div>
+                        <div class="chart_legend">
+                            <div class="block level1"><span></span>Level 1</div>
+                            <div class="block level2"><span></span>Level 2</div>
+                            <div class="block level3"><span></span>Level 3</div>
+                            <div class="block level4"><span></span>Level 4</div>
+                            <div class="block level5"><span></span>Level 5</div>
+                        </div>
+                    </div>
+                    <p>
+                        @*@student.StudentFirstName was recently given the @student.AssessmentName assessment. This report is designed to give you information about @student.StudentFirstName’s achievement level in @student.SubjectName. Along with the results of this assessment, you should also review classroom work, grades, teacher observations, and other test results to get a more complete picture of @student.StudentFirstName’s academic progress.*@
+                        @report.StudentFirstName was recently given a @report.SubjectName assessment. This report is designed to give you information about @report.StudentFirstName’s achievement level in @report.SubjectName. Along with the results of this assessment, you should also review classroom work, grades, teacher observations, and other test results to get a more complete picture of @report.StudentFirstName’s academic progress.
+                    </p>
+                    <p>
+                        At the test level, @report.StudentFirstName received a Standard Score of @report.StandardScore and a National Percentile Rank of @report.NprScore. This means @report.StudentFirstName scored higher than @report.NprScore% percent of students in the same grade across the nation.
+                    </p>
+                    <p>
+                        @report.StudentFirstName is currently at Level @report.PerformanceLevel for the @report.SubjectName test. Below you can see more detail on how @report.StudentFirstName performed on each of the domains that were part of the assessment. These may be areas of strength and/or weakness, and this information can help focus instruction so that @report.StudentFirstName can work on increasing knowledge and/or understanding the curriculum that is being taught.
+                    </p>
+                </div>
+            </div>
+            @foreach (var domainNarrative in report.DomainNarratives)
+            {
+                Html.RenderPartial(MVC.DashboardIowaFlex.Views._ProfileNarrativeDomain, model: domainNarrative);
+            }
+            
+            @if (report.TestEvents.Count > 0)
+            {
+                int i = 0;
+                <div class="student-progress-block">
+                    <h3>Monitoring @report.StudentFirstName’s Progress Across Administrations</h3>
+                    <hr><hr>
+                    <div class="right-column" style="width: 100%; display: block;">
+                        <table class="standard-score-graph-table">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Grade</th>
+                                <th>Standard Score</th>
+                                <th>Standard Score Graph</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var testEvent in report.TestEvents)
+                            {
+                                i++;
+                                ssPercentValue = Convert.ToDouble(testEvent.StandardScore);
+                                ssPercentValue = Math.Round((ssPercentValue - 100) * 100 / 300, 3);
+                                levelNumber = "";
+
+                                strList = Model.Ranges[testEvent.Grade][0].RangeBand.Split(':');
+                                level1Left = PercentValueLeft(double.Parse(strList[0]));
+                                level1Width = PercentValueWidth((double.Parse(strList[1]) + 1) - double.Parse(strList[0]));
+
+                                strList = Model.Ranges[testEvent.Grade][1].RangeBand.Split(':');
+                                level2Left = PercentValueLeft(double.Parse(strList[0]));
+                                level2Width = PercentValueWidth((double.Parse(strList[1]) + 1) - double.Parse(strList[0]));
+
+                                strList = Model.Ranges[testEvent.Grade][2].RangeBand.Split(':');
+                                level3Left = PercentValueLeft(double.Parse(strList[0]));
+                                level3Width = PercentValueWidth((double.Parse(strList[1]) + 1) - double.Parse(strList[0]));
+
+                                strList = Model.Ranges[testEvent.Grade][3].RangeBand.Split(':');
+                                level4Left = PercentValueLeft(double.Parse(strList[0]));
+                                level4Width = PercentValueWidth((double.Parse(strList[1]) + 1) - double.Parse(strList[0]));
+
+                                strList = Model.Ranges[testEvent.Grade][4].RangeBand.Split(':');
+                                level5Left = PercentValueLeft(double.Parse(strList[0]));
+                                level5Width = PercentValueWidth(double.Parse(strList[1]) - double.Parse(strList[0]));
+
+                                if (ssPercentValue <= level1Left + level1Width)
+                                {
+                                    levelNumber = "level1";
+                                }
+                                if (ssPercentValue >= level2Left && ssPercentValue <= level2Left + level2Width)
+                                {
+                                    levelNumber = "level2";
+                                }
+                                if (ssPercentValue >= level3Left && ssPercentValue <= level3Left + level3Width)
+                                {
+                                    levelNumber = "level3";
+                                }
+                                if (ssPercentValue >= level4Left && ssPercentValue <= level4Left + level4Width)
+                                {
+                                    levelNumber = "level4";
+                                }
+                                if (ssPercentValue >= level5Left)
+                                {
+                                    levelNumber = "level5";
+                                }
+                                <tr>
+                                    <td>@DateTime.Parse(testEvent.Date).ToString("MM/dd/yyyy")</td>
+                                    <td>@testEvent.Grade</td>
+                                    <td>@testEvent.StandardScore</td>
+                                    <td class="chart">
+                                        <div class="standard_score_graph">
+                                            <div class="graph-wrapper">
+                                                <div class="chart">
+                                                    <div class="bg level1" style="left: @level1Left%; width: @level1Width%;"></div>
+                                                    <div class="bg level2" style="left: @level2Left%; width: @level2Width%;"></div>
+                                                    <div class="bg level3" style="left: @level3Left%; width: @level3Width%;"></div>
+                                                    <div class="bg level4" style="left: @level4Left%; width: @level4Width%;"></div>
+                                                    <div class="bg level5" style="left: @level5Left%; width: @level5Width%;"></div>
+                                                    <div class="blocks-wrapper">
+                                                        <div class="block"><span>100</span></div>
+                                                        <div class="block"><span>125</span></div>
+                                                        <div class="block"><span>150</span></div>
+                                                        <div class="block"><span>175</span></div>
+                                                        <div class="block"><span>200</span></div>
+                                                        <div class="block"><span>225</span></div>
+                                                        <div class="block"><span>250</span></div>
+                                                        <div class="block"><span>275</span></div>
+                                                        <div class="block"><span>300</span></div>
+                                                        <div class="block"><span>325</span></div>
+                                                        <div class="block"><span>350</span></div>
+                                                        <div class="block"><span>375</span><span>400</span></div>
+                                                    </div>
+                                                    <div class="score_line @levelNumber" style="width: @ssPercentValue%;"></div>
+                                                </div>
+                                            </div>
+                                            @if (i == report.TestEvents.Count)
+                                            {
+                                                <div class="chart_legend">
+                                                    <div class="block level1"><span></span>Level 1</div>
+                                                    <div class="block level2"><span></span>Level 2</div>
+                                                    <div class="block level3"><span></span>Level 3</div>
+                                                    <div class="block level4"><span></span>Level 4</div>
+                                                    <div class="block level5"><span></span>Level 5</div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                        <div class="legend">The above details @report.StudentFirstName’s growth across multiple Administrations of the assessment</div>
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+}

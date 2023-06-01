@@ -1,0 +1,32 @@
+﻿<div class="dm-ui-page-container">
+    <section class="dm-ui-page-section">
+        <h2>Reports are not available for this test event</h2>
+        <div>
+            <br />
+            Reporting for this test event is either still in-progress or is currently unavailable. If you believe you are
+            receiving this message in error, please contact the <em>DataManager</em> Support Center.
+        </div>
+
+        <br />
+
+        @Html.Partial(MVC.Partials.Views.ViewNames._ContactInfo)
+
+    </section>
+</div>
+
+@section floating_buttons
+{
+    <a href="#" class="dm-ui-button-secondary dm-ui-button-small" id="display-reporting-key-modal-button">Add Reporting Key</a>
+}
+
+@section page_js
+{
+    @Scripts.Render(BundlePath.JsCommonOnly)
+}
+
+@section js_on_document_ready
+{
+    DmUiLibrary.HideOverlaySpinner();
+    Common.Init();
+    Common.isReportsNotAvailable = true;
+}

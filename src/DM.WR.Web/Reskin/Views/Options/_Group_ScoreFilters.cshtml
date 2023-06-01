@@ -1,0 +1,106 @@
+﻿@model OptionGroup
+
+@{
+    var modalId = $"{Model.Type}Modal";
+
+    var cancelButtonId = $"{modalId}-cancel-button";
+    var applyButtonId = $"{modalId}-apply-button";
+
+    var group = (ScoreFiltersGroup)Model;
+}
+
+<label id="lblGroupScoreFilters" style="display: none;">@string.Format("{0} Change", Model.DisplayName)</label>
+<label>@Model.DisplayName</label> @Html.WrSpecialGroupLink(modalId, "lblGroupScoreFilters", "divGroupScoreFilters")
+<div id="divGroupScoreFilters" class="option-group-selected-text">@group.SelectionText</div>
+
+<input id="@Model.TypeCode" type="hidden" value="" class="dm-ui-hidden-input" />
+
+<div id="@modalId" class="dm-ui-modal-container dm-ui-hide" role="alertdialog">
+    <div class="dm-ui-modal dm-ui-modal-green score-filters-modal">
+        <header><h1>@Model.DisplayName</h1></header>
+        <section>
+            <div id="output">Score filters help to refine your reports to show only the students you need. For more information about score filters, see DataManager Online Help. </div>
+
+            <div class="score-filters-wrapper">
+                <div class="score-filters-row head-row">
+                    <div class="score-filters-col col-concat"> </div>
+                    <div class="score-filters-col col-score">SCORE</div>
+                    <div class="score-filters-col col-content-area">CONTENT AREA</div>
+                    <div class="score-filters-col col-comparison">COMPARISON</div>
+                    <div class="score-filters-col col-val1">VALUE</div>
+                    <div class="score-filters-col col-val2">&nbsp;</div>
+                </div>
+                
+                @for (int c = 0; c < group.Rows.Count; ++c)
+                {
+                    var row = group.Rows[c];
+
+                    var scoresDropdown = group.GetScores().Select(s => new DropdownItem { Text = s.ScoreText, Value = s.ScoreValue, AltValue = s.FilterValue }).ToList();
+                    scoresDropdown.First(i => i.Value == row.ScoreValue).Selected = true;
+
+                    var contentAreas = group.GetContentAreas();
+
+                    var comparisonDropdown = group.GetComparisonOperators();
+                    comparisonDropdown.First(o => o.Value == row.ComparisonOperator).Selected = true;
+
+                    var isBetweenValue = row.ComparisonOperator == "BETWEEN";
+                    var val1 = isBetweenValue ? row.Value.Split(',')[0] : row.Value;
+                    var val2 = isBetweenValue ? row.Value.Split(',')[1] : "";
+
+                    var concatItems = row.Concatenation == ConcatOperatorEnum.None ?
+                            null :
+                            new List<SwitcherItem>
+                            {
+                                new SwitcherItem{Text = "AND", Value = "AND", IsSelected = row.Concatenation == ConcatOperatorEnum.AND},
+                                new SwitcherItem{Text = "OR", Value = "OR", IsSelected = row.Concatenation == ConcatOperatorEnum.OR},
+                            };
+
+                    <div class="score-filters-row">
+                        <div class="score-filters-col col-concat">@Html.DmUiSwitcher(concatItems, $"score_filters_concat_{c}", SectionColor.Green, new { data_original_value = row.Concatenation.ToString() })</div>
+                        <div class="score-filters-col col-score">@Html.DmUiSingleSelectDropdown(scoresDropdown, $"score-dd-{c}", htmlAttributes: new { @class = scoresDropdown.Count == 1 ? "dm-ui-disabled" : null, data_original_value = row.ScoreValue })</div>
+                        <div class="score-filters-col col-content-area">
+                            @foreach (var area in contentAreas)
+                            {
+                                string val;
+
+                                if (area.Value.Any(i => i.Value == row.ContentAreaValue))
+                                {
+                                    area.Value.First(i => i.Value == row.ContentAreaValue).Selected = true;
+                                    val = row.ContentAreaValue;
+                                }
+                                else
+                                {
+                                    area.Value.First().Selected = true;
+                                    val = area.Value.First().Value;
+                                }
+
+                                var attributes = new
+                                {
+                                    @class = area.Value.Count == 1 ? "dm-ui-disabled content-area-dropdown" : "content-area-dropdown",
+                                    style = area.Key == row.ContentAreaKey ? "" : "display: none;",
+                                    data_key = area.Key,
+                                    data_original_value = val,
+                                    data_originally_visible = (area.Key == row.ContentAreaKey).ToString().ToLower()
+                                };
+
+                                @Html.DmUiSingleSelectDropdown(area.Value, $"content-area-dd-{area.Key}-{c}", htmlAttributes: attributes)
+                            }
+                        </div>
+                        <div class="score-filters-col col-comparison">@Html.DmUiSingleSelectDropdown(comparisonDropdown, $"comparison-dd-{c}", htmlAttributes: new { @class = "comparison-dropdown", data_original_value = row.ComparisonOperator })</div>
+                        <div class="score-filters-col col-val1"><input type="text" value="@val1" data-original-value="@val1" /></div>
+                        <div class="score-filters-col col-val2" @Html.Attr(!isBetweenValue, "style", "display:none;")>and <input type="text" value="@val2" data-original-value="@val2" /></div>
+                    </div>
+                }
+            </div>
+            
+            <div class="dm-ui-modal-button-container-dual">
+                <button id="@cancelButtonId" class="dm-ui-button-large dm-ui-button-secondary">Cancel</button>
+                <button id="@applyButtonId" class="dm-ui-button-large dm-ui-button-primary">Apply</button>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script type="text/javascript">
+    Options.AssignScoreFiltersGroupHandler('#@applyButtonId', '#@cancelButtonId', '#@modalId', '#@Model.TypeCode');
+</script>

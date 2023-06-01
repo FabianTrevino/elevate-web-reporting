@@ -1,0 +1,122 @@
+﻿@model MagicFooterViewModel
+
+<footer class="main-footer-container">
+    <div class="main-footer">
+        <a class="main-footer-logo" target="_blank" href="http://www.riversideinsights.com"><img src="@Links.Reskin.Content.dm_ui.img.dm_footer_logo_svg" class="main-footer-logo-img" alt="Logo Riverside Insights Elevate Potential" /></a>
+        <div class="main-footer-links">
+            @if (Model.TermsOfUseLink != null && Model.PrivacyPolicyLink != null)
+            {
+                <a class="footer-link" target="_blank" rel="noopener noreferrer" href="@Model.TermsOfUseLink.Link" title="Terms of Use">Terms of Use</a> <text>|</text>
+                <a class="footer-link" target="_blank" href="@Model.PrivacyPolicyLink.Link" title="Privacy Policy">Privacy Policy</a>
+                if (Model.SignOutLink != null)
+                {<text> | </text>
+                <a class="footer-link footer-sitemap-switch" aria-controls="divFooterContent" aria-label="Site Map Expandable, Select and use tab to navigate" href="javascript:;">Site Map</a>
+            }
+        }
+        else
+        {
+            <span>&nbsp;</span>
+        }
+        </div>
+    </div>
+    @if (Model.SignOutLink != null)
+    {
+        <div id="divFooterContent" class="main-footer-sitemap dm-ui-hide" aria-expanded="false">
+            <hr />
+            <table role="presentation">
+                <tr>
+                    @if (Model.NavigateMenuItems != null || Model.ReportsMenuItems != null)
+                    {
+                        <td class="footer-sitemap-block" aria-label="Navigate Menu">
+                            @if (Model.NavigateMenuItems != null)
+                            {
+                                <div class="footer-map-header" role="heading">Navigate</div>
+                                <ul>
+                                    @foreach (MagicMenuItem item in Model.NavigateMenuItems)
+                                    {
+                                        <li><a class="footer-sitemap-link" href="@item.Link">@item.Text</a></li>
+                                    }
+                                </ul>
+                                <br />
+                            }
+                            @if (Model.ReportsMenuItems != null)
+                            {
+                                <div class="footer-map-header" role="heading">Reports</div>
+                                <ul>
+                                    @foreach (MagicMenuItem item in Model.ReportsMenuItems)
+                                    {
+                                        <li><a class="footer-sitemap-link" href="@item.Link">@item.Text</a></li>
+                                    }
+                                </ul>
+                            }
+                        </td>
+                    }
+                    @if (Model.AdminMenuItems != null)
+                    {
+                        <td class="footer-sitemap-block" aria-label="Administration Menu">
+                            <div class="footer-map-header" role="heading">Administration</div>
+                            <ul>
+                                @foreach (MagicMenuItem item in Model.AdminMenuItems)
+                                {
+                                    <li><a class="footer-sitemap-link" href="@item.Link">@item.Text</a></li>
+                                }
+                            </ul>
+                        </td>
+                    }
+                    @if (Model.ToolsMenuItems != null)
+                    {
+                        <td class="footer-sitemap-block" aria-label="Tools & Assistance Menu">
+                            <div class="footer-map-header" role="heading">Tools & Assistance</div>
+                            <ul>
+                                @foreach (MagicMenuItem item in Model.ToolsMenuItems)
+                                {
+                                    if (item.OpenNewWindow)
+                                    {
+                                        <li><a class="footer-sitemap-link" target="_blank" href="@item.Link">@item.Text</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a class="footer-sitemap-link" href="@item.Link">@item.Text</a></li>
+                                    }
+                                }
+                            </ul>
+                            @if (Model.IsNelsonCustomer)
+                            {
+                                <div>Contact Nelson Education Ltd.</div>
+                                <dl class="footer-map-contact-info">
+                                    <dd>by phone <a class="footer-sitemap-link" href="tel:+18006680671">(800) 668-0671 ext. 2222</a></dd>
+                                    <dd>by email <a class="footer-sitemap-link" href="mailto:nelson.clinical@nelson.com">nelson.clinical@nelson.com</a></dd>
+                                </dl>
+                            }
+                            else
+                            {
+                                <div>Contact DataManager Support Center</div>
+                                <dl class="footer-map-contact-info">
+                                    <dd>by phone <a class="footer-sitemap-link" href="tel:+18772468337">(877) 246-8337</a></dd>
+                                    <dd>by email <a class="footer-sitemap-link" href="mailto:help@riversidedatamanager.com">help@riversidedatamanager.com</a></dd>
+                                </dl>
+                            }
+                        </td>
+                    }
+                    <td class="footer-sitemap-block" aria-label="More Menu">
+                        <div class="footer-map-header" role="heading">More</div>
+                        <ul>
+                            <li><a class="footer-sitemap-link" target="_blank" href="@Model.TermsOfUseLink.Link">@Model.TermsOfUseLink.Text</a></li>
+                            <li><a class="footer-sitemap-link" target="_blank" href="@Model.PrivacyPolicyLink.Link">@Model.PrivacyPolicyLink.Text</a></li>
+                            <li><a class="footer-sitemap-link" href="@Model.SignOutLink.Link">@Model.SignOutLink.Text</a></li>
+                        </ul>
+                    </td>
+                    <td class="footer-sitemap-block" aria-label="Company Info" aria-describedby="spanFooterCompany">
+                        <div class="footer-map-header" role="heading">Company</div>
+                        <span id="spanFooterCompany">
+                            Riverside Insights <br />
+                            One Pierce Place, Suite 900W <br />
+                            Itasca, IL 60143 <br />
+                        </span>
+                        <a class="footer-sitemap-link" href="@Model.CompanyLink.Link" target="_blank">@Model.CompanyLink.Text</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+</footer>

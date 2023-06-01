@@ -1,0 +1,14 @@
+﻿@model SaveCriteriaModalModel
+
+@{
+    Layout = MVC.Shared.Views.dm_ui._ModalLayout;
+}
+
+<div class="save-criteria-modal-body">
+    <label for="criteria-name">CRITERIA NAME</label>
+    <input id="criteria-name" type="text" value="@Model.ReportTypeName" />
+    <div class="dm-ui-error-text" role="alert" style="display: none;">You must enter a criteria name.</div>
+
+    <label for="criteria-summary">SUMMARY (optional)</label>
+    <textarea id="criteria-summary" maxlength="255"></textarea>
+</div>

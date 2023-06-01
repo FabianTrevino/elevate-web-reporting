@@ -1,0 +1,29 @@
+﻿@model IowaFlexProfileNarrativeDomainModel
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="student-progress-block">
+        <h3>@Model.ErrorMessage</h3>
+        <hr>
+    </div>
+}
+else
+{
+    <div class="student-progress-block">
+        <h3>@Model.DomainName</h3>
+        <hr>
+        <div class="left-column">
+            <div class="block">
+                <div class="score">
+                    <div class="color-label @Model.AchievementLevel.ToLower()"><span></span>@Model.AchievementLevel</div>
+                </div>
+                <div class="title">Achievement Level</div>
+            </div>
+        </div>
+        <div class="right-column">
+            @Model.DomainNarrativeText
+            <br /><br />
+            @Model.DomainPerformanceLevelText
+        </div>
+    </div>
+}

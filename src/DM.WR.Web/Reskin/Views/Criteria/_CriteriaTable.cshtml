@@ -1,0 +1,33 @@
+﻿@model CriteriaTableViewModel
+
+<div class="criteria-selector-left">
+    @Html.DmUiSingleSelectDropdown(Model.AssessmentsDropdownItems, "assessments-select", false, null, "ASSESSMENT")
+</div>
+<div class="criteria-selector-right">
+    @Html.DmUiSingleSelectDropdown(Model.ReportTypeDropdownItems, "report-type-select", false, null, "REPORT TYPE")
+</div>
+
+<table id="criteria-table" class="dm-ui-table" role="grid">
+    <thead>
+        <tr>
+            <th id="thCriteriaName" tabindex="0">Criteria Name</th>
+            <th id="thCriteriaSummary" tabindex="0">Summary</th>
+            <th id="thCriteriaLastUpdated" tabindex="0">Last Updated</th>
+            <th tabindex="0">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var criteria in Model.CriteriaList)
+        {
+            <tr>
+                <td tabindex="0" title="@criteria.Name" aria-labelledby="thCriteriaName">@criteria.Name</td>
+                <td tabindex="0" title="@criteria.Summary">@criteria.Summary</td>
+                <td tabindex="0" title="@criteria.LastUpdated">@criteria.LastUpdated</td>
+                <td>
+                    <a class="load-criteria-link" tabindex="0" data-id="@criteria.Id" data-name="@criteria.Name" data-description="@criteria.Summary" data-date="@criteria.LastUpdated" aria-label="Load @criteria.Name">Load</a>
+                    <a class="delete-criteria-link" tabindex="0" data-id="@criteria.Id" aria-label="Delete @criteria.Name">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

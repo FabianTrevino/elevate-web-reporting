@@ -1,0 +1,223 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  font-family: var(--app-font-family);
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+body * {
+  font-family: var(--app-font-family);
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+body > iframe {
+  display: none;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+#root {
+  padding: 0;
+  margin: 0;
+}
+
+.app-page {
+  & .app-layout-root {
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-flow: column;
+    transition: filter 0.3s ease-in-out, max-width, 0.1s ease-in-out;
+
+    & .page-wrapper {
+      display: flex;
+      flex-flow: column;
+      flex: 1 0 auto;
+      height: inherit;
+      margin-top: 0em;
+      display: flex;
+      flex-flow: column;
+
+      transition-property: margin-top;
+      transition-timing-function: ease-in-out;
+      transition-duration: 0.3s;
+
+      & .page-body {
+        flex: 1 0 auto;
+        // padding: 0.3em 0.5em;
+        background: #f8f8f8;
+        // min-height: calc(100% - 0.5em);
+      }
+
+      &.not-found-page-wrapper_ {
+        flex: 1 0 auto;
+        background: #f4f4f4;
+
+        & .app-action-wrapper {
+          display: flex;
+          flex-flow: column;
+          justify-content: center;
+          flex: 1 0 100%;
+
+          & .app-action-footer-buttons {
+            display: grid;
+            width: 100%;
+            grid-template-columns: repeat(auto-fit, minmax(10ch, auto));
+            grid-gap: 0.4em 1em;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+    }
+
+    & .app-error-root {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+
+      // right: 0;
+
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 4;
+
+      transition-property: top;
+      transition-duration: 0.3s;
+      transition-timing-function: ease-out;
+
+      & .app-error-title {
+        flex: 0 0 auto;
+        font-size: 2.6em;
+        font-weight: 500;
+        color: #d9252b;
+      }
+
+      & .app-error-body {
+        flex: 1 1 auto;
+        margin-top: 1em;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+
+        & .app-error-message {
+          margin-top: 1.5em;
+        }
+      }
+      & .app-error-footer {
+        flex: 0 0 auto;
+        margin: 0.4em 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+  &.has-app-header {
+    & .app-error-root {
+      margin-top: 4em;
+      // height: calc(100vh - 4em);
+    }
+
+    &.has-app-header-toolbar {
+      & .app-error-root {
+        margin-top: 7em;
+        height: calc(100vh - 7em);
+      }
+    }
+    &.has-app-error-fatal {
+      & .app-error-root {
+        margin-top: 0em;
+        height: 100vh;
+      }
+    }
+  }
+
+  &.app-overlay-visible {
+    & .app-layout-root {
+      filter: saturate(0.3) blur(2px);
+    }
+  }
+
+  & .suspense-overlay-loader,
+  & .app-loader-root {
+    z-index: 5;
+    // background: rgba(255, 255, 255, 1);
+    &.redirect-loader-root {
+      background: rgba(255, 255, 255, 1);
+      text-align: center;
+    }
+  }
+
+  &.app-loading-user {
+    & .suspense-overlay-loader,
+    & .app-loader-root {
+      height: calc(100vh - 4em);
+      margin-top: 4em;
+      background: rgba(255, 255, 255, 0.96);
+    }
+  }
+
+  &.has-app-header {
+    & .suspense-overlay-loader,
+    & .app-loader-root {
+      height: calc(100vh - 4em);
+      margin-top: 4em;
+      // background: rgba(255, 255, 255, 0.96);
+      // background: linear-gradient(to bottom, #ccc 0%, #ddd 0.2em, rgba(248, 248, 248, 0.96) 0.6em, rgba(248, 248, 248, 0.96) 100%);
+    }
+  }
+
+  &.has-app-debug {
+    & .app-layout-root {
+      // max-width: calc(100% - 33ch);
+      max-width: 80vw;
+      // & .page-wrapper {
+      // }
+    }
+
+    & .app-error-root,
+    & .app-loader-root,
+    & .suspense-overlay-loader {
+      // display: none;
+      width: 80vw;
+    }
+  }
+
+  & .app-layout-teacher-login {
+    & .session-loader-root {
+      display: none;
+    }
+  }
+
+  &.terms-not-accepted {
+    & .app-layout-root {
+      & .page-wrapper {
+        & .page-root {
+          pointer-events: none;
+        }
+      }
+    }
+  }
+
+  &.has-app-error-fatal {
+    & .app-error-root {
+      margin-top: 0;
+      height: 100%;
+      z-index: 9;
+    }
+  }
+}

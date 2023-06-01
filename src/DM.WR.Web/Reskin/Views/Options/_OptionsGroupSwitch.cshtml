@@ -1,0 +1,50 @@
+﻿@model List<OptionGroup>
+
+@foreach (var group in Model)
+{
+    <div class="option-group">
+        @if (group.InputControl == OptionsInputControl.SingleSelect)
+        {
+            <input id="@group.TypeCode" type="hidden" value="@JsonConvert.SerializeObject(group.SelectedValues, Formatting.None)" class="dm-ui-hidden-input" />
+            @Html.DmUiSingleSelectDropdown(group.GetDropdownList().ToList(), $"{group.Type.ToString()}_Control", false, null, group.DisplayName, htmlAttributes: new { disabled = group.IsDisabled })
+        }
+        else if (group.InputControl == OptionsInputControl.MultiSelect)
+        {
+            <input id="@group.TypeCode" type="hidden" value="@JsonConvert.SerializeObject(group.SelectedValues, Formatting.None)" class="dm-ui-hidden-input" />
+            @Html.DmUiMultiSelectDropdown(group.GetDropdownList().ToList(), $"{group.Type.ToString()}_Control", group.DisplayName, group.HasSelectAll, group.HasSelectNone, group.MinToSelect, group.MaxToSelect, null, htmlAttributes: new { disabled = group.IsDisabled })
+        }
+        else if (group.InputControl == OptionsInputControl.Checkbox)
+        {
+            Html.RenderPartial(MVC.Options.Views._Group_Checkbox, group);
+        }
+        else if (group.InputControl == OptionsInputControl.PiledSingleSelect)
+        {
+            Html.RenderPartial(MVC.Options.Views._Group_PiledOptions, group);
+        }
+        else if (group.InputControl == OptionsInputControl.MultimeasurePerformanceBands)
+        {
+            Html.RenderPartial(MVC.Options.Views._Group_PerformanceBands, group);
+        }
+        else if (group.InputControl == OptionsInputControl.LongitudinalTestAdministrations)
+        {
+            Html.RenderPartial(MVC.Options.Views._Group_LongitudinalTestAdministrations, group);
+        }
+        else if (group.InputControl == OptionsInputControl.ScoreFilters)
+        {
+            Html.RenderPartial(MVC.Options.Views._Group_ScoreFilters, group);
+        }
+        else if (group.InputControl == OptionsInputControl.ScoreWarnings)
+        {
+            Html.RenderPartial(MVC.Options.Views._Group_ScoreWarnings, group);
+        }
+        else if (group.InputControl == OptionsInputControl.DataExportCustomDataFields)
+        {
+            Html.RenderPartial(MVC.Options.Views._Group_CustomDataFields, group);
+        }
+        else
+        {
+            <label class="dm-ui-error-text" role="alert">@group.DisplayName - @group.Type.ToString()</label>
+            <div class="dm-ui-error-text" role="alert">Unknown OptionsInputControl (@group.InputControl.ToString())</div>
+        }
+    </div>
+}

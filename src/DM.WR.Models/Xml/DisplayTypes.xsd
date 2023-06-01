@@ -1,0 +1,856 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+
+  <xs:element name="IRMConfig" type="IRMConfig">
+    <xs:keyref name="globalGroupKeyRef" refer="globalGroupKey">
+      <xs:selector xpath="ReportsPerProduct/Product/Report/LevelOfAnalysis/AnalysisType/DisplayOptions/DisplayOption/DataFilteringOptions/*"/>
+      <xs:field xpath="@keyref"/>
+    </xs:keyref>
+    <xs:key name="globalGroupKey">
+      <xs:selector xpath="GlobalGroups/Group"/>
+      <xs:field xpath="@key"/>
+    </xs:key>
+  </xs:element>
+
+  <xs:complexType name="IRMConfig">
+    <xs:sequence>
+      <xs:element name="ReportsPerProduct" type="XMLReportsPerProduct"/>
+      <xs:element name="GlobalTypes" type="XMLGlobalTypes"/>
+      <xs:element name="GlobalGroups" minOccurs="1" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Group" minOccurs="0" maxOccurs="unbounded" type="XMLReportOptionGroup"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportsPerProduct">
+    <xs:sequence>
+      <xs:element name="Product" minOccurs="1" maxOccurs="unbounded" type="XMLProduct"/>
+    </xs:sequence>
+    <xs:attribute name="_z_" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLProduct" >
+    <xs:sequence>
+      <xs:element name="Report" minOccurs="1" maxOccurs="unbounded" type="XMLReport"/>
+    </xs:sequence>
+    <xs:attribute name="productName" type="xs:string" />
+    <xs:attribute name="productCode" type="XMLProductCodeEnum"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReport">
+    <xs:sequence>
+      <xs:element name="LevelOfAnalysis" minOccurs="1" type="XMLLevelOfAnalysis"/>
+    </xs:sequence>
+    <xs:attribute name="reportName" type="xs:string" use="required" />
+    <xs:attribute name="reportType" type="XMLReportType" use="required" />
+    <xs:attribute name="mediaType" type="XMLReportMediaType" default="ROI" />
+    <xs:attribute name="isStudentLevel" type="xs:boolean" use="required" />
+    <xs:attribute name="isDefault" type="xs:boolean" default="false"/>
+    <xs:attribute name="isGradeMultiSelect" type="xs:boolean" default="false"/>
+    <xs:attribute name="accessrole"  type="xs:string"/>
+    <xs:attribute name="bitmapSubPath"  type="xs:string"/>
+    <xs:attribute name="showIfItemsAvailable" type="xs:boolean" default="false"/>
+    <xs:attribute name="showIfSubtestGroupType" type="xs:string" default=""/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLLevelOfAnalysis">
+    <xs:sequence>
+      <xs:element name="AnalysisType" nillable="true" minOccurs="1" maxOccurs="unbounded" type="XMLAnalysisType"/>
+    </xs:sequence>
+    <xs:attribute name="show" type="xs:boolean" default="true"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLAnalysisType">
+    <xs:sequence>
+      <xs:element name="DisplayOptions" minOccurs="1" maxOccurs="1" type="XMLDisplayOptions"/>
+    </xs:sequence>
+    <xs:attribute name="code" type="XMLLevelOfAnalysisType" use="required" />
+    <xs:attribute name="isDefault" type="xs:boolean" default="false" />
+    <xs:attribute name="text" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLDisplayOptions">
+    <xs:sequence>
+      <xs:element name="DisplayOption" minOccurs="1" maxOccurs="unbounded" type="XMLDisplayOption"/>
+    </xs:sequence>
+    <xs:attribute name="show" type="xs:boolean"  default="true"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLDisplayOption">
+    <xs:sequence>
+      <xs:element name="DataFilteringOptions" minOccurs="1" maxOccurs="1" type="XMLDataFilteringOptions"/>
+      <xs:element name="HelpLink" minOccurs="0" maxOccurs="1" type="XMLReportHelpLink"/>
+    </xs:sequence>
+    <xs:attribute name="code" type="xs:string" use="required" />
+    <xs:attribute name="isDefault" type="xs:boolean" default="false" />
+    <xs:attribute name="text" type="xs:string" use="required"/>
+    <xs:attribute name="url" type="xs:string" use="required"/>
+    <xs:attribute name="reportCode" type="xs:string" use="required" />
+    <xs:attribute name="hideIfGrade" type="xs:string" default="" />
+    <xs:attribute name="exportToExcel" type="xs:boolean" default="false"/>
+    <xs:attribute name="runInForeground" type="xs:boolean" default="true" />
+    <xs:attribute name="priority" type="xs:int" default="100" />
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportHelpLink">
+    <xs:attribute name="text" type="xs:string" use="required" />
+    <xs:attribute name="path" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLDataFilteringOptions">
+    <xs:sequence>
+      <xs:element name="Skillset" minOccurs="1" maxOccurs="1" type="XMLReportOptionGroup_Skillset"/>
+      <xs:element name="GraphScoreTypes" minOccurs="0" type="XMLScoreTypes"/>
+      <xs:element name="LowerGraphType" minOccurs="0" maxOccurs="1" type="XMLReportOptionGroup_LowerGraphType"/>
+      <xs:element name="ScoreTypes" minOccurs="0" type="XMLReportOptionGroup_XMLScoreTypes"/>
+      <xs:element name="AbilityProfile" minOccurs="0" type="XMLDFAbilityProfile"/>
+      <xs:element name="ExcludeZMenu" minOccurs="0" type="XMLDFExcludeZMenu"/>
+      <xs:element name="CompositeCalcMenu" minOccurs="0" type="XMLDFCompositeCalcMenu"/>
+      <xs:element name="CollegeReadiness" minOccurs="0" type="XMLReportOptionGroup_CollegeReadiness"/>
+      <xs:element name="ContentAreasMenu" minOccurs="0" type="XMLDFContentAreasMenu"/>
+      <xs:element name="CompositeTypes" minOccurs="0" type="XMLDFCompositeTypesMenu"/>
+      <xs:element name="ShowReadingTotal" minOccurs="0" maxOccurs="1" type="XMLReportOptionGroup_ShowReadingTotal"/>
+      <xs:element name="SortDirections" minOccurs="0" type="XMLSortDirections"/>
+      <xs:element name="SortBySubtest" minOccurs="0" type="XMLSortBySubtest"/>
+      <xs:element name="SortTypes" minOccurs="0" type="XMLReportOptionGroup_SortType"/>
+      <xs:element name="SubContentAreasMenu" minOccurs="0" type="XMLDFSubContentAreasMenu"/>
+      <xs:element name="PerformanceBands" minOccurs="0" type="XMLDFPerformanceBands"/>
+      <xs:element name="LongitudinalOptions" minOccurs="0" type="XMLLongitudinalOptions"/>
+      <xs:element name="GroupPopulation" minOccurs="0" type="XMLReportOptionGroup_GroupPopulation"/>
+      <xs:element name="ComparisonGrouping" minOccurs="0" type="XMLReportOptionGroup_ComparisonGrouping"/>
+      <xs:element name="PopulationFilterMenu" minOccurs="0" type="XMLDFPopulationFilterMenu"/>
+      <xs:element name="ScoreFilters" minOccurs="0" type="XMLScoreFilters"/>
+      <xs:element name="CogatDifferences" minOccurs="0" maxOccurs="1" type="XMLReportOptionGroup_CogatDifferences"/>
+      <xs:element name="ShowPredictedScores" minOccurs="0" maxOccurs="1" type="XMLReportOptionGroup_ShowPredictedScores"/>
+      <xs:element name="HomeReporting" minOccurs="0" maxOccurs="1" type="XMLHomeReporting"/>
+      <xs:element name="ReportGrouping" minOccurs="0" maxOccurs="1" type="XMLReportOptionGroup_ReportGrouping"/>
+      <xs:element name="ReportMediaType" minOccurs="0" maxOccurs="1" type="XMLReportOptionGroup_ReportMediaType"/>
+      <xs:element name="ExportTemplate" minOccurs="0" maxOccurs="1" type="XMLDFExportTemplateMenu"/>
+      <xs:element name="ExportFormat" minOccurs="0" maxOccurs="1" type="XMLReportOptionGroup_ExportFormat"/>
+      <xs:element name="ExportHeadings" minOccurs="0" maxOccurs="1" type="XMLReportOptionGroup_ExportHeadings"/>
+      <xs:element name="CustomDataFields" minOccurs="0" maxOccurs="1" type="XMLReportOptionGroup_CustomDataFields"/>
+      <xs:element name="ScoreWarnings" minOccurs="0" type="XMLScoreWarnings"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="XMLDFPopulationFilterMenu">
+    <xs:attribute name="subgroupsOnly" type="xs:boolean" default="false"/>
+    <xs:attribute name="displayNone" type="xs:int" default="0"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLDFContentAreasMenu">
+    <xs:attribute name="isMultiselect" type="xs:boolean" default="false" />
+    <xs:attribute name="showWordSkills" type="xs:boolean" default="false" />
+  </xs:complexType>
+
+  <xs:complexType name="XMLDFCompositeTypesMenu">
+    <xs:attribute name="isMultiselect" type="xs:boolean" default="true" />
+  </xs:complexType>
+
+  <xs:complexType name="XMLDFSubContentAreasMenu">
+    <xs:attribute name="isMultiselect" type="xs:boolean" default="true" />
+    <xs:attribute name="hideParentSkill" type="xs:boolean" default="false" />
+    <xs:attribute name="hideCognitiveSkill" type="xs:boolean" default="false" />
+  </xs:complexType>
+
+  <xs:complexType name="XMLDFCompositeCalcMenu"/>
+
+  <xs:complexType name="XMLHomeReporting">
+    <xs:sequence>
+      <xs:element name="Language" nillable="false" minOccurs="1" maxOccurs="unbounded" type="XMLLanguage"/>
+    </xs:sequence>
+    <xs:attribute name="text" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="XMLLanguage">
+    <xs:attribute name="text" type="xs:string" use="required" />
+    <xs:attribute name="value" type="xs:string" use="required" />
+    <xs:attribute name="isHomeReporting" type="xs:string" use="required" />
+    <xs:attribute name="isDefault" type="xs:boolean" default="false" />
+  </xs:complexType>
+
+  <xs:complexType name="XMLDFExcludeZMenu">
+    <xs:attribute name="hide" type="xs:boolean" default="false" />
+  </xs:complexType>
+
+  <xs:complexType name="XMLDFAbilityProfile">
+    <xs:attribute name="hide" type="xs:boolean" default="false" />
+    <xs:attribute name="defaultValue" type="xs:boolean" default="true" />
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroup_CollegeReadiness">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionGroup">
+        <xs:attribute name="groupType" type="XMLGroupType" fixed="CollegeReadiness"/>
+        <xs:attribute name="hide" type="xs:boolean" default="false" />
+        <xs:attribute name="defaultValue" type="xs:boolean" default="true" />
+        <xs:attribute name="showIfGrade" type="xs:string" default=""/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLDFFilterAvailability"/>
+
+  <xs:complexType name="XMLDFSorting"/>
+
+  <xs:complexType name="XMLDFExportToExcel"/>
+
+  <xs:complexType name="XMLDFPerformanceBands"/>
+
+  <xs:complexType name="XMLScoreTypes">
+    <xs:sequence>
+      <xs:element name="ScoreTypeName" nillable="true" minOccurs="1" maxOccurs="unbounded" type="XMLScoreTypeName"/>
+    </xs:sequence>
+    <xs:attribute name="isMultiselect" type="xs:boolean" use="required" />
+    <xs:attribute name="showInEditCriteria" type="xs:boolean" default="true"/>
+    <xs:attribute name="minToSelect" type="xs:int" default="1" />
+    <xs:attribute name="maxToSelect" type="xs:int"  default="1"/>
+    <xs:attribute name="hide" type="xs:boolean" default="false"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLDFExportTemplateMenu">
+    <xs:sequence>
+      <xs:element name="TemplateOption" nillable="true" minOccurs="1" maxOccurs="unbounded" type="XMLTemplateOption"/>
+    </xs:sequence>
+    <xs:attribute name="text" type="xs:string" use="required"/>
+    <xs:attribute name="minToSelect" type="xs:int" default="1" />
+    <xs:attribute name="maxToSelect" type="xs:int"  default="1"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLScoreTypeName">
+    <xs:attribute name="code" type="xs:string" use="required"/>
+    <xs:attribute name="isDefault" type="xs:boolean" default="false"/>
+    <xs:attribute name="predicted" type="xs:string"/>
+    <xs:attribute name="text" type="xs:string" use="required"/>
+    <xs:attribute name="hide" type="xs:boolean" default="false"/>
+    <xs:attribute name="hideIfSkillID" type="xs:string"/>
+    <xs:attribute name="filterValue" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLTemplateOption">
+    <xs:attribute name="code" type="xs:string" use="required"/>
+    <xs:attribute name="isDefault" type="xs:boolean" default="false"/>
+    <xs:attribute name="text" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLLongitudinalOptions">
+    <xs:sequence>
+      <xs:element name="LongitudinalTypes" minOccurs="0" maxOccurs="1" type="XMLReportOptionGroup_LongitudinalTypes"/>
+      <xs:element name="TestAdministrations" minOccurs="1" maxOccurs="1" type="XMLTestAdministrations"/>
+      <xs:element name="GrowthFeature" minOccurs="0" maxOccurs="1" type="XMLGrowthFeature"/>
+    </xs:sequence>
+    <xs:attribute name="_z_" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLLongTypeName">
+    <xs:attribute name="code" type="xs:string" use="required"/>
+    <xs:attribute name="isDefault" type="xs:boolean" default="false" />
+    <xs:attribute name="text" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLTestAdministrations">
+    <xs:attribute name="minToSelect" type="xs:int" default="1" />
+    <xs:attribute name="maxToSelect" type="xs:int"  default="1"/>
+    <xs:attribute name="testFamilyGroupCodes" type="xs:string" use="required"/>
+    <xs:attribute name="showGradesSubgroup" type="xs:boolean" use="required"/>
+    <xs:attribute name="basReportFlag" type="xs:int" default="0"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLGrowthFeature">
+    <xs:sequence>
+      <xs:element name="GrowthStartPoint" minOccurs="1" maxOccurs="1" type="XMLGrowthStartPoint"/>
+      <xs:element name="GrowthEndPoint" minOccurs="1" maxOccurs="1" type="XMLGrowthEndPoint"/>
+      <xs:element name="GrowthGoal" minOccurs="1" maxOccurs="1" type="XMLGrowthGoal"/>
+    </xs:sequence>
+    <xs:attribute name="scoreType" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLGrowthStartPoint">
+    <xs:sequence>
+      <xs:element name="GrowthStartPointOption" minOccurs="1" maxOccurs="unbounded" type="XMLGrowthStartPointOption"/>
+    </xs:sequence>
+    <xs:attribute name="text" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLGrowthStartPointOption">
+    <xs:sequence>
+      <xs:element name="GrowthStartDate" minOccurs="0" maxOccurs="1" type="XMLGrowthStartDate"/>
+    </xs:sequence>
+    <xs:attribute name="code" type="xs:string" use="required"/>
+    <xs:attribute name="isDefault" type="xs:boolean" default="false" />
+    <xs:attribute name="text" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLGrowthStartDate">
+    <xs:attribute name="text" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLGrowthEndPoint">
+  </xs:complexType>
+
+  <xs:complexType name="XMLGrowthGoal">
+    <xs:sequence>
+      <xs:element name="GrowthGoalOption" minOccurs="1" maxOccurs="unbounded" type="XMLGrowthGoalOption"/>
+    </xs:sequence>
+    <xs:attribute name="_z_" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLGrowthGoalOption">
+    <xs:attribute name="code" type="xs:string" use="required"/>
+    <xs:attribute name="isDefault" type="xs:boolean" default="false" />
+    <xs:attribute name="text" type="xs:string" use="required"/>
+    <xs:attribute name="ContentAreaIncludeCondition" type="xs:string"/>
+    <xs:attribute name="GrowthStartPointExcludeCondition" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLGlobalTypes">
+    <xs:sequence>
+      <xs:element name="ExportFileInfo" minOccurs="1" maxOccurs="unbounded" type="XMLExportFileInfo"/>
+      <xs:element name="PerformanceBands" minOccurs="1" maxOccurs="1" type="XMLPerformanceBands"/>
+      <xs:element name="InterimPerformanceBands" minOccurs="1" maxOccurs="unbounded" type="XMLInterimPerformanceBands"/>
+      <xs:element name="DisplayTextMap" minOccurs="1" maxOccurs="1" type="XMLDisplayTextMap"/>
+    </xs:sequence>
+    <xs:attribute name="_z_"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLExportFileInfo">
+    <xs:sequence>
+      <xs:element name="ParentItem" minOccurs="1" maxOccurs="unbounded" type="XMLParentItem"/>
+    </xs:sequence>
+    <xs:attribute name="key" type="xs:string"/>
+    <xs:attribute name="userTextLength" type="xs:int"/>
+    <xs:attribute name="separator" type="xs:string" use="required"/>
+    <xs:attribute name="delimiter" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLParentItem">
+    <xs:sequence>
+      <xs:element name="Item" minOccurs="1" maxOccurs="unbounded" type="XMLItem"/>
+    </xs:sequence>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+    <xs:attribute name="text" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLPerformanceBands">
+    <xs:sequence>
+      <xs:element name="Band" minOccurs="0" maxOccurs="unbounded" type="XMLBand"/>
+    </xs:sequence>
+    <xs:attribute name="_z_" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLInterimPerformanceBands">
+    <xs:complexContent>
+      <xs:extension base="XMLPerformanceBands">
+        <xs:attribute name="score" type="xs:string" use="required"/>
+        <xs:attribute name="content" type="xs:string" use="required"/>
+        <xs:attribute name="grade" type="xs:string" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLDisplayTextMap">
+    <xs:sequence>
+      <xs:element name="DisplayText" minOccurs="0" maxOccurs="unbounded" type="XMLDisplayText"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="XMLItem">
+    <xs:attribute name="value" type="xs:string" use="required"/>
+    <xs:attribute name="text" type="xs:string" use="required"/>
+    <xs:attribute name="width" type="xs:int" use="required"/>
+    <xs:attribute name="padding" type="xs:int" use="optional" default="0"/>
+    <xs:attribute name="manualSelection" type="xs:boolean" use="optional" default="false"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLBand">
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="color" type="XMLBandColorEnum" use="required"/>
+    <xs:attribute name="low" type="xs:string" use="required"/>
+    <xs:attribute name="high" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:simpleType name="XMLBandColorEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="green" />
+      <xs:enumeration value="blue" />
+      <xs:enumeration value="yellow" />
+      <xs:enumeration value="orange" />
+      <xs:enumeration value="red" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="XMLDisplayText">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="GroupType" type="XMLGroupType" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLScoreWarnings">
+    <xs:attribute name="numRows" type="xs:int" use="required"/>
+  </xs:complexType>
+
+  <xs:simpleType name="XMLProductCodeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="IOWA" />
+      <xs:enumeration value="COGAT" />
+      <xs:enumeration value="IOWA_INTERIM" />
+      <xs:enumeration value="CTBS" />
+      <xs:enumeration value="CCAT" />
+      <xs:enumeration value="LOGRAMOS" />
+      <xs:enumeration value="GMRT" />
+      <xs:enumeration value="ISSREAD" />
+      <xs:enumeration value="ISSMATH" />
+      <xs:enumeration value="ISSSCI" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="XMLReportType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SP" />
+      <xs:enumeration value="EGSR" />
+      <xs:enumeration value="SR" />
+      <xs:enumeration value="GP" />
+      <xs:enumeration value="GR" />
+      <xs:enumeration value="SGR" />
+      <xs:enumeration value="MSR" />
+      <xs:enumeration value="GS" />
+      <xs:enumeration value="LOSS" />
+      <xs:enumeration value="SPN" />
+      <xs:enumeration value="SDE" />
+      <xs:enumeration value="SPP" />
+      <xs:enumeration value="GPP" />
+      <xs:enumeration value="GIA" />
+      <xs:enumeration value="CIRR" />
+      <xs:enumeration value="SL" />
+      <xs:enumeration value="WDSR" />
+      <xs:enumeration value="CWDS" />
+      <xs:enumeration value="SWDS" />
+      <xs:enumeration value="SPS" />
+      <xs:enumeration value="SSR" />
+      <xs:enumeration value="GPS" />
+      <xs:enumeration value="GSR" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="XMLLevelOfAnalysisType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TC" />
+      <xs:enumeration value="SD" />
+      <xs:enumeration value="IA" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="XMLReportMediaType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ROI" />
+      <xs:enumeration value="PDF" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="XMLSortDirection">
+    <xs:attribute name="code" type="xs:string" use="required"/>
+    <xs:attribute name="text" type="xs:string" use="required"/>
+    <xs:attribute name ="isDefault" type="xs:boolean" default="false"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLSortDirections">
+    <xs:sequence>
+      <xs:element name="SortDirection" minOccurs="1" maxOccurs="unbounded" type="XMLSortDirection"/>
+    </xs:sequence>
+    <xs:attribute name="hide" type="xs:boolean" default="false"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLSortBySubtest">
+    <xs:attribute name="hideIfSortDirection" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLScoreFilters">
+    <xs:sequence>
+      <xs:element name="Scores" minOccurs="0" maxOccurs="1" type="XMLScoreFiltersScores"/>
+      <xs:element name="LevelOfAnalysis" minOccurs="0" maxOccurs="1" type="XMLScoreFiltersLevelOfAnalysis"/>
+      <xs:element name="ContentScope" minOccurs="0" maxOccurs="1" type="XMLScoreFiltersContentScope"/>
+      <xs:element name="SubContentScope" minOccurs="0" maxOccurs="1" type="XMLScoreFiltersSubContentScope"/>
+    </xs:sequence>
+    <xs:attribute name="_z_" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLScoreFiltersScores">
+    <xs:attribute name="_z_" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLScoreFiltersLevelOfAnalysis">
+    <xs:attribute name="_z_" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLScoreFiltersContentScope">
+    <xs:attribute name="_z_" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLScoreFiltersSubContentScope">
+    <xs:attribute name="_z_" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroup_SortType">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionGroup">
+        <xs:attribute name="groupType" type="XMLGroupType" fixed="SortType"/>
+        <xs:attribute name="hideIfSortDirection" type="xs:string"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!--***********************************
+      XML Conditions
+      ***********************************-->
+  <xs:simpleType name="XMLCompareOperator">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Equal"/>
+      <xs:enumeration value="EqualNoCase"/>
+      <xs:enumeration value="GreaterThen"/>
+      <xs:enumeration value="GreaterThenOrEqual"/>
+      <xs:enumeration value="LessThen"/>
+      <xs:enumeration value="LessThenOrEqual"/>
+      <xs:enumeration value="Contains"/>
+      <xs:enumeration value="BeginWith"/>
+      <xs:enumeration value="EndWith"/>
+      <xs:enumeration value="In"/>
+      <xs:enumeration value="IsNull"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="XMLReportOptionSearch">
+    <xs:sequence>
+      <xs:element name="OptionId" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:attribute name="id" type="xs:string" use="required"/>
+          <xs:attribute name="compareOperator" type="XMLCompareOperator" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="groupType" type="XMLGroupType" use="required"/>
+    <xs:attribute name="isSelected"  type="xs:boolean"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionSearchByValue">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionSearch">
+        <xs:sequence>
+          <xs:element name="CompareToValue" minOccurs="1" maxOccurs="1">
+            <xs:complexType>
+              <xs:attribute name="value" type="xs:string" use="required"/>
+              <xs:attribute name="compareOperator" type="XMLCompareOperator" use="required"/>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionSearchByDynamicValue">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionSearch">
+        <xs:sequence>
+          <xs:element name="CompareToOptionValue" minOccurs="1" maxOccurs="1">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="OptionSearch" minOccurs="1" maxOccurs="1" type="XMLReportOptionSearch"/>
+              </xs:sequence>
+              <xs:attribute name="compareOperator" type="XMLCompareOperator" use="required"/>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroupReference">
+    <xs:attribute name="groupType" type="XMLGroupType" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="XMLCondition" abstract ="true" >
+    <xs:attribute name="negative" default="false" type="xs:boolean"/>
+  </xs:complexType>
+
+
+  <xs:complexType name="XMLReportOptionCondition">
+    <xs:complexContent>
+      <xs:extension base="XMLCondition">
+        <xs:sequence>
+          <xs:element name="OptionSearch" minOccurs="1" maxOccurs="1" type="XMLReportOptionSearch" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroupCondition">
+    <xs:complexContent>
+      <xs:extension base="XMLCondition">
+        <xs:sequence>
+          <xs:element name="GroupReference" minOccurs="1" maxOccurs="1" type="XMLReportOptionGroupReference" />
+          <xs:element name="GroupCondition" minOccurs="1" maxOccurs="1" type="XMLReportOptionGroup" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="XMLConditionMergeOperator">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="And"/>
+      <xs:enumeration value="Or"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="XMLConditionComplex">
+    <xs:complexContent>
+      <xs:extension base="XMLCondition">
+        <xs:sequence>
+          <xs:element name="Condition" type="XMLCondition" minOccurs="2" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="mergeOperator" use="required" type="XMLConditionMergeOperator" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- 
+    ******************************
+    ReportOptionGroups
+    ******************************
+-->
+
+  <xs:simpleType name="XMLOptionMinToSelect">
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="XMLOptionMaxToSelect">
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="XMLReportOption">
+    <xs:sequence>
+      <xs:element name="ConditionToShow" minOccurs="0" maxOccurs="1" type="XMLCondition"/>
+      <xs:element name="ConditionToReport" minOccurs="0" maxOccurs="1" type="XMLCondition"/>
+      <xs:element name="ConditionToExclude" minOccurs="0" maxOccurs="1" type="XMLCondition"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <!--use="required"-->
+    <xs:attribute name="value" type="xs:string"/>
+    <xs:attribute name="text" type="xs:string" use="required"/>
+    <xs:attribute name="isDefault" type="xs:boolean" default="false"/>
+    <xs:attribute name="show" type="xs:boolean" default="true" />
+    <xs:attribute name="report" type="xs:boolean" default="true" />
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroup" abstract="true">
+    <xs:sequence>
+      <xs:element name="Option" minOccurs="0" maxOccurs="unbounded" type="XMLReportOption"/>
+      <xs:element name="ConditionToShow" minOccurs="0" maxOccurs="1" type="XMLCondition"/>
+      <xs:element name="ConditionToReport" minOccurs="0" maxOccurs="1" type="XMLCondition"/>
+      <xs:element name="ConditionToExclude" minOccurs="0" maxOccurs="1" type="XMLCondition"/>
+    </xs:sequence>
+    <xs:attribute name="key" type="xs:ID"/>
+    <xs:attribute name="keyref" type="xs:IDREF"/>
+    <xs:attribute name="text" type="xs:string" />
+    <xs:attribute name="minToSelect" type="XMLOptionMinToSelect" default="1"/>
+    <xs:attribute name="maxToSelect" type="XMLOptionMaxToSelect"/>
+    <xs:attribute name="show" type="xs:boolean" default="true" />
+    <xs:attribute name="report" type="xs:boolean" default="true" />
+    <xs:attribute name="reportSelectedOptionsOnly" type="xs:boolean" default="true"/>
+    <xs:attribute name="reportOptionValues" type="xs:boolean" default="false"/>
+    <xs:attribute name="reportParamName" type="xs:string"/>
+    <xs:attribute name="excludeOptionId" type="xs:string"/>
+    <xs:attribute name="showInEditCriteria" type="xs:boolean" default="true"/>
+    <xs:attribute name="getValuesOnSubmit" type="xs:boolean" default="false"/>
+    <xs:attribute name="hideConditionReverse" type="xs:boolean" default="false"/>
+    <xs:attribute name="hideConditionGroup" type="XMLGroupType"/>
+    <xs:attribute name="hideConditionValues" type="xs:string"/>
+    <xs:attribute name="queryKey" type="xs:string"/>
+    <xs:attribute name="queryValuesSeparator" type="xs:string" default=","/>
+    <xs:attribute name="globalTypesRef" type="xs:string" />
+  </xs:complexType>
+
+  <xs:simpleType name="XMLGroupType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="_INTERNAL_FIRST_" />
+      <xs:enumeration value="Assessment" />
+      <xs:enumeration value="TestAdministrationDate" />
+      <xs:enumeration value="DisplayType" />
+      <xs:enumeration value="GradeLevel" />
+      <xs:enumeration value="GradePaper" />
+      <xs:enumeration value="LevelofAnalysis" />
+      <xs:enumeration value="DisplayOptions" />
+      <xs:enumeration value="SkillDomainClassification" />
+      <xs:enumeration value="Scores" />
+      <xs:enumeration value="AbilityProfile" />
+      <xs:enumeration value="ColumnZ" />
+      <xs:enumeration value="CompositeCalculationOptions" />
+      <xs:enumeration value="ContentScope" />
+      <xs:enumeration value="CompositeTypes" />
+      <xs:enumeration value="SortDirection" />
+      <xs:enumeration value="SortBySubtest" />
+      <xs:enumeration value="SortType" />
+      <xs:enumeration value="SubContentScope" />
+      <xs:enumeration value="PerformanceBands" />
+      <xs:enumeration value="STATE" />
+      <xs:enumeration value="REGION" />
+      <xs:enumeration value="SYSTEM" />
+      <xs:enumeration value="DISTRICT" />
+      <xs:enumeration value="BUILDING" />
+      <xs:enumeration value="CLASS" />
+      <xs:enumeration value="Student" />
+      <xs:enumeration value="LongitudinalTypes" />
+      <xs:enumeration value="LongitudinalTestAdministrations" />
+      <xs:enumeration value="LongitudinalGrowthStartPointType" />
+      <xs:enumeration value="LongitudinalGrowthStartPoint" />
+      <xs:enumeration value="LongitudinalGrowthEndPoint" />
+      <xs:enumeration value="LongitudinalGrowthGoal" />
+      <xs:enumeration value="GroupPopulation" />
+      <xs:enumeration value="ComparisonGrouping" />
+      <xs:enumeration value="PopulationFilters" />
+      <xs:enumeration value="ScoreFilters" />
+      <xs:enumeration value="CogatDifferences" />
+      <xs:enumeration value="ShowPredictedScores" />
+      <xs:enumeration value="HomeReporting" />
+      <xs:enumeration value="ReportGrouping" />
+      <xs:enumeration value="ReportMediaType" />
+      <xs:enumeration value="ExportTemplate" />
+      <xs:enumeration value="ExportFormat" />
+      <xs:enumeration value="ExportHeadings" />
+      <xs:enumeration value="CustomDataFields" />
+      <xs:enumeration value="ScoreWarnings" />
+      <xs:enumeration value="ShowReadingTotal" />
+      <xs:enumeration value="GraphScores" />
+      <xs:enumeration value="LowerGraphType" />
+      <xs:enumeration value="CollegeReadiness" />
+      <xs:enumeration value="_INTERNAL_LAST_" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="XMLReportOptionGroup_XMLScoreTypes">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionGroup">
+        <xs:sequence>
+          <xs:element name="ScoreTypeName" nillable="true" minOccurs="1" maxOccurs="unbounded" type="XMLScoreTypeName"/>
+        </xs:sequence>
+        <xs:attribute name="groupType" type="XMLGroupType" fixed="Scores"/>
+        <xs:attribute name="isMultiselect" type="xs:boolean" use="required" />
+        <xs:attribute name="hide" type="xs:boolean" default="false"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroup_Skillset">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionGroup">
+        <xs:attribute name="groupType" type="XMLGroupType" fixed="SkillDomainClassification"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroup_CogatDifferences">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionGroup">
+        <xs:attribute name="groupType" type="XMLGroupType" fixed="CogatDifferences"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroup_ShowPredictedScores">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionGroup">
+        <xs:attribute name="groupType" type="XMLGroupType" fixed="ShowPredictedScores"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroup_ShowReadingTotal">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionGroup">
+        <xs:attribute name="groupType" type="XMLGroupType" fixed="ShowReadingTotal"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroup_ReportGrouping">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionGroup">
+        <xs:attribute name="groupType" type="XMLGroupType" fixed="ReportGrouping"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroup_LowerGraphType">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionGroup">
+        <xs:attribute name="groupType" type="XMLGroupType" fixed="LowerGraphType"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroup_ReportMediaType">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionGroup">
+        <xs:attribute name="groupType" type="XMLGroupType" fixed="ReportMediaType"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroup_LongitudinalTypes">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionGroup">
+        <xs:attribute name="groupType" type="XMLGroupType" fixed="LongitudinalTypes"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroup_ExportFormat">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionGroup">
+        <xs:attribute name="groupType" type="XMLGroupType" fixed="ExportFormat"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroup_ExportHeadings">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionGroup">
+        <xs:attribute name="groupType" type="XMLGroupType" fixed="ExportHeadings"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroup_CustomDataFields">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionGroup">
+        <xs:attribute name="groupType" type="XMLGroupType" fixed="CustomDataFields"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroup_GroupPopulation">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionGroup">
+        <xs:attribute name="groupType" type="XMLGroupType" fixed="GroupPopulation"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XMLReportOptionGroup_ComparisonGrouping">
+    <xs:complexContent>
+      <xs:extension base="XMLReportOptionGroup">
+        <xs:attribute name="groupType" type="XMLGroupType" fixed="ComparisonGrouping"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+</xs:schema>

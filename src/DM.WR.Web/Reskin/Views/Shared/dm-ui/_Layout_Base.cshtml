@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=11" />
+    <meta name="description" content="Elevate Platform" />
+    @*<link rel="icon" type="image/png" href="@Links.Reskin.Content.dm_ui.img.dm_fav_png">*@
+    <link rel="icon" href="~/Reskin/Content/img/elevate/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="~/Reskin/Content/img/elevate/logo192.png" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render(DmUiBundlePath.CssBundle)
+    @Styles.Render("~/Reskin/Scripts/elevate-external-header/elevate-css/errors.css")
+    @Styles.Render("~/Reskin/Scripts/elevate-external-header/elevate-css/variables.css")
+    @RenderSection("page_css", required: false)
+    @Scripts.Render(DmUiBundlePath.JsBundle)
+
+    <link rel="stylesheet" href="~/Reskin/Scripts/elevate-external-header/eeh/eeh/build/static/css/main.css">
+    <link rel="preload" href="~/Reskin/Content/fonts/Open_Sans/static/OpenSans/OpenSans-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="~/Reskin/Content/fonts/Open_Sans/static/OpenSans/OpenSans-Bold.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="stylesheet" href="~/Reskin/Content/fonts/fonts.css" />
+
+</head>
+<body>
+    <div id="root"></div>
+    @Scripts.Render("~/Reskin/Scripts/elevate-external-header/eeh/eeh/build/static/js/main.js")
+
+    @RenderBody()
+
+    @* ----- Footer ----- *@
+    @if (ViewBag.MagicFooterViewModel != null)
+    { Html.RenderPartial(MVC.Shared.Views.dm_ui._MagicFooter, (MagicFooterViewModel)ViewBag.MagicFooterViewModel); }
+    else
+    { Html.RenderPartial(MVC.Shared.Views.dm_ui._Footer, (MainFooterViewModel)ViewBag.FooterViewModel); }
+
+    <div id="modal-placeholder"></div>
+
+    @RenderSection("page_js", required: false)
+
+    @Html.DmUiOverlaySpinner()
+
+    @Html.DmUiSessionTimeOutModal((SectionColor)ViewBag.SectionColor)
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            DmUiLibrary.Init(@Html.Raw(ViewBag.UiSettings));
+            @RenderSection("js_on_document_ready", required: false)
+        });
+    </script>
+</body>
+</html>

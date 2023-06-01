@@ -1,0 +1,671 @@
+﻿/* ----- Options Page ----- */
+.options-page-section #change-main-location-link {
+    margin-left: 16px;
+    font-size: 14px;
+}
+
+.options-page-section .options-placeholder {
+    width: 100%;
+    position: relative;
+    margin-top: 32px;
+}
+
+    .options-page-section .options-placeholder .options-top-to-bottom > hr {
+        width: 92%;
+        margin: 20px auto 35px auto;
+        border-top: 1px solid #3d3f3f;
+    }
+
+.options-page-section .primary-options,
+.options-page-section .secondary-options {
+    width: 100%;
+}
+
+.options-page-section .primary-options {
+    margin-bottom: 4px;
+    display: table;
+    width: 100%;
+}
+
+.options-page-section .secondary-options {
+    margin-top: 20px;
+    display: table;
+    width: 100%;
+}
+
+.options-page-section .primary-options-left,
+.options-page-section .secondary-options-left,
+.options-page-section .primary-options-right,
+.options-page-section .secondary-options-right {
+    width: 50%;
+    padding-right: 40px;
+}
+
+.options-page-section .primary-options-left,
+.options-page-section .secondary-options-left {
+    float: left;
+}
+
+.options-page-section .primary-options-right,
+.options-page-section .secondary-options-right {
+    float: right;
+}
+
+.options-page-section .option-group {
+    width: 100%;
+    min-height: 60px;
+    margin-bottom: 20px;
+}
+
+.options-page-section .option-group > label {
+    margin-bottom: 8px;
+}
+
+.options-page-section .option-group > .launch-group-modal {
+    margin-left: 16px;
+}
+
+    .options-page-section .option-group .dm-ui-checkbox-container {
+        display: block;
+        margin-top: 0px;
+        margin-bottom: 16px;
+        margin-left: 16px;
+    }
+    .options-page-section .option-group .option-group-selected-text {
+        margin-left: 16px;
+    }
+
+.clear {
+    clear: both;
+}
+
+.options-page-buttons {
+    padding-top: 32px;
+    padding-bottom: 12px;
+}
+
+.options-page-buttons .dm-ui-button-primary,
+.options-page-buttons .dm-ui-action-button {
+    float: right;
+    margin-left: 18px;
+}
+
+.options-page-buttons .dm-ui-button-secondary {
+    float: left;
+    margin-right: 18px;
+}
+
+.options-disabled-special-group {
+    opacity: 0.5;
+}
+
+/* Edit Criteria Controls */
+.options-page-section .edit-criteria-notification {
+    position: relative;
+    margin-top: -16px;
+    margin-bottom: 24px;
+}
+
+.options-page-section .edit-criteria-notification .notification-text {
+    line-height: 32px;
+}
+
+.options-page-section .edit-criteria-notification .dm-ui-button-primary {
+    position: absolute;
+    right: 12px;
+    top: 19px;
+}
+
+.options-page-section .edit-criteria-controls {
+    width: 100%;
+}
+
+.options-page-section .edit-criteria-controls div {
+    display: inline-block;
+}
+
+.options-page-section .edit-criteria-controls .criteria-name {
+    width: 27%;
+    margin-right: 3%;
+}
+
+.options-page-section .edit-criteria-controls .criteria-description {
+    width: 52%;
+    margin-right: 3%;
+}
+
+.options-page-section .edit-criteria-controls .criteria-date {
+    width: 14%;
+}
+
+.edit-criteria-textboxes {
+    margin-bottom: 20px;
+}
+
+.options-page-section .edit-criteria-hr {
+    margin-bottom: 20px;
+}
+
+/* Save Criteria Modal */
+.save-criteria-modal-body textarea {
+    height: 235px;
+    resize: none;
+}
+
+/* Multimeasure Controls */
+.options-page-section .multimeasure-controls {
+    position: absolute;
+    right: 0;
+    top: -52px;
+}
+
+.options-page-section .multimeasure-controls > .mm-element {
+    margin-left: 16px;
+}
+.options-page-section .multimeasure-controls .plus,
+.options-page-section .multimeasure-controls .minus {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: -4px 3px 0 16px;
+}
+    .options-page-section .multimeasure-controls .plus {
+        margin-right: 8px;
+    }
+    .options-page-section .multimeasure-controls .disabled {
+        opacity: 0.35;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    .options-page-section .multimeasure-controls .plus:before,
+    .options-page-section .multimeasure-controls .minus:before {
+        content: "";
+        display: block;
+        height: 4px;
+        width: 16px;
+        background-color: #6a6d6d;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        margin-top: -2px;
+    }
+    .options-page-section .multimeasure-controls .plus:after {
+        content: "";
+        display: block;
+        height: 16px;
+        width: 4px;
+        background-color: #6a6d6d;
+        position: absolute;
+        left: 50%;
+        top: 0;
+        margin-left: -2px;
+    }
+        .options-page-section .multimeasure-controls a .plus:after,
+        .options-page-section .multimeasure-controls a .plus:before,
+        .options-page-section .multimeasure-controls a .minus:before {
+            background-color: #147cbd;
+        }
+    .columns-divider {
+        margin: 0 5px;
+    }
+
+/* Group - Piled Options */
+.piled-options-group .dm-ui-dropdown-widget {
+    margin-bottom: 12px;
+}
+
+/* Group - Multimeasure Performance Bands */
+.dm-ui-modal.performance-bands-group {
+    width: 550px;
+}
+
+.performance-bands-group .band-row-heading {
+    margin-top: 18px;
+}
+
+.performance-bands-group .band-row:not(.band-row-heading) {
+    margin-bottom: 18px;
+}
+
+.performance-bands-group .band-row-element {
+    display: inline-block;
+    text-align: left;
+    font-size: 12.8px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.12;
+    letter-spacing: 0.2px;
+    color: #2d2d2d;
+    width: 57px;
+
+}
+    .performance-bands-group .band-row-element label {
+        text-transform: uppercase;
+    }
+
+.performance-bands-group .band-category {
+    width: 294px;
+    position: relative;
+    margin-right: 35px;
+}
+
+.performance-bands-group .band-dash {
+    width: 30px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.performance-bands-group .band-category input {
+    background-color: transparent;
+}
+
+.performance-bands-group .band-category:after {
+    content: "";
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    width: 19px;
+    height: 30px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    z-index: -1;
+}
+
+.performance-bands-group .band-category.green:after {
+    background-color: #3d8060;
+}
+
+.performance-bands-group .band-category.blue:after {
+    background-color: #04739e;
+}
+
+.performance-bands-group .band-category.yellow:after {
+    background-color: #cc8500;
+}
+
+.performance-bands-group .band-category.orange:after {
+    background-color: #f56600;
+}
+
+.performance-bands-group .band-category.red:after {
+    background-color: #c32727;
+}
+
+/* Group - Longitudinal Test Admins */
+.longitudinal-test-admins-modal {
+    width: 900px;
+}
+
+.longitudinal-test-admins-modal .left-column,
+.longitudinal-test-admins-modal .right-column {
+    display: inline-block;
+    width: 35%;
+    margin-right: 10%;
+    margin-bottom: 18px;
+}
+
+.longitudinal-test-admins-modal .header-column {
+    margin-top: 18px;
+    margin-bottom: 8px;
+    font-size: 12.8px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.56;
+    letter-spacing: 0.2px;
+}
+
+/* Group - Score Filters */
+.score-filters-modal {
+    /*max-width: 1216px;
+    min-width: 960px;*/
+    /*width: 100%;*/
+    width: auto;
+}
+
+.score-filters-row {
+    margin-bottom: 18px;
+    white-space: nowrap;
+}
+
+.score-filters-modal .head-row {
+    margin-top: 12px;
+    margin-bottom: 4px;
+    font-size: 12.8px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.56;
+    letter-spacing: 0.2px;
+    color: #2d2d2d;
+}
+
+.score-filters-wrapper {
+    display: table;
+    width: 100%;
+}
+.score-filters-modal .score-filters-row {
+    display: table-row;
+}
+    .score-filters-modal .score-filters-col {
+        /*display: inline-block;*/
+        display: table-cell;
+        padding: 0 0 20px 20px;
+        width: 100%;
+    }
+        .score-filters-modal .score-filters-col:nth-child(2),
+        .score-filters-modal .score-filters-col:first-child {
+            padding-left: 0;
+        }
+        .score-filters-modal .head-row .score-filters-col {
+            padding-bottom: 1px;
+            padding-top: 20px;
+        }
+        .score-filters-modal .col-val2 {
+            padding-left: 4px;
+        }
+
+.score-filters-modal .col-concat {
+    /*width: 9%;*/
+    width: 0;
+}
+    .score-filters-modal .col-concat .dm-ui-switcher {
+        margin-right: 20px;
+    }
+.score-filters-modal .col-score {
+    /*width: 31%;*/
+    min-width: 240px;
+}
+
+.score-filters-modal .col-content-area {
+    /*width: 21%;*/
+    min-width: 240px;
+}
+
+.score-filters-modal .col-comparison {
+    /*width: 23%;*/
+    min-width: 260px;
+}
+
+.score-filters-modal .col-val1 {
+    /*width: 5%;*/
+}
+
+.score-filters-modal .col-val2 {
+    /*width: 9%;*/
+}
+    
+.score-filters-modal .col-val2 > input {
+    /*width: 55%;*/
+}
+    .score-filters-modal .col-val1 > input,
+    .score-filters-modal .col-val2 > input {
+        width: 70px;
+    }
+
+
+/* Group - Score Filters */
+.score-warnings-modal {
+    width: 900px;
+}
+
+.score-warnings-row {
+    margin-bottom: 18px;
+    white-space: nowrap;
+}
+
+.score-warnings-modal .head-row {
+    margin-top: 12px;
+    margin-bottom: 4px;
+    font-size: 12.8px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.56;
+    letter-spacing: 0.2px;
+    color: #2d2d2d;
+}
+
+.score-warnings-modal .score-warnings-col {
+    display: inline-block;
+}
+
+.score-warnings-modal .col-concat {
+    width: 100px;
+}
+
+.score-warnings-modal .col-dropdown {
+    width: 50%;
+}
+
+.score-warnings-modal .col-switch {
+    min-width: 5px;
+}
+
+/* Group - Custom Data Fields */
+.custom-data-fields-modal {
+    position: absolute;
+    top: 0;
+    transform: translate(-50%, -264px);
+    min-width: 1020px;
+    max-width: 1240px;
+    width: 120%;
+    height: calc(100vh - 72px);
+}
+
+.custom-data-fields-modal .cdf-container {
+    height: calc(100vh - 220px);
+    overflow-y: auto;
+    position: relative;
+}
+
+.custom-data-fields-modal .cdf-available-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    height: 100%;
+    width: 33%;
+}
+
+.custom-data-fields-modal .custom-fields-selected-container-margin {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 67%;
+    padding-left: 32px;
+}
+
+.custom-data-fields-modal .cdf-available-controls,
+.custom-data-fields-modal .custom-fields-selected-controls {
+    height: 40px;
+}
+
+.custom-data-fields-modal .cdf-available-controls h4,
+.custom-data-fields-modal .custom-fields-selected-controls h4 {
+    display: inline-block;
+    margin-top: 8px;
+}
+
+.custom-data-fields-modal .cdf-available-controls button,
+.custom-data-fields-modal .custom-fields-selected-controls button {
+    float: right;
+}
+
+.custom-data-fields-modal .cdf-available-items {
+    border: solid 1px #979797;
+    width: 100%;
+    padding: 8px;
+}
+
+.custom-data-fields-modal #cdf-select-all-link,
+.custom-data-fields-modal #cdf-deselect-all-link {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.custom-data-fields-modal #cdf-deselect-all-link {
+    float: right;
+}
+
+.custom-data-fields-modal .cdf-available-items hr {
+    margin-bottom: 4px;
+}
+
+.custom-data-fields-modal .cdf-available-items .dm-ui-checkbox-container {
+    display: inline-block;
+}
+
+.custom-data-fields-modal .cdf-available-items .cdf-grouping-arrow {
+    float: right;
+    width: 16px;
+    height: 10px;
+    margin-top: 8px;
+    margin-right: 4px;
+    cursor: pointer;
+}
+
+.custom-data-fields-modal .cdf-available-items .cdf-grouping-arrow-up {
+    display: none;
+}
+
+.custom-data-fields-modal .cdf-available-items .cdf-item {
+    list-style: none;
+    padding-left: 16px;
+}
+
+.custom-data-fields-modal .custom-fields-selected-container {
+    width: 100%;
+    height: 100%;
+}
+
+.custom-data-fields-modal .custom-fields-selected-items {
+    border: solid 1px #979797;
+}
+
+.custom-data-fields-modal .custom-fields-selected-items .cdf-selected-headings {
+    padding: 8px;
+    font-size: 12.8px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.56;
+    letter-spacing: 0.2px;
+    color: #2d2d2d;
+}
+
+.custom-data-fields-modal .custom-fields-selected-items .cdf-selected-headings .cdf-selected-headings-label {
+    display: inline-block;
+    margin-left: 70px;
+}
+
+.custom-data-fields-modal .custom-fields-selected-items .cdf-selected-headings .cdf-selected-headings-length {
+    float: right;
+    margin-right: 108px;
+}
+
+.custom-data-fields-modal .cdf-selected-items-drop {
+    padding: 16px;
+}
+
+.custom-data-fields-modal .cdf-selected-item {
+    border-radius: 2px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.26);
+    border: solid 1px #d5dadc;
+    margin-bottom: 16px;
+    background-color: #fff;
+    position: relative;
+}
+
+.custom-data-fields-modal .cdf-dragger {
+    position: absolute;
+    transform: translate(17px, 65%);
+    cursor: grab;
+}
+
+.custom-data-fields-modal .cdf-selected-item-body {
+    display: inline-block;
+    height: 100%;
+    width: calc(100% - 44px);
+    margin-left: 44px;
+    padding: 16px;
+    border-left: solid 2px #d5dadc;
+}
+
+.custom-data-fields-modal .cdf-user-controls .cdf-selected-item-user-text {
+    width: 68%;
+    margin-right: 32px;
+}
+
+.custom-data-fields-modal .cdf-user-controls .cdf-selected-item-user-width {
+    width: 8%;
+}
+
+.custom-data-fields-modal .cdf-user-controls .dm-ui-button-primary {
+    float: right;
+}
+
+.custom-data-fields-modal .cdf-default-values {
+    color: #6a6d6d;
+}
+
+.custom-data-fields-modal .cdf-default-values .cdf-selected-item-text {
+    display: inline-block;
+    width: 68%;
+    margin-right: 32px;
+}
+
+.custom-data-fields-modal .cdf-default-values .cdf-selected-item-width {
+    display: inline-block;
+    width: 8%;
+}
+
+.custom-data-fields-modal .dm-ui-modal-button-container-dual .cdf-apply-button,
+.custom-data-fields-modal .dm-ui-modal-button-container-dual .cdf-remove-all-button {
+    float: right;
+    margin-left: 18px;
+}
+
+/*-----------------------------------------*/
+/*     Options Top To Bottom Layout        */
+/*-----------------------------------------*/
+.options-top-to-bottom {
+    width: 100%;
+}
+
+.options-top-to-bottom .option-group {
+    min-height: 0;
+    margin-bottom: 12px;
+    display: table-row;
+}
+
+    .options-top-to-bottom .option-group > label {
+        min-width: 158px;
+        padding-right: 12px;
+        display: table-cell;
+        padding-bottom: 15px;
+    }
+
+    .options-top-to-bottom .option-group > .dm-ui-dropdown-widget {
+        display: inline-block;
+        width: 100%;
+        display: table-cell;
+        padding-bottom: 15px;
+    }
+.options-top-to-bottom .dm-ui-checkbox-container {
+    display: inline-block !important;
+    margin-right: 16px;
+}
+
+.options-top-to-bottom .option-group-selected-text {
+    float: left;
+    margin-left: 0 !important;
+    max-width: 90%;
+}
+

@@ -1,0 +1,82 @@
+﻿@using DM.WR.Models.Config
+@model EntranceViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="@Links.Reskin.Content.dm_ui.img.dm_fav_png">
+    <title>Web Reporting</title>
+    @Styles.Render(DmUiBundlePath.CssBundle)
+    @Styles.Render(BundlePath.CssBackdoorPage)
+    @Scripts.Render(DmUiBundlePath.JsBundle)
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" type="text/css">
+</head>
+<body style="background-image: url(@Links.Reskin.Content.img.BackDoorBackground_png)">
+    <div id="root"></div>
+    @Scripts.Render("~/Reskin/Scripts/elevate-external-header/eeh/build/static/main.826aa607.js")
+
+    <div class="body-content">
+        <h1>Welcome to Web Reporting!</h1>
+        @using (Html.BeginForm("Index", "BackDoor", FormMethod.Post, new { @class = "back-door-form" }))
+        {
+        @Html.LabelFor(m => m.View)
+        @Html.DmUiSingleSelectDropdown(items: Model.ViewList, id: "View")
+        <br />
+        <div class="classic-login" @Html.Attr(Model.ViewList.Any(i => i.Value == WebReportingView.IowaFlex && i.Selected), "style", "display: none;")>
+            @Html.LabelFor(m => m.LocationGuids)
+            @Html.TextBoxFor(m=> m.LocationGuids)
+
+            @Html.LabelFor(m => m.ContractInstances)
+            @Html.TextBoxFor(m => m.ContractInstances)
+
+            @Html.LabelFor(m => m.RoleName)
+            @Html.TextBoxFor(m => m.RoleName)
+        </div>
+
+        <div class="adaptive-login" @Html.Attr(Model.ViewList.Any(i => i.Value == WebReportingView.IowaFlex && !i.Selected), "style", "display: none;")>
+            @Html.LabelFor(m => m.UserId)
+            @Html.TextAreaFor(m => m.UserId)
+
+            @Html.LabelFor(m => m.LocationIds)
+            @Html.TextAreaFor(m => m.LocationIds)
+
+            @Html.LabelFor(m => m.LocationLevel)
+            @Html.TextAreaFor(m => m.LocationLevel)
+        </div>
+
+        <div class="bd-button-container">
+            <input id="submit-button" type="submit" class="dm-ui-button-medium dm-ui-button-primary" value="Submit" />
+        </div>
+
+        <div class="dm-ui-error-text">@Model.ErrorMessage</div>
+        }
+    </div>
+    @Scripts.Render(DmUiBundlePath.JsBundle)
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            DmUiLibrary.Init('settings');
+
+            $('textarea').on('enterkeyup', function () {
+                $('form').submit();
+            });
+
+            $('#View').on('change', function () {
+                if (this.value == 'dashboard_iowaflex') {
+                    $('.classic-login').hide();
+                    $('.adaptive-login').show();
+                }
+                else {
+                    $('.classic-login').show();
+                    $('.adaptive-login').hide();
+                }
+
+            });
+        });
+    </script>
+</body>
+</html>

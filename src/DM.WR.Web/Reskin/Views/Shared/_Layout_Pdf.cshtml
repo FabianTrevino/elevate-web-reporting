@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href="@Links.Reskin.Content.dm_ui.img.dm_fav_png">
+    <title>@ViewBag.Title</title>
+    @Styles.Render(DmUiBundlePath.CssBundle)
+    @RenderSection("page_css", required: false)
+</head>
+<body style="background-color: transparent !important;">
+    @RenderBody()
+
+    @* ----- Footer -----
+            @{ Html.RenderPartial(MVC.Shared.Views.dm_ui._Footer, (MainFooterViewModel)ViewBag.FooterViewModel); }
+
+            @Html.DmUiOverlaySpinner()
+
+        <div id="modal-placeholder"></div>
+
+        @Html.DmUiSessionTimeOutModal((SectionColor)ViewBag.SectionColor)
+
+    *@
+
+    @Scripts.Render(DmUiBundlePath.JsBundle)
+
+    @RenderSection("page_js", required: false)
+
+    <script type="text/javascript">
+            $(document).ready(function () {
+                //DmUiLibrary.Init(@Html.Raw(ViewBag.UiSettings));
+                @RenderSection("js_on_document_ready", required: false)
+            });
+    </script>
+</body>
+</html>

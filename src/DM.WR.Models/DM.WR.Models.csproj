@@ -1,0 +1,464 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{79347493-9DCF-486D-A915-B173EF19ACD0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DM.WR.Models</RootNamespace>
+    <AssemblyName>DM.WR.Models</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <ErrorReport>prompt</ErrorReport>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'QA|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <ErrorReport>prompt</ErrorReport>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PROD|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <ErrorReport>prompt</ErrorReport>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <PlatformTarget>x64</PlatformTarget>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UAT|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <ErrorReport>prompt</ErrorReport>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV|x86'">
+    <OutputPath>bin\x86\DEV\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'QA|x86'">
+    <OutputPath>bin\x86\QA\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UAT|x86'">
+    <OutputPath>bin\x86\UAT\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV1|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DEV1\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV1|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\DEV1\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV2|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DEV2\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV2|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\DEV2\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV4|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DEV4\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV4|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\DEV4\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|AnyCPU'">
+    <OutputPath>bin\DEMO\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|x86'">
+    <OutputPath>bin\x86\DEMO\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DM.UI.Library.Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DM.UI.Library.Models.1.1.65\lib\net472\DM.UI.Library.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="HandyStuff, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HandyStuff.0.0.3-beta\lib\net472\HandyStuff.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BackgroundReport\ElevateReports\ElevateUiBackgroundRequest.cs" />
+    <Compile Include="BackgroundReport\Environment.cs" />
+    <Compile Include="BackgroundReport\GenerateReportRequest.cs" />
+    <Compile Include="BackgroundReport\GenerateReportResponse.cs" />
+    <Compile Include="BackgroundReport\GetReportsResponse.cs" />
+    <Compile Include="BackgroundReport\ReportFormat.cs" />
+    <Compile Include="BackgroundReport\ReportMeta.cs" />
+    <Compile Include="BackgroundReport\ReportStatus.cs" />
+    <Compile Include="BackgroundReport\Reports\CatalogExporter.cs" />
+    <Compile Include="BackgroundReport\Reports\IowaGroupItemAnalysisReportRequest.cs" />
+    <Compile Include="BackgroundReport\Reports\IowaListOfStudentScoresReportRequest.cs" />
+    <Compile Include="BackgroundReport\Reports\CogatGroupListSummaryReportRequest.cs" />
+    <Compile Include="BackgroundReport\Reports\CogatListStudentScoresReportRequest.cs" />
+    <Compile Include="BackgroundReport\Reports\CogatProfileNarrativeReportRequest.cs" />
+    <Compile Include="BackgroundReport\Reports\IowaGroupListSummaryReportRequest.cs" />
+    <Compile Include="BackgroundReport\Reports\IowaGroupPerformanceProfileReportRequest.cs" />
+    <Compile Include="BackgroundReport\Reports\IowaStudentPerformanceProfileReportRequest.cs" />
+    <Compile Include="BackgroundReport\Reports\ProfileNarrativeReportRequest.cs" />
+    <Compile Include="CogAt\elevate\FiltersModel.cs" />
+    <Compile Include="CogAt\PileKey.cs" />
+    <Compile Include="CogAt\ViewModels\ContentAreaHeader.cs" />
+    <Compile Include="CogAt\ViewModels\ContentAreaRow.cs" />
+    <Compile Include="CogAt\ViewModels\ContentAreaNationalPercent.cs" />
+    <Compile Include="CogAt\ViewModels\StudentRosterExtraParams.cs" />
+    <Compile Include="CogAt\ViewModels\StudentRosterHeader.cs" />
+    <Compile Include="CogAt\ViewModels\StudentRosterHeaderField.cs" />
+    <Compile Include="CogAt\ViewModels\CogatScoreWarningItem.cs" />
+    <Compile Include="CogAt\ViewModels\StudentRosterViewModel.cs" />
+    <Compile Include="CogAt\ViewModels\ContentAreaViewModel.cs" />
+    <Compile Include="CogAt\Filter.cs" />
+    <Compile Include="CogAt\LocationFilterItem.cs" />
+    <Compile Include="CogAt\FilterItem.cs" />
+    <Compile Include="CogAt\FilterType.cs" />
+    <Compile Include="CogAt\LocationsFilter.cs" />
+    <Compile Include="CogAt\PiledFilterItem.cs" />
+    <Compile Include="Config\ConfigSettings.cs" />
+    <Compile Include="Config\Constants.cs" />
+    <Compile Include="Config\SessionKey.cs" />
+    <Compile Include="Config\WebReportingView.cs" />
+    <Compile Include="ElevateReportingEngine\EREngineRequestModel.cs" />
+    <Compile Include="ElevateReportingEngine\EREngineResponseModel.cs" />
+    <Compile Include="GraphqlClient\DomainEndPoint\SubjectGradeDomains.cs" />
+    <Compile Include="GraphqlClient\DomainEndPoint\Domain.cs" />
+    <Compile Include="GraphqlClient\DomainEndPoint\PerformanceLevel.cs" />
+    <Compile Include="GraphqlClient\DomainEndPoint\Subject.cs" />
+    <Compile Include="GraphqlClient\PerformanceLevelDescriptorsEndPoint\PerformanceLevelDescriptor.cs" />
+    <Compile Include="GraphqlClient\PerformanceLevelDescriptorsEndPoint\PerformanceLevelStatement.cs" />
+    <Compile Include="GraphqlClient\StudentEndPoint\TestEvent.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\ChildLocation.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\CogatRosterRecord.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\CogatRoster.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\DifferentiatedReportKto1Student.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\DomainScore.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\GainAnalysis.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\Grade.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\Location.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\LocationRoster.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\LocationRosterKto1.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\LongitudinalGain.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\LongitudinalNode.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\LongitudinalTestEvent.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\LongitudinalTestScore.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\Name.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\ParentLocation.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\PerformanceBand.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\PerformanceLevel.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\PerformanceLevelMatrixDataPoint.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\PerformanceLevelMatrix.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\PerformanceLevelDonutKto1.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\PerformanceScoreGraphKto1.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\PldStageKto1.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\Population.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\RosterCard.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\RosterListKto1.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\Score.cs" />
+    <Compile Include="GraphqlClient\RangeEndPoint\StandardScoreRange.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\Student.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\StudentRoster.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\TestEvent.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\TestScore.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\User.cs" />
+    <Compile Include="IowaFlex\IowaFlexFilterPanel.cs" />
+    <Compile Include="IowaFlex\BreadCrumb.cs" />
+    <Compile Include="IowaFlex\DomainModel.cs" />
+    <Compile Include="IowaFlex\LocationsFilter.cs" />
+    <Compile Include="IowaFlex\LocationNode.cs" />
+    <Compile Include="GraphqlClient\StudentEndPoint\ChildLocation.cs" />
+    <Compile Include="GraphqlClient\StudentEndPoint\ChildLocation2.cs" />
+    <Compile Include="GraphqlClient\StudentEndPoint\CurrentTestEvent.cs" />
+    <Compile Include="GraphqlClient\StudentEndPoint\District.cs" />
+    <Compile Include="GraphqlClient\StudentEndPoint\DomainScore.cs" />
+    <Compile Include="GraphqlClient\StudentEndPoint\Grade.cs" />
+    <Compile Include="GraphqlClient\StudentEndPoint\Name.cs" />
+    <Compile Include="GraphqlClient\StudentEndPoint\PerformanceBand.cs" />
+    <Compile Include="GraphqlClient\StudentEndPoint\PerformanceLevel.cs" />
+    <Compile Include="GraphqlClient\StudentEndPoint\Score.cs" />
+    <Compile Include="GraphqlClient\StudentEndPoint\Student.cs" />
+    <Compile Include="GraphqlClient\StudentEndPoint\TestScore.cs" />
+    <Compile Include="IowaFlex\TestEventFilterItem.cs" />
+    <Compile Include="IowaFlex\ViewModels\Band.cs" />
+    <Compile Include="IowaFlex\ViewModels\DifferentiatedReportKto1HierarchyViewModel.cs" />
+    <Compile Include="IowaFlex\ViewModels\DifferentiatedReportKto1ViewModel.cs" />
+    <Compile Include="IowaFlex\ViewModels\PerformanceLevelMatrixDataPoint.cs" />
+    <Compile Include="IowaFlex\ViewModels\PerformanceLevelMatrixModel.cs" />
+    <Compile Include="IowaFlex\ViewModels\CogatRosterModel.cs" />
+    <Compile Include="IowaFlex\ViewModels\CogatRosterColumn.cs" />
+    <Compile Include="IowaFlex\ViewModels\CogatRosterValue.cs" />
+    <Compile Include="IowaFlex\ViewModels\ProfileNarrativeKto1ViewModel.cs" />
+    <Compile Include="GraphqlClient\UserEndPoint\DifferentiatedReportKto1.cs" />
+    <Compile Include="IowaFlex\ViewModels\RosterKto1ValueStudent.cs" />
+    <Compile Include="IowaFlex\ViewModels\RosterKto1ValueLocation.cs" />
+    <Compile Include="IowaFlex\ViewModels\RosterKto1Column.cs" />
+    <Compile Include="IowaFlex\ViewModels\RosterKto1Model.cs" />
+    <Compile Include="IowaFlex\ViewModels\PerformanceScoresLevelKto1.cs" />
+    <Compile Include="IowaFlex\ViewModels\DonutCardLevelKto1.cs" />
+    <Compile Include="IowaFlex\ViewModels\DonutCardKto1.cs" />
+    <Compile Include="IowaFlex\ViewModels\DonutCardsKto1Model.cs" />
+    <Compile Include="IowaFlex\ViewModels\GainsAnalysisValue.cs" />
+    <Compile Include="IowaFlex\ViewModels\IowaFlexProfileNarrativeTestEvent.cs" />
+    <Compile Include="IowaFlex\ViewModels\IowaFlexProfileNarrativeReport.cs" />
+    <Compile Include="IowaFlex\ViewModels\LongitudinalRosterColumn.cs" />
+    <Compile Include="IowaFlex\ViewModels\LongitudinalRosterModel.cs" />
+    <Compile Include="IowaFlex\ViewModels\GainsAnalysisModel.cs" />
+    <Compile Include="IowaFlex\ViewModels\JsonResponseModel.cs" />
+    <Compile Include="IowaFlex\ViewModels\LongitudinalRosterValue.cs" />
+    <Compile Include="IowaFlex\ViewModels\PerformanceScoresKto1Model.cs" />
+    <Compile Include="IowaFlex\ViewModels\TrendAnalysisModel.cs" />
+    <Compile Include="IowaFlex\ViewModels\TrendAnalysisPerformanceBand.cs" />
+    <Compile Include="ScoreManagerApi\Scores.cs" />
+    <Compile Include="ScoreManagerApi\GroupTotal.cs" />
+    <Compile Include="ScoreManagerApi\SmiApiParameters.cs" />
+    <Compile Include="ScoreManagerApi\SMIBaseParameters.cs" />
+    <Compile Include="ScoreManagerApi\SMIFilteringParameters.cs" />
+    <Compile Include="ScoreManagerApi\SMIGeneralProcessingParameters.cs" />
+    <Compile Include="ScoreManagerApi\SMIGroupParameters.cs" />
+    <Compile Include="ScoreManagerApi\SMISubtestParameters.cs" />
+    <Compile Include="SMI\ExcludeType.cs" />
+    <Compile Include="SMI\SMIBaseParameters.cs" />
+    <Compile Include="SMI\SMIGeneralProcessingParameters.cs" />
+    <Compile Include="SMI\SMIFilteringParameters.cs" />
+    <Compile Include="SMI\SMIGroupParameters.cs" />
+    <Compile Include="SMI\SMISkillParameters.cs" />
+    <Compile Include="SMI\SMISubtestParameters.cs" />
+    <Compile Include="IowaFlex\ViewModels\IowaFlexProfileNarrativeDomainModel.cs" />
+    <Compile Include="IowaFlex\ViewModels\IowaFlexProfileNarrativeViewModel.cs" />
+    <Compile Include="IowaFlex\NodeDataRow.cs" />
+    <Compile Include="Email\FeedbackModel.cs" />
+    <Compile Include="Types\ParticipatedLocations.cs" />
+    <Compile Include="Types\RosterRolesElevate.cs" />
+    <Compile Include="ViewModels\CogatBackgroundFiltersModel.cs" />
+    <Compile Include="ViewModels\DashboardDifferentiatedInstructionReportViewModel.cs" />
+    <Compile Include="ViewModels\DashboardCogatViewModel.cs" />
+    <Compile Include="IowaFlex\ViewModels\IowaFlexLongitudinalViewModel.cs" />
+    <Compile Include="ViewModels\DashboardIowaFlexViewModel.cs" />
+    <Compile Include="IowaFlex\PiledFilterItem.cs" />
+    <Compile Include="IowaFlex\FilterType.cs" />
+    <Compile Include="IowaFlex\FilterItem.cs" />
+    <Compile Include="IowaFlex\Filter.cs" />
+    <Compile Include="CogAt\FilterPanel.cs" />
+    <Compile Include="Options\CustomFieldGroup.cs" />
+    <Compile Include="Types\Assessment.cs" />
+    <Compile Include="Types\DmLinkName.cs" />
+    <Compile Include="Types\ContentScope.cs" />
+    <Compile Include="Types\CriteriaContainer.cs" />
+    <Compile Include="Types\CriteriaInfo.cs" />
+    <Compile Include="Types\CustomerInfo.cs" />
+    <Compile Include="Options\CustomFieldOption.cs" />
+    <Compile Include="Types\LastNameSearchContext.cs" />
+    <Compile Include="Types\ScoreWarning.cs" />
+    <Compile Include="Types\ScoringOptions.cs" />
+    <Compile Include="Types\UserData.cs" />
+    <Compile Include="Options\CheckboxOption.cs" />
+    <Compile Include="Options\ConcatOperatorEnum.cs" />
+    <Compile Include="Options\LongitudinalTestAdminOption.cs" />
+    <Compile Include="Options\Option.cs" />
+    <Compile Include="Options\OptionBook.cs" />
+    <Compile Include="Options\OptionGroup.cs" />
+    <Compile Include="Options\LocationGroup.cs" />
+    <Compile Include="Options\OptionPage.cs" />
+    <Compile Include="Options\OptionsCategory.cs" />
+    <Compile Include="Options\OptionsInputControl.cs" />
+    <Compile Include="Options\PerformanceBandGroup.cs" />
+    <Compile Include="Options\PerformanceBandOption.cs" />
+    <Compile Include="Options\PiledOption.cs" />
+    <Compile Include="Options\ScoreFilterRow.cs" />
+    <Compile Include="Options\ScoreFiltersGroup.cs" />
+    <Compile Include="Options\ScoreFiltersScore.cs" />
+    <Compile Include="Options\ScoreWarningRow.cs" />
+    <Compile Include="Options\ScoreWarningsFilterSwitchEnum.cs" />
+    <Compile Include="Options\ScoreWarningsGroup.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\CogatFiltersViewModel.cs" />
+    <Compile Include="IowaFlex\ViewModels\IowaFlexLongitudinalFiltersViewModel.cs" />
+    <Compile Include="IowaFlex\ViewModels\IowaFlexFiltersViewModel.cs" />
+    <Compile Include="ViewModels\SiteEntryModel.cs" />
+    <Compile Include="ViewModels\ReportViewerModel.cs" />
+    <Compile Include="ViewModels\SaveCriteriaModalModel.cs" />
+    <Compile Include="ViewModels\CriteriaTableViewModel.cs" />
+    <Compile Include="ViewModels\CriteriaPageViewModel.cs" />
+    <Compile Include="ViewModels\EntranceViewModel.cs" />
+    <Compile Include="ViewModels\LibraryPageViewModel.cs" />
+    <Compile Include="ViewModels\LocationChangeModalModel.cs" />
+    <Compile Include="ViewModels\OptionsPageViewModel.cs" />
+    <Compile Include="ViewModels\OptionsViewModel.cs" />
+    <Compile Include="ViewModels\ReportingKeyModalModel.cs" />
+    <Compile Include="Xml\DisplayTypes.extension.cs">
+      <DependentUpon>DisplayTypes.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Xml\DisplayTypes.generated.cs">
+      <DependentUpon>DisplayTypes.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Xml\XmlLoader.cs" />
+    <Compile Include="Xml\XmlValidator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Xml\DisplayTypes.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Xml\DisplayTypes.xsd">
+      <Generator>DisplayTypesGenerator</Generator>
+      <LastGenOutput>DisplayTypes.generated.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DM.WR.Data\DM.WR.Data.csproj">
+      <Project>{2B434721-FBAE-4136-A787-BBB68BC0E882}</Project>
+      <Name>DM.WR.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

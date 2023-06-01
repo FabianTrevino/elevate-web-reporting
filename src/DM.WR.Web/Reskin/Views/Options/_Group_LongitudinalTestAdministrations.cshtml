@@ -1,0 +1,48 @@
+﻿@model OptionGroup
+
+@{
+    var modalId = $"{Model.Type}Modal";
+
+    var cancelButtonId = $"{modalId}-cancel-button";
+    var applyButtonId = $"{modalId}-apply-button";
+
+    var longitudinalOptions = Model.Options.Cast<LongitudinalTestAdminOption>().ToList();
+    var text = longitudinalOptions.Count(o => o.IsSelected) > 0 ? longitudinalOptions.Count(o => o.IsSelected) + " selected" : "None selected";
+}
+
+<label id="lblGroupLongitudinalInstructions" style="display: none;">@string.Format("{0} Change", Model.DisplayName)</label>
+<label>@Model.DisplayName</label>  @Html.WrSpecialGroupLink(modalId, "lblGroupLongitudinalInstructions", "divGroupLongitudinalInstructions")
+<div id="divGroupLongitudinalInstructions" class="option-group-selected-text">@text</div>
+
+<input id="@Model.TypeCode" type="hidden" value="JSON.stringify(@Model.SelectedValues)" class="dm-ui-hidden-input" />
+
+<div id="@modalId" class="dm-ui-modal-container dm-ui-hide" role="alertdialog">
+    <div class="dm-ui-modal dm-ui-modal-green longitudinal-test-admins-modal">
+        <header><h1>@Model.DisplayName</h1></header>
+        <section>
+            <div>Select the test administration dates and grades/levels to include in the longitudinal graph.</div>
+
+            <div class="left-column header-column">TEST ADMINISTRATIONS</div>
+            <div class="right-column header-column">GRADE LEVEL</div>
+
+            @for (int c = 0; c < longitudinalOptions.Count; ++c)
+            {
+                var gradeLevelId = $"grade_level_{c}";
+                var option = longitudinalOptions[c];
+                var selectedGradeLevel = option.GradeLevels.Where(gl => gl.IsSelected).Select(gl => gl.Value).FirstOrDefault();
+
+                <div class="left-column">@Html.DmUiCheckBox(text: option.Text, isChecked: option.IsSelected, id: option.Value, htmlAttributes: new { disabled = option.IsDisabled, data_grade_level_id = $"{gradeLevelId}_dm_ui", data_index = c, data_original_selection = option.IsSelected.ToString().ToLower(), data_original_disabled = option.IsDisabled.ToString().ToLower() } )</div>
+                <div class="right-column">@Html.DmUiSingleSelectDropdown(option.GetGradeLevelsDropdownList(), gradeLevelId, false, null, null, null, new { @class = option.IsDisabled || !option.IsSelected ? "dm-ui-disabled" : null, data_original_value = selectedGradeLevel, data_original_disabled = option.IsDisabled.ToString().ToLower() } )</div>
+            }
+
+            <div class="dm-ui-modal-button-container-dual">
+                <button id="@cancelButtonId" class="dm-ui-button-small dm-ui-button-secondary">Cancel</button>
+                <button id="@applyButtonId" class="dm-ui-button-small dm-ui-button-primary">Apply</button>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script type="text/javascript">
+    Options.AssignLongitudinalTestAdminsGroupHandler('#@applyButtonId', '#@cancelButtonId', '#@modalId', '#@Model.TypeCode');
+</script>

@@ -1,0 +1,22 @@
+﻿@model OptionGroup
+
+@{
+    var options = Model.Options.Cast<CheckboxOption>().ToList();
+}
+
+<label for="@Model.TypeCode">@Model.DisplayName</label>
+
+@foreach (var option in options)
+{
+    @Html.DmUiCheckBox(
+        text: option.Text, 
+        isChecked: option.IsSelected, 
+        id: Html.RandomId(),
+        htmlAttributes: new { @class = Model.Type.ToString(), disabled = Model.IsDisabled })
+}
+
+<input id="@Model.TypeCode" type="hidden" value="@JsonConvert.SerializeObject(options.Select(o => o.IsSelected), Formatting.None)" class="dm-ui-hidden-input" />
+
+<script type="text/javascript">
+    Options.AssignCheckboxGroupHandler('.@Model.Type.ToString()', '#@Model.TypeCode');
+</script>

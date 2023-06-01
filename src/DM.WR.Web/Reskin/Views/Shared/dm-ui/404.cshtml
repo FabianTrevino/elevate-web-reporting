@@ -1,0 +1,30 @@
+﻿@model NotFoundViewModel
+
+@{
+    Layout = MVC.Shared.Views.dm_ui._Layout_NoMenu;
+}
+
+<div class="dm-ui-404-container">
+    <img class="dm-ui-404-unhappy-img" src="@Links.Reskin.Content.dm_ui.img._404_svg" alt="" title="" />
+
+    <h1 class="dm-ui-404-header">404</h1>
+
+    <div class="dm-ui-404-page-not-found">Page not found</div>
+
+    <div class="dm-ui-404-encountered">Click the "Go Back" button or ask your teacher/proctor for help.</div>
+
+    <a class="dm-ui-button-primary dm-ui-button-large" href="@Model.DmSignInLink">Go Back</a>
+    
+    <div class="dm-ui-404-contact">
+        If you have any questions or need assistance, please contact us.
+        <br/>
+        1-877-246-8337 | <a href="mailto:help@riversidedatamanager.com">help@riversidedatamanager.com</a>
+        <br/>
+        DataManager Support Center hours are Monday - Friday from 7:00 AM – 6:00 PM (CST).
+    </div>
+</div>
+
+@section js_on_document_ready
+{
+    DmUiLibrary.HideOverlaySpinner();
+}

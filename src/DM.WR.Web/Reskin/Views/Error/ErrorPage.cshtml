@@ -1,0 +1,31 @@
+﻿@model string
+
+@{
+    Layout = MVC.Shared.Views.dm_ui._Layout_NoMenu;
+}
+
+<div class="dm-ui-page-container">
+    <section class="dm-ui-page-section">
+        <h2>Report processing error</h2>
+        <div>
+            <br/>
+            An error occurred while processing your requested <em>DataManager</em> report. Please try again later or
+            contact the <em>DataManager</em> Support Center.
+        </div>
+
+        <br />
+
+        @Html.Partial(MVC.Partials.Views.ViewNames._ContactInfo)
+
+    </section>
+</div>
+
+@section floating_buttons
+{
+    <a href="@Model" class="dm-ui-button-secondary dm-ui-button-small" id="display-reporting-key-modal-button" style="float:right;">Add Reporting Key</a>
+}
+
+@section js_on_document_ready
+{
+    DmUiLibrary.HideOverlaySpinner();
+}
